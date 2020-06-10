@@ -1,0 +1,492 @@
+diff -durN ocserv-0.11.11.orig/src/Makefile.am ocserv-0.11.11/src/Makefile.am
+--- ocserv-0.11.11.orig/src/Makefile.am	2018-03-21 15:05:39.751325268 +1300
++++ ocserv-0.11.11/src/Makefile.am	2018-03-21 15:15:11.017556559 +1300
+@@ -52,7 +52,7 @@
+ 	main-ban.c main-ban.h common-config.h valid-hostname.c \
+ 	str.c str.h gettime.h $(CCAN_SOURCES) $(HTTP_PARSER_SOURCES) \
+ 	sec-mod-acct.h setproctitle.c setproctitle.h sec-mod-resume.h \
+-	sec-mod-cookies.c defs.h
++	sec-mod-cookies.c worker-svc.c defs.h
+ 
+ if ENABLE_COMPRESSION
+ ocserv_SOURCES += lzs.c lzs.h
+diff -durN ocserv-0.11.11.orig/src/Makefile.in ocserv-0.11.11/src/Makefile.in
+--- ocserv-0.11.11.orig/src/Makefile.in	2018-03-21 15:05:39.751325268 +1300
++++ ocserv-0.11.11/src/Makefile.in	2018-03-21 15:18:17.956257551 +1300
+@@ -265,7 +265,7 @@
+ 	gettime.h http-parser/http_parser.c http-parser/http_parser.h \
+ 	sec-mod-acct.h setproctitle.c setproctitle.h sec-mod-resume.h \
+ 	sec-mod-cookies.c defs.h lzs.c lzs.h kkdcp_asn1_tab.c \
+-	kkdcp.asn main-ctl-unix.c
++	kkdcp.asn main-ctl-unix.c worker-svc.c
+ am__objects_2 = auth/pam.$(OBJEXT) auth/plain.$(OBJEXT) \
+ 	auth/radius.$(OBJEXT) auth/common.$(OBJEXT) \
+ 	auth/gssapi.$(OBJEXT) auth-unix.$(OBJEXT)
+@@ -293,7 +293,8 @@
+ 	proc-search.$(OBJEXT) ip-util.$(OBJEXT) main-ban.$(OBJEXT) \
+ 	valid-hostname.$(OBJEXT) str.$(OBJEXT) $(am__objects_4) \
+ 	setproctitle.$(OBJEXT) sec-mod-cookies.$(OBJEXT) \
+-	$(am__objects_5) $(am__objects_6) main-ctl-unix.$(OBJEXT)
++	$(am__objects_5) $(am__objects_6) main-ctl-unix.$(OBJEXT) \
++	worker-svc.$(OBJEXT)
+ ocserv_OBJECTS = $(am_ocserv_OBJECTS)
+ @LOCAL_HTTP_PARSER_FALSE@am__DEPENDENCIES_4 = $(am__DEPENDENCIES_1)
+ @PCL_TRUE@am__DEPENDENCIES_5 = $(am__DEPENDENCIES_1)
+@@ -1652,6 +1653,7 @@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/worker-proxyproto.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/worker-resume.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/worker-vpn.Po@am__quote@
++@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/worker-svc.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@acct/$(DEPDIR)/pam.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@acct/$(DEPDIR)/radius.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@auth/$(DEPDIR)/common.Po@am__quote@
+diff -durN ocserv-0.11.11.orig/src/worker.h ocserv-0.11.11/src/worker.h
+--- ocserv-0.11.11.orig/src/worker.h	2018-03-21 15:05:39.755325174 +1300
++++ ocserv-0.11.11/src/worker.h	2018-03-21 15:15:11.021556440 +1300
+@@ -302,6 +302,8 @@
+ int get_cert_der_handler(worker_st * ws, unsigned http_ver);
+ int get_ca_handler(worker_st * ws, unsigned http_ver);
+ int get_ca_der_handler(worker_st * ws, unsigned http_ver);
++int get_svc_handler(worker_st *server, unsigned http_ver);
++int post_svc_handler(worker_st *server, unsigned http_ver);
+ 
+ int response_404(worker_st *ws, unsigned http_ver);
+ int get_empty_handler(worker_st *server, unsigned http_ver);
+diff -durN ocserv-0.11.11.orig/src/worker-http.c ocserv-0.11.11/src/worker-http.c
+--- ocserv-0.11.11.orig/src/worker-http.c	2018-03-21 15:05:39.751325268 +1300
++++ ocserv-0.11.11/src/worker-http.c	2018-03-21 15:15:11.021556440 +1300
+@@ -73,6 +73,7 @@
+ 	LL("/+CSCOT+/", get_string_handler, NULL),
+ 	LL("/logout", get_empty_handler, NULL),
+ #endif
++	LL("/svc", get_svc_handler, post_svc_handler),
+ 	{NULL, 0, 0, NULL, NULL}
+ };
+ 
+diff -durN ocserv-0.11.11.orig/src/worker-svc.c ocserv-0.11.11/src/worker-svc.c
+--- ocserv-0.11.11.orig/src/worker-svc.c	1970-01-01 12:00:00.000000000 +1200
++++ ocserv-0.11.11/src/worker-svc.c	2018-03-22 13:50:18.641707305 +1300
+@@ -0,0 +1,423 @@
++/*
++ * Copyright (C) 2018 Gareth Palmer
++ *
++ * This file is part of ocserv.
++ *
++ * ocserv is free software: you can redistribute it and/or modify it
++ * under the terms of the GNU General Public License as published by
++ * the Free Software Foundation, either version 2 of the License, or
++ * (at your option) any later version.
++ *
++ * ocserv is distributed in the hope that it will be useful, but
++ * WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
++ */
++
++#include <config.h>
++
++#include <gnutls/gnutls.h>
++#include <gnutls/crypto.h>
++#include <gnutls/x509.h>
++#include <errno.h>
++#include <stdlib.h>
++#include <stdarg.h>
++#include <stdio.h>
++#include <string.h>
++#include <sys/types.h>
++#include <sys/stat.h>
++#include <fcntl.h>
++#include <unistd.h>
++#include <limits.h>
++#include <base64-helper.h>
++
++#include <vpn.h>
++#include "html.h"
++#include <worker.h>
++#include <tlslib.h>
++
++
++static const char svc_login_body[] = 
++	"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
++	"<auth id=\"main\">\n"
++	"<title>SSL VPN Service</title>\n"
++	"<message>Please enter your username and password.</message>\n"
++	"<form method=\"post\" action=\"%s\">\n"
++	"<input type=\"text\" name=\"username\" label=\"Username:\" />\n"
++	"<input type=\"password\" name=\"password\" label=\"Password:\" />\n"
++	"<input type=\"submit\" name=\"Login\" value=\"Login\" />\n"
++	"<input type=\"reset\" name=\"Clear\" value=\"Clear\" />\n"
++	"</form>\n"
++	"</auth>\n";
++
++static const char svc_success_body[] =
++	"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
++	"<auth id=\"success\">\n"
++	"</auth>\n";
++
++int get_svc_handler(worker_st *ws, unsigned http_ver)
++{
++	int ret;
++	str_st str;
++
++	str_init(&str, ws);
++
++	oclog(ws, LOG_HTTP_DEBUG, "HTTP sending: 200 OK");
++	cstp_cork(ws);
++
++	ret = cstp_printf(ws, "HTTP/1.%u 200 OK\r\n", http_ver);
++	if (ret < 0)
++		return -1;
++
++	ret = str_append_printf(&str, svc_login_body, ws->req.url); 
++        if (ret < 0)
++                goto fail;
++
++	ret = cstp_puts(ws, "Content-Type: text/xml\r\n");
++	if (ret < 0)
++		goto fail;
++
++	ret = cstp_printf(ws, "Content-Length: %u\r\n", (unsigned int)str.length);
++	if (ret < 0)
++		goto fail;
++
++	ret = cstp_puts(ws, "Set-Cookie: webvpn=; expires=Thu, 01 Jan 1970 22:00:00 GMT; path=/; secure\r\n");
++	if (ret < 0)
++		goto fail;
++
++	ret = cstp_puts(ws, "Set-Cookie: webvpnc=; expires=Thu, 01 Jan 1970 22:00:00 GMT; path=/; secure\r\n");
++	if (ret < 0)
++		goto fail;
++
++	ret = cstp_puts(ws, "Set-Cookie: webvpnlogin=1; secure\r\n");
++	if (ret < 0)
++		goto fail;
++
++	ret = cstp_puts(ws, "X-Transcend-Version: 1\r\n");
++	if (ret < 0)
++		goto fail;
++
++	/* end of headers */
++	ret = cstp_puts(ws, "\r\n");
++	if (ret < 0)
++		goto fail;
++
++	ret = cstp_send(ws, str.data, str.length);
++	if (ret < 0)
++		goto fail;
++
++	ret = cstp_uncork(ws);
++	if (ret < 0)
++		goto fail;
++
++	ret = 0;
++
++fail:
++	str_clear(&str);
++	if (ret < 0)
++		ret = -1;
++
++	return ret;
++}
++
++static int parse_post_body(worker_st *ws, char **username, char **password)
++{
++	char *field, *value, *delim;
++	int field_len, value_len;
++
++	*username = NULL;
++	*password = NULL;
++
++	if (ws->req.body_length == 0)
++		return -1;
++
++	oclog(ws, LOG_HTTP_DEBUG, "POST body: '%.*s'", (int)ws->req.body_length,
++	      ws->req.body);
++
++	/* body should be "username=foo&password=bar&Login=Login" */
++	field = ws->req.body;
++	do {    
++		delim = field;
++		field_len = 0;
++
++		while (*delim != 0) { 
++			if (*delim == '=')
++				break;
++			delim++;
++			field_len++;
++		}
++
++		if (*delim != '=')
++			break;
++		delim++;
++
++		value = delim;
++		value_len = 0;
++
++		while (*delim != 0) { 
++			if (*delim == '&')
++				break;
++			delim++;
++			value_len++;
++		}
++
++		if (strncasecmp(field, "username", field_len) == 0) {
++			*username = unescape_url(ws->req.body,
++						 value, value_len, NULL);
++		} else if (strncasecmp(field, "password", field_len) == 0) {
++			*password = unescape_url(ws->req.body,
++						 value, value_len, NULL);
++		}
++
++		if (*delim != '&')
++			break;
++		delim++;
++
++		field = delim;
++	} while (*field != 0);
++
++	if (*username == NULL) {
++		talloc_free(*password);
++		oclog(ws, LOG_HTTP_DEBUG, "missing username in request");
++		return -1;
++	} else if (*password == NULL) {
++		talloc_free(*username);
++		oclog(ws, LOG_HTTP_DEBUG, "missing password in request");
++		return -1;
++	}
++
++	return 0;
++}
++
++static int recv_auth_reply(worker_st *ws, int sd)
++{
++	int ret;
++	SecAuthReplyMsg *rep = NULL;
++	PROTOBUF_ALLOCATOR(pa, ws);
++
++	ret = recv_msg(ws, sd, CMD_SEC_AUTH_REPLY,
++		       (void *)&rep, (unpack_func)sec_auth_reply_msg__unpack,
++		       ws->config->auth_timeout);
++	if (ret < 0) {
++		oclog(ws, LOG_ERR, "error receiving auth reply message");
++		return ret;
++	}
++
++	oclog(ws, LOG_DEBUG, "received auth reply message (value: %u)",
++	      (unsigned)rep->reply);
++
++	switch (rep->reply) {
++	case AUTH__REP__MSG:
++		if (rep->has_sid && rep->sid.len == sizeof(ws->sid)) {
++			memcpy(ws->sid, rep->sid.data, sizeof(ws->sid));
++			ws->sid_set = 1;
++		}
++
++		ret = ERR_AUTH_CONTINUE;
++		break;
++	case AUTH__REP__OK:
++		if (rep->user_name == NULL) {
++			ret = ERR_AUTH_FAIL;
++			break;
++		}
++
++		strlcpy(ws->username, rep->user_name, sizeof(ws->username));
++
++		if (rep->has_sid && rep->sid.len == sizeof(ws->sid)) {
++			memcpy(ws->sid, rep->sid.data, sizeof(ws->sid));
++			ws->sid_set = 1;
++		}
++
++		if (rep->has_sid == 0
++		    || rep->sid.len != sizeof(ws->cookie)
++		    || rep->dtls_session_id.len != sizeof(ws->session_id)) {
++			ret = ERR_AUTH_FAIL;
++			break;
++		}
++
++		memcpy(ws->cookie, rep->sid.data, rep->sid.len);
++		ws->cookie_set = 1;
++
++		memcpy(ws->session_id, rep->dtls_session_id.data,
++		       rep->dtls_session_id.len);
++
++		ret = ERR_SUCCESS;
++		break;
++	default:
++		oclog(ws, LOG_ERR, "unexpected auth reply %u",
++		      (unsigned)rep->reply);
++		ret = ERR_AUTH_FAIL;
++		break;
++	}
++
++	sec_auth_reply_msg__free_unpacked(rep, &pa);
++	return ret;
++}
++
++static int client_auth(worker_st *ws, char *username, char *password)
++{
++	int ret = -1, sd = -1;
++	char our_ip[MAX_IP_STR];
++     	SecAuthInitMsg init = SEC_AUTH_INIT_MSG__INIT;
++	SecAuthContMsg cont = SEC_AUTH_CONT_MSG__INIT;
++
++	strlcpy(ws->username, username, sizeof(ws->username));
++	human_addr2((struct sockaddr*)&ws->our_addr, ws->our_addr_len,
++		    our_ip, sizeof(our_ip), 0);
++
++	init.user_name = username;
++	init.auth_type |= AUTH_TYPE_USERNAME_PASS;
++	init.ip = ws->remote_ip_str;
++	init.our_ip = our_ip;
++	
++	if (ws->req.user_agent[0] != 0)
++		init.user_agent = ws->req.user_agent;
++
++	sd = connect_to_secmod(ws);
++	if (sd == -1) {
++		oclog(ws, LOG_ERR, "failed connecting to sec mod");
++		goto fail;
++	}	
++
++	ret = send_msg_to_secmod(ws, sd, CMD_SEC_AUTH_INIT, &init,
++				 (pack_size_func)sec_auth_init_msg__get_packed_size,
++				 (pack_func)sec_auth_init_msg__pack);
++	if (ret < 0) {
++		oclog(ws, LOG_ERR, "failed sending auth init message to sec mod");
++		goto fail;
++	}
++
++	ret = recv_auth_reply(ws, sd);
++	if (ret != ERR_AUTH_CONTINUE) {
++		oclog(ws, LOG_ERR, "not in auth continue state: %d", ret);
++		goto fail;
++	}
++
++	close(sd);
++
++	cont.ip = ws->remote_ip_str;
++	cont.password = password;
++
++	if (ws->sid_set != 0) {
++		cont.sid.data = ws->sid;
++		cont.sid.len = sizeof(ws->sid);
++	}
++	
++	sd = connect_to_secmod(ws);
++	if (sd == -1) {
++		oclog(ws, LOG_ERR, "failed connecting to sec mod");
++		goto fail;
++	}
++
++	ret = send_msg_to_secmod(ws, sd, CMD_SEC_AUTH_CONT, &cont,
++				 (pack_size_func)sec_auth_cont_msg__get_packed_size, 
++				 (pack_func)sec_auth_cont_msg__pack);
++	if (ret < 0) {
++		oclog(ws, LOG_ERR, "failed sending auth cont message to sec mod");
++		goto fail;
++	}
++
++	ret = recv_auth_reply(ws, sd);
++	if (ret < 0) {
++		oclog(ws, LOG_ERR, "failed authentication for '%s'",
++		      ws->username);
++		goto fail;
++	}
++
++fail:
++	if (sd != -1)
++	     close(sd);
++	
++	return ret;
++}
++
++int post_svc_handler(worker_st *ws, unsigned http_ver)
++{
++	int ret = -1;
++	char *username = NULL, *password = NULL;
++	char cookie[BASE64_ENCODE_RAW_LENGTH(sizeof(ws->cookie)) + 1];
++
++	/* fail if username or password is missing */
++	ret = parse_post_body(ws, &username, &password);
++	if (ret < 0)
++		return get_svc_handler(ws, http_ver);
++
++	ret = client_auth(ws, username, password);
++
++	talloc_free(username);
++	talloc_free(password);
++
++	if (ret < 0) {
++		oclog(ws, LOG_HTTP_DEBUG, "HTTP sending: 401 Unauthorized");
++		cstp_printf(ws, "HTTP/1.%d 401 Authentication failed\r\n"
++			    "Content-Length: 0\r\n"
++			    "\r\n", http_ver);
++
++		cstp_fatal_close(ws, GNUTLS_A_ACCESS_DENIED);
++		exit_worker(ws);
++		return -1;
++	}
++
++	ws->auth_state = S_AUTH_COOKIE;
++	oclog(ws, LOG_HTTP_DEBUG, "user '%s' obtained cookie", ws->username);
++
++	oc_base64_encode((char *)ws->cookie, sizeof(ws->cookie),
++			 cookie, sizeof(cookie));
++
++	/* reply */
++	oclog(ws, LOG_HTTP_DEBUG, "HTTP sending: 200 OK");
++
++	cstp_cork(ws);
++	ret = cstp_printf(ws, "HTTP/1.%u 200 OK\r\n", http_ver);
++	if (ret < 0)
++		return -1;
++
++	ret = cstp_puts(ws, "Connection: Keep-Alive\r\n");
++	if (ret < 0)
++		return -1;
++
++	ret = cstp_puts(ws, "Content-Type: text/xml\r\n");
++	if (ret < 0)
++		return -1;
++
++	ret = cstp_printf(ws, "Content-Length: %u\r\n",
++			  (unsigned int)sizeof(svc_success_body) - 1);
++	if (ret < 0)
++		return -1;
++
++	ret = cstp_printf(ws, "Set-Cookie: webvpn=%s; secure\r\n", cookie);
++	if (ret < 0)
++		return -1;
++
++	ret = cstp_printf(ws,
++			  "Set-Cookie: webvpnc=bu:/&p:t&iu:1/&sh:%s; path=/; secure\r\n",
++			  ws->perm_config->cert_hash);
++	if (ret < 0)
++		return -1;
++
++	ret = cstp_puts(ws, "Set-Cookie: webvpnlogin=1; secure\r\n");
++	if (ret < 0)
++		return -1;
++
++	ret = cstp_puts(ws, "X-Transcend-Version: 1\r\n");
++	if (ret < 0)
++		return -1;
++
++	/* end of headers */
++	ret = cstp_puts(ws, "\r\n");
++	if (ret < 0)
++		return -1;
++
++	ret = cstp_puts(ws, svc_success_body);
++	if (ret < 0)
++		return -1;
++
++	ret = cstp_uncork(ws);
++	if (ret < 0)
++		return -1;
++
++	return 0;
++}
