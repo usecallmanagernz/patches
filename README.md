@@ -15,3 +15,13 @@ available on some phone models.
 See [Patching Asterisk](http://usecallmanager.nz/patching-asterisk.html)
 and [VPN Connection](http://usecallmanager.nz/vpn-group.html) for more
 information.
+
+---
+
+## Latest Patch Versions
+
+Asterisk 16: cisco-usecallmanager-16.12.0.patch
+
+Asterisk 13: cisco-usecallmanager-13.35.0.patch
+
+OCServ: cisco-webvpnlogin-0.12.6.patch
