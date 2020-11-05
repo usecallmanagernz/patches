@@ -20,8 +20,8 @@ information.
 
 ## Latest Patch Versions
 
-Asterisk 16: cisco-usecallmanager-16.12.0.patch
+Asterisk 16: cisco-usecallmanager-16.14.0.patch
 
-Asterisk 13: cisco-usecallmanager-13.35.0.patch
+Asterisk 13: cisco-usecallmanager-13.37.0.patch
 
 OCServ: cisco-webvpnlogin-0.12.6.patch
