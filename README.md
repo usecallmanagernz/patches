@@ -20,7 +20,7 @@ information.
 
 ## Latest Patch Versions
 
-Asterisk 16: cisco-usecallmanager-16.14.0.patch
+Asterisk 16: cisco-usecallmanager-16.15.1.patch
 
 Asterisk 13: cisco-usecallmanager-13.37.0.patch
 
