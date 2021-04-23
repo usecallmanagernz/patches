@@ -1,7 +1,7 @@
-diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/chan_sip.c
---- asterisk-13.38.2.orig/channels/chan_sip.c	2021-04-22 22:53:09.782425011 +1200
-+++ asterisk-13.38.2/channels/chan_sip.c	2021-04-22 22:55:52.266599165 +1200
-@@ -360,6 +360,67 @@
+diff -durN asterisk-18.3.0.orig/channels/chan_sip.c asterisk-18.3.0/channels/chan_sip.c
+--- asterisk-18.3.0.orig/channels/chan_sip.c	2021-04-22 22:53:43.905636049 +1200
++++ asterisk-18.3.0/channels/chan_sip.c	2021-04-22 22:59:50.313296281 +1200
+@@ -363,6 +363,67 @@
  			application is only available if TEST_FRAMEWORK is defined.</para>
  		</description>
  	</application>
@@ -69,7 +69,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	<function name="SIP_HEADER" language="en_US">
  		<synopsis>
  			Gets the specified SIP header from an incoming INVITE message.
-@@ -458,6 +519,27 @@
+@@ -505,6 +566,27 @@
  					<enum name="codec[x]">
  						<para>Preferred codec index number <replaceable>x</replaceable> (beginning with zero).</para>
  					</enum>
@@ -97,7 +97,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  				</enumlist>
  			</parameter>
  		</syntax>
-@@ -673,7 +755,9 @@
+@@ -720,7 +802,9 @@
  	{ CPIM_PIDF_XML,   "presence", "application/cpim-pidf+xml",   "cpim-pidf+xml" },  /* RFC 3863 */
  	{ PIDF_XML,        "presence", "application/pidf+xml",        "pidf+xml" },       /* RFC 3863 */
  	{ XPIDF_XML,       "presence", "application/xpidf+xml",       "xpidf+xml" },       /* Pre-RFC 3863 with MS additions */
@@ -108,7 +108,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  };
  
  /*! \brief The core structure to setup dialogs. We parse incoming messages by using
-@@ -837,6 +921,7 @@
+@@ -884,6 +968,7 @@
  static struct stasis_subscription *network_change_sub; /*!< subscription id for network change events */
  static struct stasis_subscription *acl_change_sub; /*!< subscription id for named ACL system change events */
  static int network_change_sched_id = -1;
@@ -116,7 +116,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  static char used_context[AST_MAX_CONTEXT];        /*!< name of automatically created context for unloading */
  
-@@ -871,6 +956,68 @@
+@@ -918,6 +1003,68 @@
   */
  static int sipdebug_text;
  
@@ -185,7 +185,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  static const struct _map_x_s referstatusstrings[] = {
  	{ REFER_IDLE,      "<none>" },
  	{ REFER_SENT,      "Request sent" },
-@@ -924,11 +1071,17 @@
+@@ -971,11 +1118,17 @@
  
  #ifdef HAVE_LIBXML2
  static int cc_esc_publish_handler(struct sip_pvt *pvt, struct sip_request *req, struct event_state_compositor *esc, struct sip_esc_entry *esc_entry);
@@ -203,7 +203,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  #endif
  
  /*!
-@@ -951,6 +1104,7 @@
+@@ -998,6 +1151,7 @@
  } event_state_compositors [] = {
  #ifdef HAVE_LIBXML2
  	{CALL_COMPLETION, "call-completion", &cc_esc_publish_callbacks},
@@ -211,7 +211,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  #endif
  };
  
-@@ -1016,6 +1170,10 @@
+@@ -1063,6 +1217,10 @@
  static int temp_pvt_init(void *);
  static void temp_pvt_cleanup(void *);
  
@@ -222,7 +222,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  /*! \brief A per-thread temporary pvt structure */
  AST_THREADSTORAGE_CUSTOM(ts_temp_pvt, temp_pvt_init, temp_pvt_cleanup);
  
-@@ -1121,6 +1279,7 @@
+@@ -1169,6 +1327,7 @@
  /*--- PBX interface functions */
  static struct ast_channel *sip_request_call(const char *type, struct ast_format_cap *cap, const struct ast_assigned_ids *assignedids, const struct ast_channel *requestor, const char *dest, int *cause);
  static int sip_devicestate(const char *data);
@@ -230,7 +230,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  static int sip_sendtext(struct ast_channel *ast, const char *text);
  static int sip_call(struct ast_channel *ast, const char *dest, int timeout);
  static int sip_sendhtml(struct ast_channel *chan, int subclass, const char *data, int datalen);
-@@ -1146,7 +1305,8 @@
+@@ -1194,7 +1353,8 @@
  static int sipsock_read(int *id, int fd, short events, void *ignore);
  static int __sip_xmit(struct sip_pvt *p, struct ast_str *data);
  static int __sip_reliable_xmit(struct sip_pvt *p, uint32_t seqno, int resp, struct ast_str *data, int fatal, int sipmethod);
@@ -240,7 +240,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  static int __transmit_response(struct sip_pvt *p, const char *msg, const struct sip_request *req, enum xmittype reliable);
  static int retrans_pkt(const void *data);
  static int transmit_response_using_temp(ast_string_field callid, struct ast_sockaddr *addr, int useglobal_nat, const int intended_method, const struct sip_request *req, const char *msg);
-@@ -1156,6 +1316,7 @@
+@@ -1204,6 +1364,7 @@
  static int transmit_response_with_sdp(struct sip_pvt *p, const char *msg, const struct sip_request *req, enum xmittype reliable, int oldsdp, int rpid);
  static int transmit_response_with_unsupported(struct sip_pvt *p, const char *msg, const struct sip_request *req, const char *unsupported);
  static int transmit_response_with_auth(struct sip_pvt *p, const char *msg, const struct sip_request *req, const char *rand, enum xmittype reliable, const char *header, int stale);
@@ -248,7 +248,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  static int transmit_provisional_response(struct sip_pvt *p, const char *msg, const struct sip_request *req, int with_sdp);
  static int transmit_response_with_allow(struct sip_pvt *p, const char *msg, const struct sip_request *req, enum xmittype reliable);
  static void transmit_fake_auth_response(struct sip_pvt *p, struct sip_request *req, enum xmittype reliable);
-@@ -1169,6 +1330,7 @@
+@@ -1217,6 +1378,7 @@
  static int transmit_info_with_vidupdate(struct sip_pvt *p);
  static int transmit_message(struct sip_pvt *p, int init, int auth);
  static int transmit_refer(struct sip_pvt *p, const char *dest);
@@ -256,7 +256,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  static int transmit_notify_with_mwi(struct sip_pvt *p, int newmsgs, int oldmsgs, const char *vmexten);
  static int transmit_notify_with_sipfrag(struct sip_pvt *p, int cseq, char *message, int terminate);
  static int transmit_cc_notify(struct ast_cc_agent *agent, struct sip_pvt *subscription, enum sip_cc_notify_state state);
-@@ -1178,7 +1340,11 @@
+@@ -1226,7 +1388,11 @@
  static void copy_request(struct sip_request *dst, const struct sip_request *src);
  static void receive_message(struct sip_pvt *p, struct sip_request *req, struct ast_sockaddr *addr, const char *e);
  static void parse_moved_contact(struct sip_pvt *p, struct sip_request *req, char **name, char **number, int set_call_forward);
@@ -269,7 +269,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  /* Misc dialog routines */
  static int __sip_autodestruct(const void *data);
-@@ -1193,6 +1359,7 @@
+@@ -1241,6 +1407,7 @@
  static int build_path(struct sip_pvt *p, struct sip_peer *peer, struct sip_request *req, const char *pathbuf);
  static enum check_auth_result register_verify(struct sip_pvt *p, struct ast_sockaddr *addr,
  					      struct sip_request *req, const char *uri);
@@ -277,7 +277,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  static int get_sip_pvt_from_replaces(const char *callid, const char *totag, const char *fromtag,
  		struct sip_pvt **out_pvt, struct ast_channel **out_chan);
  static void check_pendings(struct sip_pvt *p);
-@@ -1203,6 +1370,7 @@
+@@ -1251,6 +1418,7 @@
  
  static int sip_sipredirect(struct sip_pvt *p, const char *dest);
  static int is_method_allowed(unsigned int *allowed_methods, enum sipmethod method);
@@ -285,7 +285,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  /*--- Codec handling / SDP */
  static void try_suggested_sip_codec(struct sip_pvt *p);
-@@ -1216,9 +1384,9 @@
+@@ -1264,9 +1432,9 @@
  static int process_sdp_a_ice(const char *a, struct sip_pvt *p, struct ast_rtp_instance *instance, int rtcp_mux);
  static int process_sdp_a_rtcp_mux(const char *a, struct sip_pvt *p, int *requested);
  static int process_sdp_a_dtls(const char *a, struct sip_pvt *p, struct ast_rtp_instance *instance);
@@ -298,7 +298,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  static int process_sdp_a_image(const char *a, struct sip_pvt *p);
  static void add_ice_to_sdp(struct ast_rtp_instance *instance, struct ast_str **a_buf);
  static void add_dtls_to_sdp(struct ast_rtp_instance *instance, struct ast_str **a_buf);
-@@ -1260,7 +1428,7 @@
+@@ -1308,7 +1476,7 @@
  static int expire_register(const void *data);
  static void *do_monitor(void *data);
  static int restart_monitor(void);
@@ -307,7 +307,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  static struct ast_variable *copy_vars(struct ast_variable *src);
  static int dialog_find_multiple(void *obj, void *arg, int flags);
  static struct ast_channel *sip_pvt_lock_full(struct sip_pvt *pvt);
-@@ -1282,6 +1450,7 @@
+@@ -1330,6 +1498,7 @@
  static void mwi_event_cb(void *, struct stasis_subscription *, struct stasis_message *);
  static void network_change_stasis_cb(void *data, struct stasis_subscription *sub, struct stasis_message *message);
  static void acl_change_stasis_cb(void *data, struct stasis_subscription *sub, struct stasis_message *message);
@@ -315,7 +315,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  static void sip_keepalive_all_peers(void);
  #define peer_in_destruction(peer) (ao2_ref(peer, 0) == 0)
  
-@@ -1348,6 +1517,8 @@
+@@ -1394,6 +1563,8 @@
  static inline int sip_debug_test_pvt(struct sip_pvt *p);
  static void append_history_full(struct sip_pvt *p, const char *fmt, ...);
  static void sip_dump_history(struct sip_pvt *dialog);
@@ -324,7 +324,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  /*--- Device object handling */
  static struct sip_peer *build_peer(const char *name, struct ast_variable *v, struct ast_variable *alt, int realtime, int devstate_only);
-@@ -1358,7 +1529,7 @@
+@@ -1404,7 +1575,7 @@
  static struct sip_peer *temp_peer(const char *name);
  static void register_peer_exten(struct sip_peer *peer, int onoff);
  static int sip_poke_peer_s(const void *data);
@@ -333,7 +333,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  static void reg_source_db(struct sip_peer *peer);
  static void destroy_association(struct sip_peer *peer);
  static void set_insecure_flags(struct ast_flags *flags, const char *value, int lineno);
-@@ -1412,9 +1583,14 @@
+@@ -1459,9 +1630,14 @@
  static int transmit_state_notify(struct sip_pvt *p, struct state_notify_data *data, int full, int timeout);
  static void update_connectedline(struct sip_pvt *p, const void *data, size_t datalen);
  static void update_redirecting(struct sip_pvt *p, const void *data, size_t datalen);
@@ -349,7 +349,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  /*-- TCP connection handling ---*/
  static void *_sip_tcp_helper_thread(struct ast_tcptls_session_instance *tcptls_session);
-@@ -1461,7 +1637,7 @@
+@@ -1508,7 +1684,7 @@
  static int handle_incoming(struct sip_pvt *p, struct sip_request *req, struct ast_sockaddr *addr, int *recount, int *nounlock);
  static int handle_request_update(struct sip_pvt *p, struct sip_request *req);
  static int handle_request_invite(struct sip_pvt *p, struct sip_request *req, struct ast_sockaddr *addr, uint32_t seqno, int *recount, const char *e, int *nounlock);
@@ -358,7 +358,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  static int handle_request_bye(struct sip_pvt *p, struct sip_request *req);
  static int handle_request_register(struct sip_pvt *p, struct sip_request *req, struct ast_sockaddr *sin, const char *e);
  static int handle_request_cancel(struct sip_pvt *p, struct sip_request *req);
-@@ -1526,6 +1702,7 @@
+@@ -1573,6 +1749,7 @@
  	.properties = AST_CHAN_TP_WANTSJITTER | AST_CHAN_TP_CREATESJITTER,
  	.requester = sip_request_call,			/* called with chan unlocked */
  	.devicestate = sip_devicestate,			/* called with chan unlocked (not chan-specific) */
@@ -366,7 +366,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	.call = sip_call,			/* called with chan locked */
  	.send_html = sip_sendhtml,
  	.hangup = sip_hangup,			/* called with chan locked */
-@@ -3348,9 +3525,23 @@
+@@ -3396,9 +3573,23 @@
  	if (dialog->relatedpeer && dialog->relatedpeer->mwipvt == dialog) {
  		dialog->relatedpeer->mwipvt = dialog_unref(dialog->relatedpeer->mwipvt, "delete ->relatedpeer->mwipvt");
  	}
@@ -390,7 +390,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  	dialog_ref(dialog, "Stop scheduled items for unlink action");
  	if (ast_sched_add(sched, 0, __dialog_unlink_sched_items, dialog) < 0) {
-@@ -5249,6 +5440,85 @@
+@@ -5297,6 +5488,85 @@
  	}
  }
  
@@ -476,7 +476,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  static void sip_destroy_peer_fn(void *peer)
  {
  	sip_destroy_peer(peer);
-@@ -5265,6 +5535,9 @@
+@@ -5313,6 +5583,9 @@
  	 * happening right now.
  	 */
  	clear_peer_mailboxes(peer);
@@ -486,7 +486,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  	if (peer->outboundproxy) {
  		ao2_ref(peer->outboundproxy, -1);
-@@ -5282,6 +5555,16 @@
+@@ -5330,6 +5603,16 @@
  		peer->mwipvt = dialog_unref(peer->mwipvt, "unreffing peer->mwipvt");
  	}
  
@@ -503,7 +503,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	if (peer->chanvars) {
  		ast_variables_destroy(peer->chanvars);
  		peer->chanvars = NULL;
-@@ -5949,6 +6232,29 @@
+@@ -5997,6 +6280,29 @@
  	}
  }
  
@@ -533,7 +533,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  /*! \brief Initialize DTLS-SRTP support on an RTP instance */
  static int dialog_initialize_dtls_srtp(const struct sip_pvt *dialog, struct ast_rtp_instance *rtp, struct ast_sdp_srtp **srtp)
  {
-@@ -6245,6 +6551,10 @@
+@@ -6298,6 +6604,10 @@
  		dialog->fromdomainport = peer->fromdomainport;
  	}
  	dialog->callingpres = peer->callingpres;
@@ -544,7 +544,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  	return 0;
  }
-@@ -6415,6 +6725,15 @@
+@@ -6466,6 +6776,15 @@
  		}
  	}
  
@@ -560,7 +560,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	/* Check whether there is vxml_url, distinctive ring variables */
  	headp = ast_channel_varshead(ast);
  	AST_LIST_TRAVERSE(headp, current, entries) {
-@@ -6637,6 +6956,9 @@
+@@ -6701,6 +7020,9 @@
  	/* Remove link from peer to subscription of MWI */
  	if (p->relatedpeer && p->relatedpeer->mwipvt == p)
  		p->relatedpeer->mwipvt = dialog_unref(p->relatedpeer->mwipvt, "delete ->relatedpeer->mwipvt");
@@ -570,7 +570,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	if (p->relatedpeer && p->relatedpeer->call == p)
  		p->relatedpeer->call = dialog_unref(p->relatedpeer->call, "unset the relatedpeer->call field in tandem with relatedpeer field itself");
  
-@@ -7180,6 +7502,11 @@
+@@ -7239,6 +7561,11 @@
  		if (sipdebug)
  			ast_debug(1, "update_call_counter(%s) - decrement call limit counter on hangup\n", p->username);
  		update_call_counter(p, DEC_CALL_LIMIT);
@@ -582,7 +582,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	}
  
  	/* Determine how to disconnect */
-@@ -8069,6 +8396,7 @@
+@@ -8128,6 +8455,7 @@
  	case AST_CONTROL_UPDATE_RTP_PEER: /* Absorb this since it is handled by the bridge */
  		break;
  	case AST_CONTROL_FLASH: /* We don't currently handle AST_CONTROL_FLASH here, but it is expected, so we don't need to warn either. */
@@ -590,7 +590,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		res = -1;
  		break;
  	case AST_CONTROL_PVT_CAUSE_CODE: /* these should be handled by the code in channel.c */
-@@ -8541,14 +8869,12 @@
+@@ -8600,14 +8928,12 @@
  	return __get_header(req, name, &start);
  }
  
@@ -606,7 +606,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  	if (!(str = ast_str_thread_get(&sip_content_buf, 128))) {
  		return NULL;
-@@ -8556,8 +8882,8 @@
+@@ -8615,8 +8941,8 @@
  
  	ast_str_reset(str);
  
@@ -617,7 +617,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  			return NULL;
  		}
  	}
-@@ -8565,6 +8891,68 @@
+@@ -8624,6 +8950,68 @@
  	return ast_str_buffer(str);
  }
  
@@ -686,7 +686,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  /*! \brief Read RTP from network */
  static struct ast_frame *sip_rtp_read(struct ast_channel *ast, struct sip_pvt *p, int *faxdetect)
  {
-@@ -10262,7 +10650,9 @@
+@@ -10307,7 +10695,9 @@
  	/* Others */
  	int sendonly = -1;
  	unsigned int numberofports;
@@ -697,7 +697,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	int red_data_pt[10];		/* For T.140 RED */
  	int red_num_gen = 0;		/* For T.140 RED */
  	char red_fmtp[100] = "empty";	/* For T.140 RED */
-@@ -10330,11 +10720,11 @@
+@@ -10375,11 +10765,11 @@
  			if (process_sdp_a_sendonly(value, &sendonly)) {
  				processed = TRUE;
  			}
@@ -712,34 +712,34 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  				processed = TRUE;
  			else if (process_sdp_a_image(value, p))
  				processed = TRUE;
-@@ -10787,7 +11177,7 @@
- 					} else if (!processed_crypto && process_crypto(p, p->rtp, &p->srtp, value, secure_audio)) {
- 						processed_crypto = TRUE;
- 						processed = TRUE;
+@@ -10836,7 +11226,7 @@
+ 							ast_log(AST_LOG_NOTICE, "Processed audio crypto attribute without SAVP specified; accepting anyway\n");
+ 							secure_audio = TRUE;
+ 						}
 -					} else if (process_sdp_a_audio(value, p, &newaudiortp, &last_rtpmap_codec)) {
 +					} else if (process_sdp_a_audio(value, p, &newaudiortp, &audio_codec, &rtpmap_codecs)) {
  						processed = TRUE;
  					} else if (process_sdp_a_rtcp_mux(value, p, &remote_rtcp_mux_audio)) {
  						processed = TRUE;
-@@ -10806,7 +11196,7 @@
- 					} else if (!processed_crypto && process_crypto(p, p->vrtp, &p->vsrtp, value, secure_video)) {
- 						processed_crypto = TRUE;
- 						processed = TRUE;
+@@ -10859,7 +11249,7 @@
+ 							ast_log(AST_LOG_NOTICE, "Processed video crypto attribute without SAVP specified; accepting anyway\n");
+ 							secure_video = TRUE;
+ 						}
 -					} else if (process_sdp_a_video(value, p, &newvideortp, &last_rtpmap_codec)) {
 +					} else if (process_sdp_a_video(value, p, &newvideortp, &video_codec, &rtpmap_codecs)) {
  						processed = TRUE;
  					} else if (process_sdp_a_rtcp_mux(value, p, &remote_rtcp_mux_video)) {
  						processed = TRUE;
-@@ -10816,7 +11206,7 @@
+@@ -10869,7 +11259,7 @@
  				else if (text) {
  					if (process_sdp_a_ice(value, p, p->trtp, rtcp_mux_offered)) {
  						processed = TRUE;
 -					} else if (process_sdp_a_text(value, p, &newtextrtp, red_fmtp, &red_num_gen, red_data_pt, &last_rtpmap_codec)) {
 +					} else if (process_sdp_a_text(value, p, &newtextrtp, red_fmtp, &red_num_gen, red_data_pt, &rtpmap_codecs)) {
  						processed = TRUE;
- 					} else if (!processed_crypto && process_crypto(p, p->trtp, &p->tsrtp, value, 1)) {
+ 					} else if (!processed_crypto && process_crypto(p, p->trtp, &p->tsrtp, value)) {
  						processed_crypto = TRUE;
-@@ -11488,11 +11878,11 @@
+@@ -11551,11 +11941,11 @@
  	return found;
  }
  
@@ -753,7 +753,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	char fmtp_string[256];
  	unsigned int sample_rate;
  	int debug = sip_debug_test_pvt(p);
-@@ -11515,24 +11905,24 @@
+@@ -11578,24 +11968,24 @@
  			ast_rtp_codecs_set_framing(newaudiortp, framing);
  		}
  		found = TRUE;
@@ -786,7 +786,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		}
  	} else if (sscanf(a, "fmtp: %30u %255[^\t\n]", &codec, fmtp_string) == 2) {
  		struct ast_format *format;
-@@ -11568,36 +11958,37 @@
+@@ -11631,36 +12021,37 @@
  	return found;
  }
  
@@ -836,7 +836,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		}
  	} else if (sscanf(a, "fmtp: %30u %255[^\t\n]", &codec, fmtp_string) == 2) {
  		struct ast_format *format;
-@@ -11617,41 +12008,61 @@
+@@ -11680,41 +12071,61 @@
  			}
  			ao2_ref(format, -1);
  		}
@@ -908,7 +908,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		}
  	} else if (!strncmp(a, red_fmtp, strlen(red_fmtp))) {
  		char *rest = NULL;
-@@ -11792,15 +12203,20 @@
+@@ -11855,15 +12266,20 @@
   *  is supported for this dialog. */
  static int add_supported(struct sip_pvt *pvt, struct sip_request *req)
  {
@@ -936,7 +936,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  }
  
  /*! \brief Add header to SIP message */
-@@ -12459,8 +12875,9 @@
+@@ -12522,8 +12938,9 @@
  		ast_clear_flag(&p->flags[1], SIP_PAGE2_CONNECTLINEUPDATE_PEND);
  		add_rpid(&resp, p);
  	}
@@ -947,7 +947,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	}
  
  	/* If we are sending a 302 Redirect we can add a diversion header if the redirect information is set */
-@@ -12707,6 +13124,35 @@
+@@ -12770,6 +13187,35 @@
  	return send_response(p, &resp, reliable, seqno);
  }
  
@@ -983,7 +983,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  /*!
   \brief Extract domain from SIP To/From header
   \return -1 on error, 1 if domain string is empty, 0 if domain was properly extracted
-@@ -12931,15 +13377,14 @@
+@@ -12994,15 +13440,14 @@
  {
  	struct ast_str *tmp = ast_str_alloca(256);
  	char tmp2[256];
@@ -1002,7 +1002,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  	if (!ast_test_flag(&p->flags[0], SIP_SENDRPID)) {
  		return 0;
-@@ -12950,16 +13395,12 @@
+@@ -13013,16 +13458,12 @@
  	}
  	connected_id = ast_channel_connected_effective_id(p->owner);
  	lid_num = S_COR(connected_id.number.valid, connected_id.number.str, NULL);
@@ -1022,7 +1022,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	if (((lid_pres & AST_PRES_RESTRICTION) != AST_PRES_ALLOWED) &&
  			(ast_test_flag(&p->flags[1], SIP_PAGE2_TRUST_ID_OUTBOUND) == SIP_PAGE2_TRUST_ID_OUTBOUND_NO)) {
  		/* If pres is not allowed and we don't trust the peer, we don't apply an RPID header */
-@@ -12975,67 +13416,67 @@
+@@ -13038,67 +13479,67 @@
  		fromdomain = ast_sockaddr_stringify_host_remote(&p->ourip);
  	}
  
@@ -1129,7 +1129,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	}
  	return 0;
  }
-@@ -13255,6 +13696,12 @@
+@@ -13318,6 +13759,12 @@
  	}
  
  	ast_str_append(m_buf, 0, " %d", rtp_code);
@@ -1142,7 +1142,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	ast_str_append(a_buf, 0, "a=rtpmap:%d %s/%u\r\n", rtp_code, subtype, rate);
  	/* VP8: add RTCP FIR support */
  	if (ast_format_cmp(format, ast_format_vp8) == AST_FORMAT_CMP_EQUAL) {
-@@ -13262,6 +13709,16 @@
+@@ -13325,6 +13772,16 @@
  	}
  
  	ast_format_generate_sdp_fmtp(format, rtp_code, a_buf);
@@ -1159,7 +1159,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  }
  
  /*! \brief Add text codec offer to SDP offer/answer body in INVITE or 200 OK */
-@@ -13625,7 +14082,7 @@
+@@ -13698,7 +14155,7 @@
  					ast_test_flag(&p->flags[2], SIP_PAGE3_FORCE_AVP)));
  
  			/* Build max bitrate string */
@@ -1168,7 +1168,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  				snprintf(bandwidth, sizeof(bandwidth), "b=CT:%d\r\n", p->maxcallbitrate);
  			if (debug) {
  				ast_verbose("Video is at %s\n", ast_sockaddr_stringify(&vdest));
-@@ -13665,6 +14122,11 @@
+@@ -13738,6 +14195,11 @@
  		}
  
  		/* Start building generic SDP headers */
@@ -1180,7 +1180,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  		/* We break with the "recommendation" and send our IP, in order that our
  		   peer doesn't have to ast_gethostbyname() us */
-@@ -14033,7 +14495,7 @@
+@@ -14084,7 +14546,7 @@
  	}
  }
  
@@ -1189,7 +1189,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  {
  	char uri[SIPBUFSIZE];
  	struct ast_str *header = ast_str_alloca(SIPBUFSIZE);
-@@ -14065,6 +14527,29 @@
+@@ -14116,6 +14578,29 @@
  	ao2_ref(agent, -1);
  }
  
@@ -1219,7 +1219,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  /*! \brief Used for 200 OK and 183 early media
  	\return Will return XMIT_ERROR for network errors.
  */
-@@ -14080,8 +14565,9 @@
+@@ -14131,8 +14616,9 @@
  	if (rpid == TRUE) {
  		add_rpid(&resp, p);
  	}
@@ -1230,7 +1230,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	}
  	if (p->rtp) {
  		ast_rtp_instance_activate(p->rtp);
-@@ -14366,8 +14852,6 @@
+@@ -14417,8 +14903,6 @@
  	const char *d = NULL;	/* domain in from header */
  	const char *urioptions = "";
  	int ourport;
@@ -1239,7 +1239,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	struct ast_party_id connected_id;
  	int ret;
  
-@@ -14417,7 +14901,7 @@
+@@ -14468,7 +14952,7 @@
  
  	/* Hey, it's a NOTIFY! See if they've configured a mwi_from.
  	 * XXX Right now, this logic works because the only place that mwi_from
@@ -1248,7 +1248,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	 * we might end up putting the mwi_from setting into other types of NOTIFY
  	 * messages as well.
  	 */
-@@ -14426,13 +14910,8 @@
+@@ -14477,13 +14961,8 @@
  	}
  
  	if (ast_strlen_zero(l)) {
@@ -1262,7 +1262,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  	/* Allow user to be overridden */
  	if (!ast_strlen_zero(p->fromuser))
-@@ -14475,7 +14954,7 @@
+@@ -14526,7 +15005,7 @@
  	}
  
  	/* If a caller id name was specified, prefix a display name, if there is enough room. */
@@ -1271,7 +1271,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		size_t written = ast_str_strlen(from);
  		size_t name_len;
  		if (sip_cfg.pedanticsipchecking) {
-@@ -14651,9 +15130,45 @@
+@@ -14702,9 +15181,45 @@
  			quote_str, reason, quote_str);
  	}
  
@@ -1317,7 +1317,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  static int transmit_publish(struct sip_epa_entry *epa_entry, enum sip_publish_type publish_type, const char * const explicit_uri)
  {
  	struct sip_pvt *pvt;
-@@ -14720,12 +15235,25 @@
+@@ -14771,12 +15286,25 @@
  	}
  	add_date(&req);
  	if (sipmethod == SIP_REFER && p->refer) {	/* Call transfer */
@@ -1343,7 +1343,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	} else if (sipmethod == SIP_SUBSCRIBE) {
  		if (p->subscribed == MWI_NOTIFICATION) {
  			add_header(&req, "Event", "message-summary");
-@@ -14817,6 +15345,8 @@
+@@ -14868,6 +15396,8 @@
  		add_rpid(&req, p);
  	if (sipmethod == SIP_INVITE) {
  		add_diversion(&req, p);
@@ -1352,7 +1352,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	}
  	if (sdp) {
  		offered_media_list_destroy(p);
-@@ -15112,6 +15642,9 @@
+@@ -15162,6 +15692,9 @@
  	struct ast_channel *c = NULL;
  	struct timeval tv = {0,};
  
@@ -1362,7 +1362,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	/* iterate ringing devices and get the oldest of all causing channels */
  	citer = ao2_iterator_init(device_state_info, 0);
  	for (; (device_state = ao2_iterator_next(&citer)); ao2_ref(device_state, -1)) {
-@@ -15130,93 +15663,9 @@
+@@ -15180,93 +15713,9 @@
  	return c ? ast_channel_ref(c) : NULL;
  }
  
@@ -1383,7 +1383,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 -
 -	switch (data->state) {
 -	case (AST_EXTENSION_RINGING | AST_EXTENSION_INUSE):
--		statestring = (sip_cfg.notifyringing) ? "early" : "confirmed";
+-		statestring = (sip_cfg.notifyringing == NOTIFYRINGING_ENABLED) ? "early" : "confirmed";
 -		local_state = NOTIFY_INUSE;
 -		pidfstate = "busy";
 -		pidfnote = "Ringing";
@@ -1456,7 +1456,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	switch (subscribed) {
  	case XPIDF_XML:
  	case CPIM_PIDF_XML:
-@@ -15227,46 +15676,91 @@
+@@ -15277,46 +15726,91 @@
  		ast_str_append(tmp, 0, "<presentity uri=\"%s;method=SUBSCRIBE\" />\n", mfrom);
  		ast_str_append(tmp, 0, "<atom id=\"%s\">\n", exten);
  		ast_str_append(tmp, 0, "<address uri=\"%s;user=ip\" priority=\"0.800000\">\n", mto);
@@ -1577,7 +1577,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		break;
  	case DIALOG_INFO_XML: /* SNOM subscribes in this format */
  		ast_str_append(tmp, 0, "<?xml version=\"1.0\"?>\n");
-@@ -15376,7 +15870,13 @@
+@@ -15426,7 +15920,13 @@
  		} else {
  			ast_str_append(tmp, 0, "<dialog id=\"%s\">\n", exten);
  		}
@@ -1592,7 +1592,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		if (data->state == AST_EXTENSION_ONHOLD) {
  				ast_str_append(tmp, 0, "<local>\n<target uri=\"%s\">\n"
  			                                    "<param pname=\"+sip.rendering\" pvalue=\"no\"/>\n"
-@@ -15471,36 +15971,22 @@
+@@ -15521,36 +16021,22 @@
  		add_header(&req, "Subscription-State", "terminated;reason=noresource");
  		break;
  	default:
@@ -1641,7 +1641,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  	add_content(&req, ast_str_buffer(tmp));
  
-@@ -15561,7 +16047,7 @@
+@@ -15611,7 +16097,7 @@
  		(0/0) notification. This can temporarily be disabled in
  		sip.conf with the "buggymwi" option */
  	ast_str_append(&out, 0, "Voice-Message: %d/%d%s\r\n",
@@ -1650,7 +1650,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  	if (p->subscribed) {
  		if (p->expiry) {
-@@ -15720,10 +16206,6 @@
+@@ -15770,10 +16256,6 @@
  	if (!ast_test_flag(&p->flags[0], SIP_SENDRPID)) {
  		return;
  	}
@@ -1661,7 +1661,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  	append_history(p, "ConnectedLine", "%s party is now %s <%s>",
  		ast_test_flag(&p->flags[0], SIP_OUTGOING) ? "Calling" : "Called",
-@@ -15733,7 +16215,12 @@
+@@ -15783,7 +16265,12 @@
  	if (ast_channel_state(p->owner) == AST_STATE_UP || ast_test_flag(&p->flags[0], SIP_OUTGOING)) {
  		struct sip_request req;
  
@@ -1675,7 +1675,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  			reqprep(&req, p, ast_test_flag(&p->flags[0], SIP_REINVITE_UPDATE) ? SIP_UPDATE : SIP_INVITE, 0, 1);
  
  			add_header(&req, "Allow", ALLOWED_METHODS);
-@@ -15745,11 +16232,6 @@
+@@ -15795,11 +16282,6 @@
  			p->lastinvite = p->ocseq;
  			ast_set_flag(&p->flags[0], SIP_OUTGOING);
  			send_request(p, &req, XMIT_CRITICAL, p->ocseq);
@@ -1687,7 +1687,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		} else {
  			/* We cannot send the update yet, so we have to wait until we can */
  			ast_set_flag(&p->flags[0], SIP_NEEDREINVITE);
-@@ -15778,6 +16260,159 @@
+@@ -15828,6 +16310,159 @@
  	}
  }
  
@@ -1702,7 +1702,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +		struct sip_pvt *pvt;
 +		struct ast_str *content = ast_str_alloca(8192);
 +
-+		if (!(pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, NULL))) {
++		if (!(pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, 0))) {
 +			return -1;
 +		}
 +
@@ -1760,7 +1760,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +		struct sip_pvt *pvt;
 +		struct ast_str *content = ast_str_alloca(8192);
 +
-+		if (!(pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, NULL))) {
++		if (!(pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, 0))) {
 +			return -1;
 +		}
 +
@@ -1795,7 +1795,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +		struct sip_pvt *pvt;
 +		struct ast_str *content = ast_str_alloca(8192);
 +
-+		if (!(pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, NULL))) {
++		if (!(pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, 0))) {
 +			return -1;
 +		}
 +
@@ -1847,7 +1847,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  static const struct _map_x_s regstatestrings[] = {
  	{ REG_STATE_FAILED,     "Failed" },
  	{ REG_STATE_UNREGISTERED, "Unregistered"},
-@@ -16191,8 +16826,8 @@
+@@ -16241,8 +16876,8 @@
  			ast_string_field_set(p, username, r->username);
  		}
  		/* Save extension in packet */
@@ -1857,8 +1857,8 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +			ast_string_field_set(p, exten, r->exten);
  		}
  
- 		/* Set transport and port so the correct contact is built */
-@@ -16329,6 +16964,9 @@
+ 		/* Set transport so the correct contact is built */
+@@ -16368,6 +17003,9 @@
  {
  	sip_refer_destroy(p);
  	p->refer = ast_calloc_with_stringfields(1, struct sip_refer, 512);
@@ -1868,7 +1868,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	return p->refer ? 1 : 0;
  }
  
-@@ -16337,6 +16975,7 @@
+@@ -16376,6 +17014,7 @@
  {
  	if (p->refer) {
  		ast_string_field_free_memory(p->refer);
@@ -1876,7 +1876,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		ast_free(p->refer);
  		p->refer = NULL;
  	}
-@@ -16416,6 +17055,28 @@
+@@ -16455,6 +17094,28 @@
  	*/
  }
  
@@ -1905,7 +1905,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  /*! \brief Send SIP INFO advice of charge message */
  static int transmit_info_with_aoc(struct sip_pvt *p, struct ast_aoc_decoded *decoded)
  {
-@@ -16498,6 +17159,10 @@
+@@ -16537,6 +17198,10 @@
  
  	if (sipmethod == SIP_ACK) {
  		p->invitestate = INV_CONFIRMED;
@@ -1916,7 +1916,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	}
  
  	return send_request(p, &resp, reliable, seqno ? seqno : p->ocseq);
-@@ -16604,6 +17269,7 @@
+@@ -16643,6 +17308,7 @@
  static int expire_register(const void *data)
  {
  	struct sip_peer *peer = (struct sip_peer *)data;
@@ -1924,7 +1924,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  	if (!peer) {		/* Hmmm. We have no peer. Weird. */
  		return 0;
-@@ -16611,6 +17277,7 @@
+@@ -16650,6 +17316,7 @@
  
  	peer->expire = -1;
  	peer->portinuri = 0;
@@ -1932,7 +1932,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  	destroy_association(peer);	/* remove registration data from storage */
  	set_socket_transport(&peer->socket, peer->default_outbound_transport);
-@@ -16623,6 +17290,14 @@
+@@ -16662,6 +17329,14 @@
  		peer->socket.ws_session = NULL;
  	}
  
@@ -1947,7 +1947,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	if (peer->endpoint) {
  		RAII_VAR(struct ast_json *, blob, NULL, ast_json_unref);
  		ast_endpoint_set_state(peer->endpoint, AST_ENDPOINT_OFFLINE);
-@@ -16655,6 +17330,7 @@
+@@ -16694,6 +17369,7 @@
  	/* Only clear the addr after we check for destruction.  The addr must remain
  	 * in order to unlink from the peers_by_ip container correctly */
  	memset(&peer->addr, 0, sizeof(peer->addr));
@@ -1955,7 +1955,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  	sip_unref_peer(peer, "removing peer ref for expire_register");
  
-@@ -16873,7 +17549,7 @@
+@@ -16955,7 +17631,7 @@
  }
  
  /*! \brief Parse contact header and save registration (peer registration) */
@@ -1964,7 +1964,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  {
  	char contact[SIPBUFSIZE];
  	char data[SIPBUFSIZE];
-@@ -16950,6 +17626,7 @@
+@@ -17032,6 +17708,7 @@
  		}
  		return PARSE_REGISTER_QUERY;
  	} else if (!strcasecmp(curi, "*") || !expire) {	/* Unregister this peer */
@@ -1972,7 +1972,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		/* This means remove all registrations and return OK */
  		AST_SCHED_DEL_UNREF(sched, peer->expire,
  				sip_unref_peer(peer, "remove register expire ref"));
-@@ -17087,15 +17764,34 @@
+@@ -17169,15 +17846,34 @@
  	}
  
  	/* Is this a new IP address for us? */
@@ -2008,7 +2008,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	/* Save User agent */
  	useragent = sip_get_header(req, "User-Agent");
  	if (strcasecmp(useragent, peer->useragent)) {
-@@ -17282,6 +17978,8 @@
+@@ -17364,6 +18060,8 @@
  	/* Always OK if no secret */
  	if (ast_strlen_zero(secret) && ast_strlen_zero(md5secret)) {
  		return AUTH_SUCCESSFUL;
@@ -2017,7 +2017,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	}
  
  	/* Always auth with WWW-auth since we're NOT a proxy */
-@@ -17455,7 +18153,7 @@
+@@ -17537,7 +18235,7 @@
  	}
  
  	if (ast_mwi_state_type() == stasis_message_type(msg)) {
@@ -2026,7 +2026,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	}
  }
  
-@@ -17512,6 +18210,218 @@
+@@ -17594,6 +18292,218 @@
  	}
  }
  
@@ -2137,7 +2137,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +	ast_unref_namedgroups(args.named_callgroups);
 +
 +	while ((peer = ao2_iterator_next(peeriter))) {
-+		if ((!(pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, NULL)))) {
++		if ((!(pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, 0)))) {
 +			sip_unref_peer(peer, "remove iterator ref");
 +			continue;
 +		}
@@ -2152,7 +2152,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +
 +		ast_str_reset(content);
 +
-+		if (ast_test_flag(&peer->flags[2], SIP_PAGE3_CISCO_PICKUPNOTIFY_FROM) || ast_test_flag(&peer->flags[2], SIP_PAGE3_CISCO_PICKUPNOTIFY_TO)) {
++		if (ast_test_flag(&peer->flags[2], SIP_PAGE3_CISCO_PICKUPNOTIFY_FROM | SIP_PAGE3_CISCO_PICKUPNOTIFY_TO)) {
 +			ast_str_append(&content, 0, "--uniqueBoundary\r\n");
 +			ast_str_append(&content, 0, "Content-Type: application/x-cisco-remotecc-request+xml\r\n");
 +			ast_str_append(&content, 0, "\r\n");
@@ -2245,7 +2245,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  static void cb_extensionstate_destroy(int id, void *data)
  {
  	struct sip_pvt *p = data;
-@@ -17539,8 +18449,8 @@
+@@ -17621,8 +18531,8 @@
  			/* we must skip the next two checks for a queued state change or resubscribe */
  		} else if ((p->laststate == data->state && (~data->state & AST_EXTENSION_RINGING)) &&
  				(p->last_presence_state == data->presence_state &&
@@ -2256,7 +2256,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  			/* don't notify unchanged state or unchanged early-state causing parties again */
  			sip_pvt_unlock(p);
  			return 0;
-@@ -17592,7 +18502,7 @@
+@@ -17674,7 +18584,7 @@
  	}
  
  	if (!force) {
@@ -2265,7 +2265,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  				ast_test_flag(&p->flags[1], SIP_PAGE2_STATECHANGEQUEUE) ? "(queued)" : "");
  	}
  
-@@ -17615,12 +18525,126 @@
+@@ -17697,12 +18607,126 @@
  		.presence_message = info->presence_message,
  	};
  
@@ -2305,7 +2305,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +		}
 +
 +		if (!subscription->pvt) {
-+			if (!(subscription->pvt = sip_alloc(NULL, NULL, 0, SIP_NOTIFY, NULL, NULL))) {
++			if (!(subscription->pvt = sip_alloc(NULL, NULL, 0, SIP_NOTIFY, NULL, 0))) {
 +				return;
 +			}
 +		}
@@ -2338,7 +2338,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +		ast_set_flag(&subscription->pvt->flags[1], SIP_PAGE2_DIALOG_ESTABLISHED);
 +		ast_set_flag(&subscription->pvt->flags[2], SIP_PAGE3_SUBSCRIPTIONSTATE_ACTIVE);
 +
-+		subscription->pvt->subscribed = PIDF_XML; /* XXX Needs to be configurable */
++		subscription->pvt->subscribed = PIDF_XML; /* Needs to be configurable */
 +		subscription->pvt->expiry = 0;
 +
 +		subscription->pvt->sa = peer->addr;
@@ -2396,7 +2396,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  }
  
  /*! \brief Send a fake 401 Unauthorized response when the administrator
-@@ -17781,7 +18805,7 @@
+@@ -17863,7 +18887,7 @@
  	char tmp[256];
  	char *c, *name, *unused_password, *domain;
  	char *uri2 = ast_strdupa(uri);
@@ -2405,7 +2405,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  	terminate_uri(uri2);
  
-@@ -17851,6 +18875,16 @@
+@@ -17933,6 +18957,16 @@
  	}
  	peer = sip_find_peer(name, NULL, TRUE, FINDPEERS, FALSE, 0);
  
@@ -2422,7 +2422,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	/* If we don't want username disclosure, use the bogus_peer when a user
  	 * is not found. */
  	if (!peer && sip_cfg.alwaysauthreject && sip_cfg.autocreatepeer == AUTOPEERS_DISABLED) {
-@@ -17890,7 +18924,7 @@
+@@ -17972,7 +19006,7 @@
  
  					/* We have a successful registration attempt with proper authentication,
  					now, update the peer */
@@ -2431,7 +2431,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  					case PARSE_REGISTER_DENIED:
  						ast_log(LOG_WARNING, "Registration denied because of contact ACL\n");
  						transmit_response_with_date(p, "603 Denied", req);
-@@ -17905,7 +18939,6 @@
+@@ -17987,7 +19021,6 @@
  						ast_string_field_set(p, fullcontact, peer->fullcontact);
  						transmit_response_with_date(p, "200 OK", req);
  						res = 0;
@@ -2439,7 +2439,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  						break;
  					case PARSE_REGISTER_UPDATE:
  						ast_string_field_set(p, fullcontact, peer->fullcontact);
-@@ -17913,9 +18946,14 @@
+@@ -17995,9 +19028,14 @@
  						if (p->expiry != 0) {
  							update_peer(peer, p->expiry);
  						}
@@ -2447,7 +2447,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  						/* Say OK and ask subsystem to retransmit msg counter */
 -						transmit_response_with_date(p, "200 OK", req);
 -						send_mwi = 1;
-+						if (p->expiry != 0 && ast_test_flag(&p->flags[1], SIP_PAGE2_CISCO_USECALLMANAGER) && addrchanged) {
++						if (p->expiry != 0 && ast_test_flag(&peer->flags[1], SIP_PAGE2_CISCO_USECALLMANAGER) && addrchanged) {
 +							transmit_response_with_optionsind(p, req);
 +						} else {
 +							transmit_response_with_date(p, "200 OK", req);
@@ -2456,7 +2456,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  						res = 0;
  						break;
  					}
-@@ -17939,7 +18977,7 @@
+@@ -18021,7 +19059,7 @@
  			}
  			ao2_lock(peer);
  			sip_cancel_destroy(p);
@@ -2465,7 +2465,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  			case PARSE_REGISTER_DENIED:
  				ast_log(LOG_WARNING, "Registration denied because of contact ACL\n");
  				transmit_response_with_date(p, "403 Forbidden", req);
-@@ -17953,13 +18991,17 @@
+@@ -18035,13 +19073,17 @@
  			case PARSE_REGISTER_QUERY:
  				ast_string_field_set(p, fullcontact, peer->fullcontact);
  				transmit_response_with_date(p, "200 OK", req);
@@ -2477,7 +2477,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +				ast_set2_flag(&p->flags[1], ast_test_flag(&peer->flags[1], SIP_PAGE2_CISCO_USECALLMANAGER), SIP_PAGE2_CISCO_USECALLMANAGER);
  				/* Say OK and ask subsystem to retransmit msg counter */
 -				transmit_response_with_date(p, "200 OK", req);
-+				if (p->expiry != 0 && ast_test_flag(&p->flags[1], SIP_PAGE2_CISCO_USECALLMANAGER) && addrchanged) {
++				if (p->expiry != 0 && ast_test_flag(&peer->flags[1], SIP_PAGE2_CISCO_USECALLMANAGER) && addrchanged) {
 +					transmit_response_with_optionsind(p, req);
 +				} else {
 +					transmit_response_with_date(p, "200 OK", req);
@@ -2485,7 +2485,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  				if (peer->endpoint) {
  					RAII_VAR(struct ast_json *, blob, NULL, ast_json_unref);
  					ast_endpoint_set_state(peer->endpoint, AST_ENDPOINT_ONLINE);
-@@ -17968,7 +19010,7 @@
+@@ -18050,7 +19092,7 @@
  						"address", ast_sockaddr_stringify(addr));
  					ast_endpoint_blob_publish(peer->endpoint, ast_endpoint_state_type(), blob);
  				}
@@ -2494,7 +2494,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  				res = 0;
  				break;
  			}
-@@ -17976,10 +19018,19 @@
+@@ -18058,10 +19100,19 @@
  		}
  	}
  	if (!res) {
@@ -2518,7 +2518,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		} else {
  			update_peer_lastmsgssent(peer, -1, 0);
  		}
-@@ -18098,82 +19149,6 @@
+@@ -18180,82 +19231,6 @@
  	}
  }
  
@@ -2601,7 +2601,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  /*! \brief Get name, number and presentation from remote party id header,
   *  returns true if a valid header was found and it was different from the
   *  current caller id.
-@@ -18188,6 +19163,7 @@
+@@ -18270,6 +19245,7 @@
  	char *privacy = "";
  	char *screen = "";
  	char *start, *end;
@@ -2609,7 +2609,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  	if (!ast_test_flag(&p->flags[0], SIP_TRUSTRPID))
  		return 0;
-@@ -18196,7 +19172,13 @@
+@@ -18278,7 +19254,13 @@
  		req = &p->initreq;
  	ast_copy_string(tmp, sip_get_header(req, "Remote-Party-ID"), sizeof(tmp));
  	if (ast_strlen_zero(tmp)) {
@@ -2624,22 +2624,22 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	}
  
  	/*
-@@ -18248,7 +19230,13 @@
+@@ -18330,7 +19312,13 @@
  	if (!end)
  		return 0;
  	*end++ = '\0';
 -	if (*end) {
 +	if (pai) {
-+                if (!strcasecmp(sip_get_header(req, "Privacy"), "id")) {
-+                        callingpres = AST_PRES_PROHIB_USER_NUMBER_PASSED_SCREEN;
-+                } else if (!strcasecmp(cid_num, "anonymous@anonymous.invalid")) {
-+                        callingpres = AST_PRES_PROHIB_USER_NUMBER_NOT_SCREENED;
-+                }
++		if (!strcasecmp(sip_get_header(req, "Privacy"), "id")) {
++			callingpres = AST_PRES_PROHIB_USER_NUMBER_PASSED_SCREEN;
++		} else if (!strcasecmp(cid_num, "anonymous@anonymous.invalid")) {
++			callingpres = AST_PRES_PROHIB_USER_NUMBER_NOT_SCREENED;
++		}
 +	} else if (*end) {
  		start = end;
  		if (*start != ';')
  			return 0;
-@@ -18588,6 +19576,14 @@
+@@ -18670,6 +19658,14 @@
  	return SIP_GET_DEST_EXTEN_NOT_FOUND;
  }
  
@@ -2654,7 +2654,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  /*! \brief Find a companion dialog based on Replaces information
   *
   * This information may come from a Refer-To header in a REFER or from
-@@ -19138,10 +20134,10 @@
+@@ -19252,10 +20248,10 @@
  
  		/* Then find devices based on IP */
  		if (!peer) {
@@ -2668,7 +2668,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  				; /* found, fall through */
  			} else {
  				peer = sip_find_peer(NULL, &p->recv, TRUE, FINDPEERS, FALSE, p->socket.type);
-@@ -19209,6 +20205,7 @@
+@@ -19323,6 +20319,7 @@
  
  	do_setnat(p);
  
@@ -2676,7 +2676,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	ast_string_field_set(p, peersecret, peer->secret);
  	ast_string_field_set(p, peermd5secret, peer->md5secret);
  	ast_string_field_set(p, subscribecontext, peer->subscribecontext);
-@@ -19236,12 +20233,17 @@
+@@ -19350,12 +20347,17 @@
  
  	p->allowtransfer = peer->allowtransfer;
  
@@ -2695,7 +2695,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  		/* build_peer, called through sip_find_peer, is not able to check the
  		 * sip_pvt->natdetected flag in order to determine if the peer is behind
-@@ -19609,7 +20611,7 @@
+@@ -19723,7 +20725,7 @@
  		return;
  	}
  
@@ -2704,7 +2704,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		ast_log(LOG_WARNING, "Unable to retrieve text from %s\n", p->callid);
  		transmit_response(p, "500 Internal Server Error", req);
  		if (!p->owner) {
-@@ -21037,7 +22039,7 @@
+@@ -21151,7 +22153,7 @@
  }
  
  /*! \brief list peer mailboxes to CLI */
@@ -2713,7 +2713,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  {
  	struct sip_mailbox *mailbox;
  
-@@ -21070,6 +22072,8 @@
+@@ -21184,6 +22186,8 @@
  	struct ast_variable *v;
  	int x = 0, load_realtime;
  	int realtimepeers;
@@ -2722,7 +2722,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  	realtimepeers = ast_check_realtime("sippeers");
  
-@@ -21150,7 +22154,7 @@
+@@ -21264,7 +22268,7 @@
  		print_named_groups(fd, peer->named_callgroups, 0);
  		ast_cli(fd, "  Nam. Pickupgr: ");
  		print_named_groups(fd, peer->named_pickupgroups, 0);
@@ -2731,7 +2731,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		ast_cli(fd, "  MOH Suggest  : %s\n", peer->mohsuggest);
  		ast_cli(fd, "  Mailbox      : %s\n", ast_str_buffer(mailbox_str));
  		ast_cli(fd, "  VM Extension : %s\n", peer->vmexten);
-@@ -21229,9 +22233,9 @@
+@@ -21343,9 +22347,9 @@
  		ast_cli(fd, "  Qualify Freq : %d ms\n", peer->qualifyfreq);
  		ast_cli(fd, "  Keepalive    : %d ms\n", peer->keepalive * 1000);
  		if (peer->chanvars) {
@@ -2743,7 +2743,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		}
  
  		ast_cli(fd, "  Sess-Timers  : %s\n", stmode2str(peer->stimer.st_mode_oper));
-@@ -21243,6 +22247,26 @@
+@@ -21357,6 +22361,26 @@
  		ast_cli(fd, "  Use Reason   : %s\n", AST_CLI_YESNO(ast_test_flag(&peer->flags[1], SIP_PAGE2_Q850_REASON)));
  		ast_cli(fd, "  Encryption   : %s\n", AST_CLI_YESNO(ast_test_flag(&peer->flags[1], SIP_PAGE2_USE_SRTP)));
  		ast_cli(fd, "  RTCP Mux     : %s\n", AST_CLI_YESNO(ast_test_flag(&peer->flags[2], SIP_PAGE3_RTCP_MUX)));
@@ -2770,7 +2770,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		ast_cli(fd, "\n");
  		peer = sip_unref_peer(peer, "sip_show_peer: sip_unref_peer: done with peer ptr");
  	} else  if (peer && type == 1) { /* manager listing */
-@@ -21279,7 +22303,7 @@
+@@ -21393,7 +22417,7 @@
  		astman_append(s, "%s\r\n", ast_print_namedgroups(&tmp_str, peer->named_pickupgroups));
  		ast_str_reset(tmp_str);
  		astman_append(s, "MOHSuggest: %s\r\n", peer->mohsuggest);
@@ -2779,7 +2779,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		astman_append(s, "VoiceMailbox: %s\r\n", ast_str_buffer(tmp_str));
  		astman_append(s, "TransferMode: %s\r\n", transfermode2str(peer->allowtransfer));
  		astman_append(s, "LastMsgsSent: %d\r\n", peer->lastmsgssent);
-@@ -21338,6 +22362,17 @@
+@@ -21452,6 +22476,17 @@
  		}
  		astman_append(s, "SIP-Use-Reason-Header: %s\r\n", (ast_test_flag(&peer->flags[1], SIP_PAGE2_Q850_REASON)) ? "Y" : "N");
  		astman_append(s, "Description: %s\r\n", peer->description);
@@ -2797,7 +2797,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  		peer = sip_unref_peer(peer, "sip_show_peer: sip_unref_peer: done with peer");
  
-@@ -21453,9 +22488,9 @@
+@@ -21567,9 +22602,9 @@
  
  		ast_cli(a->fd, "  Auto-Framing:  %s \n", AST_CLI_YESNO(user->autoframing));
  		if (user->chanvars) {
@@ -2809,7 +2809,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		}
  
  		ast_cli(a->fd, "\n");
-@@ -22059,7 +23094,7 @@
+@@ -22177,7 +23212,7 @@
  	if (cur->subscribed != NONE && arg->subscriptions) {
  		struct ast_str *mailbox_str = ast_str_alloca(512);
  		if (cur->subscribed == MWI_NOTIFICATION && cur->relatedpeer)
@@ -2818,7 +2818,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		ast_cli(arg->fd, FORMAT4, ast_sockaddr_stringify_addr(dst),
  				S_OR(cur->username, S_OR(cur->cid_num, "(None)")),
  			   	cur->callid,
-@@ -22533,7 +23568,7 @@
+@@ -22651,7 +23686,7 @@
  			}
  		} else {
  			/* Type is application/dtmf, simply use what's in the message body */
@@ -2827,7 +2827,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		}
  
  		/* An empty message body requires us to send a 200 OK */
-@@ -22761,6 +23796,8 @@
+@@ -22879,6 +23914,8 @@
  static char *sip_cli_notify(struct ast_cli_entry *e, int cmd, struct ast_cli_args *a)
  {
  	struct ast_variable *varlist;
@@ -2836,7 +2836,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	int i;
  
  	switch (cmd) {
-@@ -22790,10 +23827,21 @@
+@@ -22908,10 +23945,21 @@
  		return CLI_FAILURE;
  	}
  
@@ -2857,9 +2857,9 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 -		struct ast_variable *header, *var;
 +		struct ast_variable *var, *header, *headers = NULL;
  
- 		if (!(p = sip_alloc(NULL, NULL, 0, SIP_NOTIFY, NULL, NULL))) {
+ 		if (!(p = sip_alloc(NULL, NULL, 0, SIP_NOTIFY, NULL, 0))) {
  			ast_log(LOG_WARNING, "Unable to build sip pvt data for notify (memory/socket error)\n");
-@@ -22812,36 +23860,214 @@
+@@ -22930,36 +23978,214 @@
  		/* Notify is outgoing call */
  		ast_set_flag(&p->flags[0], SIP_OUTGOING);
  		sip_notify_alloc(p);
@@ -3036,7 +3036,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +		e->command = "sip callforward {on|off}";
 +		e->usage =
 +			"Usage: sip callforward {on <peer> <extension>|off <peer>}\n"
-+			"       Sets/Removes the call forwarding extension for a SIP peer\n";
++			"       Sets/Clears the call forwarding extension for a SIP peer\n";
 +		return NULL;
 +	case CLI_GENERATE:
 +		if (a->pos == 3) {
@@ -3066,7 +3066,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +	}
 +
 +	if (ast_strlen_zero(callforward)) {
-+		ast_cli(a->fd, "Call forwarding on '%s' removed\n", peer->name);
++		ast_cli(a->fd, "Call forwarding on '%s' cleared\n", peer->name);
 +	} else {
 +		ast_cli(a->fd, "Call forwarding on '%s' set to %s\n", peer->name, callforward);
 +	}
@@ -3084,7 +3084,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	return CLI_SUCCESS;
  }
  
-@@ -23193,7 +24419,7 @@
+@@ -23397,7 +24623,7 @@
  };
  
  /*! \brief  ${SIPPEER()} Dialplan function - reads peer data */
@@ -3093,7 +3093,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  {
  	struct sip_peer *peer;
  	char *colname;
-@@ -23247,7 +24473,7 @@
+@@ -23451,7 +24677,7 @@
  		ast_copy_string(buf, peer->useragent, len);
  	} else  if (!strcasecmp(colname, "mailbox")) {
  		struct ast_str *mailbox_str = ast_str_alloca(512);
@@ -3102,7 +3102,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		ast_copy_string(buf, ast_str_buffer(mailbox_str), len);
  	} else  if (!strcasecmp(colname, "context")) {
  		ast_copy_string(buf, peer->context, len);
-@@ -23288,11 +24514,82 @@
+@@ -23492,11 +24718,82 @@
  		} else {
  			buf[0] = '\0';
  		}
@@ -3186,7 +3186,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  	return 0;
  }
-@@ -23300,7 +24597,8 @@
+@@ -23504,7 +24801,8 @@
  /*! \brief Structure to declare a dialplan function: SIPPEER */
  static struct ast_custom_function sippeer_function = {
  	.name = "SIPPEER",
@@ -3196,7 +3196,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  };
  
  /*! \brief update redirecting information for a channel based on headers
-@@ -24161,6 +25459,20 @@
+@@ -24366,6 +25664,20 @@
  		ast_set_flag(&p->flags[1], SIP_PAGE2_DIALOG_ESTABLISHED);
  		xmitres = transmit_request(p, SIP_ACK, seqno, XMIT_UNRELIABLE, TRUE);
  		sched_check_pendings(p);
@@ -3217,7 +3217,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		break;
  
  	case 407: /* Proxy authentication */
-@@ -24493,6 +25805,7 @@
+@@ -24698,6 +26010,7 @@
  		return;
  
  	switch (resp) {
@@ -3225,7 +3225,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	case 202:   /* Transfer accepted */
  		/* We need  to do something here */
  		/* The transferee is now sending INVITE to target */
-@@ -24744,6 +26057,8 @@
+@@ -24949,6 +26262,8 @@
  	struct sip_peer *peer = /* sip_ref_peer( */ p->relatedpeer /* , "bump refcount on p, as it is being used in this function(handle_response_peerpoke)")*/ ; /* hope this is already refcounted! */
  	int statechanged, is_reachable, was_reachable;
  	int pingtime = ast_tvdiff_ms(ast_tvnow(), peer->ps);
@@ -3234,7 +3234,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  	/*
  	 * Compute the response time to a ping (goes in peer->lastms.)
-@@ -24767,26 +26082,24 @@
+@@ -24972,26 +26287,24 @@
  	is_reachable = pingtime <= peer->maxms;
  	statechanged = peer->lastms == 0 /* yes, unknown before */
  		|| was_reachable != is_reachable;
@@ -3267,7 +3267,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  				"time", pingtime);
  			ast_endpoint_blob_publish(peer->endpoint, ast_endpoint_state_type(), blob);
  		}
-@@ -24796,6 +26109,38 @@
+@@ -25001,6 +26314,38 @@
  		}
  	}
  
@@ -3306,7 +3306,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	pvt_set_needdestroy(p, "got OPTIONS response");
  
  	/* Try again eventually */
-@@ -25342,6 +26687,9 @@
+@@ -25533,6 +26878,9 @@
  
  				/* Wait for 487, then destroy */
  			} else if (sipmethod == SIP_BYE) {
@@ -3316,7 +3316,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  				pvt_set_needdestroy(p, "transaction completed");
  			}
  			break;
-@@ -25440,6 +26788,2237 @@
+@@ -25631,6 +26979,2237 @@
  	return 0;
  }
  
@@ -3704,7 +3704,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +
 +		/* We need to signal to the phone to take the first call leg off hold, even though the generator on that
 +		   channel has gone due to the masquerade as the phone still thinks that it is on hold */
-+		if (!(pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, NULL))) {
++		if (!(pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, 0))) {
 +			goto conference_cleanup;
 +		}
 +		copy_pvt_data(pvt, conference_data->pvt);
@@ -3795,7 +3795,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +		add_content(&req, ast_str_buffer(content));
 +		send_request(conference_data->pvt, &req, XMIT_RELIABLE, conference_data->pvt->ocseq);
 +	} else {
-+		if ((pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, NULL))) {
++		if ((pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, 0))) {
 +			copy_pvt_data(pvt, conference_data->pvt);
 +
 +			if (res) {
@@ -3997,7 +3997,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +		return 0;
 +	}
 +
-+	if (!(refer_pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, NULL))) {
++	if (!(refer_pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, 0))) {
 +		ao2_ref(conference, -1);
 +		ast_free(content);
 +		return 0;
@@ -4141,7 +4141,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +		if (event_type == PARKED_CALL_FAILED) {
 +			struct sip_pvt *pvt;
 +
-+			if (!(pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, NULL))) {
++			if (!(pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, 0))) {
 +				return;
 +			}
 +			copy_pvt_data(pvt, park_data->pvt);
@@ -4203,13 +4203,13 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +				snprintf(tmp, sizeof(tmp), "active;expires=%d", park_data->pvt->expiry);
 +				add_header(&req, "Subscription-State", tmp);
 +			} else {
-+                		add_header(&req, "Subscription-State", "terminated;reason=noresource");
++				add_header(&req, "Subscription-State", "terminated;reason=noresource");
 +			}
 +			add_header(&req, "Content-Type", "application/dialog-info+xml");
 +
 +			/* "parmams" is a typo in the the Cisco API, duh. */
 +			ast_str_append(&content, 0, "<dialog-info xmlns=\"urn:ietf:parmams:xml:ns:dialog-info\" xmlns:call=\"urn:x-cisco:parmams:xml:ns:dialog-info:dialog:callinfo-dialog\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"%d\" state=\"full\" entity=\"%d@%s\">\n", park_data->pvt->dialogver, parkingspace, fromdomain);
-+        		ast_str_append(&content, 0, "<dialog id=\"%d\">\n", parkingspace);
++			ast_str_append(&content, 0, "<dialog id=\"%d\">\n", parkingspace);
 +			if (event_type == PARKED_CALL || event_type == PARKED_CALL_REMINDER) {
 +				ast_str_append(&content, 0, "<state>confirmed</state>\n");
 +			} else {
@@ -4227,7 +4227,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +	} else {
 +		struct sip_pvt *pvt;
 +
-+		if (!(pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, NULL))) {
++		if (!(pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, 0))) {
 +			return;
 +		}
 +		copy_pvt_data(pvt, park_data->pvt);
@@ -4269,7 +4269,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +	if (!stasis_subscription_final_message(sub, message)) {
 +		payload = stasis_message_data(message);
 +
-+		if (strcmp(park_data->uniqueid, payload->parkee->uniqueid)) {
++		if (strcmp(park_data->uniqueid, payload->parkee->base->uniqueid)) {
 +			return;
 +		} 
 +
@@ -4308,11 +4308,11 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +	if (!(pvt = get_sip_pvt(park_data->callid, park_data->tag, park_data->theirtag))) {
 +		ast_debug(1, "call leg does not exist\n");
 +		goto park_cleanup;
-+        }
++	}
 +
 +	sip_pvt_lock(pvt);
 +
-+        if (!(chan = pvt->owner)) {
++	if (!(chan = pvt->owner)) {
 +		ast_debug(1, "no owner channel\n");
 +		sip_pvt_unlock(pvt);
 +		dialog_unref(pvt, "drop pvt");
@@ -4675,7 +4675,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +	ast_str_set(&url, 0, "%s", peer->cisco_qrt_url);
 +	ast_str_append(&url, 0, "%sname=%s", strchr(ast_str_buffer(url), '?') ? "&amp;" : "?", peer->cisco_devicename);
 +
-+	if (!((pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, NULL)))) {
++	if (!((pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, 0)))) {
 +		return;
 +	}
 +
@@ -4733,7 +4733,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +
 +		transmit_response(pvt, "202 Accepted", req);
 +
-+		if (!(refer_pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, NULL))) {
++		if (!(refer_pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, 0))) {
 +			return 0;
 +		}
 +		copy_pvt_data(refer_pvt, pvt);
@@ -4801,7 +4801,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +
 +	ast_channel_unref(chan);
 +
-+	if (!(refer_pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, NULL))) {
++	if (!(refer_pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, 0))) {
 +		return 0;
 +	}
 +	copy_pvt_data(refer_pvt, pvt);
@@ -4849,7 +4849,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +	return 0;
 +}
 +
-+static int remotecc_callback_notify(char *context, char *exten, struct ast_state_cb_info *info, void *data)
++static int remotecc_callback_notify(const char *context, const char *exten, struct ast_state_cb_info *info, void *data)
 +{
 +	struct sip_peer *peer = data;
 +	struct sip_pvt *pvt;
@@ -4867,9 +4867,9 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +	}
 +
 +	tv = ast_tvnow();
-+	ast_strftime(date, sizeof(date), "%H:%M %d/%m/%Y", ast_localtime(&tv, &tm, NULL));
++	ast_strftime(date, sizeof(date), "%X %x", ast_localtime(&tv, &tm, NULL));
 +
-+	if (!((pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, NULL)))) {
++	if (!((pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, 0)))) {
 +		return 0;
 +	}
 +
@@ -4910,7 +4910,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +
 +	ast_str_reset(content);
 +
-+	if (!((pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, NULL)))) {
++	if (!((pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, 0)))) {
 +		return 0;
 +	}
 +
@@ -5050,7 +5050,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +		if (res) {
 +			transmit_response(pvt, "202 Accepted", req);
 +
-+			if (!(refer_pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, NULL))) {
++			if (!(refer_pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, 0))) {
 +				return 0;
 +			}
 +			copy_pvt_data(refer_pvt, pvt);
@@ -5096,7 +5096,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +	} else if (!ast_strlen_zero(remotecc_data->usercalldata) && peer->callback) {
 +		transmit_response(pvt, "202 Accepted", req);
 +
-+		if (!(refer_pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, NULL))) {
++		if (!(refer_pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, 0))) {
 +			return 0;
 +		}
 +		copy_pvt_data(refer_pvt, pvt);
@@ -5132,7 +5132,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +		if (!strcmp(remotecc_data->usercalldata, "Dial")) {
 +			ast_str_reset(content);
 +
-+			if (!(refer_pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, NULL))) {
++			if (!(refer_pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, 0))) {
 +				return 0;
 +			}
 +			copy_pvt_data(refer_pvt, pvt);
@@ -5160,7 +5160,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +
 +	transmit_response(pvt, "202 Accepted", req);
 +
-+	if (!(refer_pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, NULL))) {
++	if (!(refer_pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, 0))) {
 +		return 0;
 +	}
 +	copy_pvt_data(refer_pvt, pvt);
@@ -5554,7 +5554,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  /*! \brief Get tag from packet
   *
   * \return Returns the pointer to the provided tag buffer,
-@@ -25522,16 +29101,130 @@
+@@ -25713,16 +29292,130 @@
  	return 0;
  }
  
@@ -5687,7 +5687,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		*sep++ = '\0';
  	}
  
-@@ -25546,6 +29239,7 @@
+@@ -25737,6 +29430,7 @@
  		char *buf, *cmd, *code;
  		int respcode;
  		int success = TRUE;
@@ -5695,7 +5695,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  		/* EventID for each transfer... EventID is basically the REFER cseq
  
-@@ -25554,7 +29248,13 @@
+@@ -25745,7 +29439,13 @@
  		 Check if we have an owner of this event */
  
  		/* Check the content type */
@@ -5710,7 +5710,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  			/* We need a sipfrag */
  			transmit_response(p, "400 Bad request", req);
  			sip_scheddestroy(p, DEFAULT_TRANS_TIMEOUT);
-@@ -25562,7 +29262,7 @@
+@@ -25753,7 +29453,7 @@
  		}
  
  		/* Get the text of the attachment */
@@ -5719,7 +5719,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  			ast_log(LOG_WARNING, "Unable to retrieve attachment from NOTIFY %s\n", p->callid);
  			transmit_response(p, "400 Bad request", req);
  			sip_scheddestroy(p, DEFAULT_TRANS_TIMEOUT);
-@@ -25676,6 +29376,11 @@
+@@ -25867,6 +29567,11 @@
  		transmit_response(p, "200 OK", req);
  	} else if (!strcmp(event, "call-completion")) {
  		res = handle_cc_notify(p, req);
@@ -5731,7 +5731,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	} else {
  		/* We don't understand this event. */
  		transmit_response(p, "489 Bad event", req);
-@@ -27115,7 +30820,7 @@
+@@ -27306,7 +31011,7 @@
  	We can't destroy dialogs, since we want the call to continue.
  
  	*/
@@ -5740,7 +5740,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  {
  	char *refer_to = NULL;
  	char *refer_to_context = NULL;
-@@ -27124,6 +30829,46 @@
+@@ -27315,6 +31020,46 @@
  	enum ast_transfer_result transfer_res;
  	RAII_VAR(struct ast_channel *, transferer, NULL, ast_channel_cleanup);
  	RAII_VAR(struct ast_str *, replaces_str, NULL, ast_free_ptr);
@@ -5787,7 +5787,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  	if (req->debug) {
  		ast_verbose("Call %s got a SIP call transfer from %s: (REFER)!\n",
-@@ -27600,6 +31345,10 @@
+@@ -27794,6 +31539,10 @@
  		transmit_response(p, "200 OK", req);
  	}
  
@@ -5798,7 +5798,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	/* Destroy any pending invites so we won't try to do another
  	 * scheduled reINVITE. */
  	stop_reinvite_retry(p);
-@@ -27970,7 +31719,7 @@
+@@ -28164,7 +31913,7 @@
  		return FALSE;
  	}
  
@@ -5807,7 +5807,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		ast_log(LOG_WARNING, "Unable to get PIDF body\n");
  		return FALSE;
  	}
-@@ -28090,6 +31839,100 @@
+@@ -28284,6 +32033,100 @@
  	return res;
  }
  
@@ -5908,7 +5908,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  #endif /* HAVE_LIBXML2 */
  
  static int handle_sip_publish_initial(struct sip_pvt *p, struct sip_request *req, struct event_state_compositor *esc, const int expires)
-@@ -28366,6 +32209,178 @@
+@@ -28556,6 +32399,178 @@
  	return 0;
  }
  
@@ -6087,7 +6087,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  /*! \brief  Handle incoming SUBSCRIBE request */
  static int handle_request_subscribe(struct sip_pvt *p, struct sip_request *req, struct ast_sockaddr *addr, uint32_t seqno, const char *e)
  {
-@@ -28374,6 +32389,7 @@
+@@ -28564,6 +32579,7 @@
  	char *event = ast_strdupa(sip_get_header(req, "Event")); /* Get Event package name */
  	int resubscribe = (p->subscribed != NONE) && !req->ignore;
  	char *options;
@@ -6095,7 +6095,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  	if (p->initreq.headers) {
  		/* We already have a dialog */
-@@ -28507,12 +32523,19 @@
+@@ -28697,12 +32713,19 @@
  					subscribed = XPIDF_XML; /* Older versions of Polycom firmware will claim pidf+xml, but really they only support xpidf+xml */
  				} else {
  					subscribed = PIDF_XML; /* RFC 3863 format */
@@ -6116,7 +6116,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  			} else if (strstr(accept, "application/xpidf+xml")) {
  				subscribed = XPIDF_XML;        /* Early pre-RFC 3863 format with MSN additions (Microsoft Messenger) */
  			} else {
-@@ -28635,6 +32658,33 @@
+@@ -28825,6 +32848,33 @@
  			p->relatedpeer = sip_ref_peer(authpeer, "setting dialog's relatedpeer pointer");
  		}
  		/* Do not release authpeer here */
@@ -6150,7 +6150,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	} else if (!strcmp(event, "call-completion")) {
  		handle_cc_subscribe(p, req);
  	} else { /* At this point, Asterisk does not understand the specified event */
-@@ -28679,6 +32729,9 @@
+@@ -28869,6 +32919,9 @@
  			if (p->subscribed == MWI_NOTIFICATION && p->relatedpeer) {
  				ast_debug(2, "%s subscription for mailbox notification - peer %s\n",
  						action, p->relatedpeer->name);
@@ -6160,7 +6160,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  			} else if (p->subscribed == CALL_COMPLETION) {
  				ast_debug(2, "%s CC subscription for peer %s\n", action, p->username);
  			} else {
-@@ -28701,10 +32754,38 @@
+@@ -28891,10 +32944,38 @@
  				struct sip_peer *peer = p->relatedpeer;
  				sip_ref_peer(peer, "ensure a peer ref is held during MWI sending");
  				ao2_unlock(p);
@@ -6200,7 +6200,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		} else if (p->subscribed != CALL_COMPLETION) {
  			struct state_notify_data data = { 0, };
  			char *subtype = NULL;
-@@ -28725,6 +32806,9 @@
+@@ -28915,6 +32996,9 @@
  
  			sip_pvt_unlock(p);
  			data.state = ast_extension_state_extended(NULL, p->context, p->exten, &device_state_info);
@@ -6210,7 +6210,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  			sip_pvt_lock(p);
  
  			if (data.state < 0) {
-@@ -28739,11 +32823,7 @@
+@@ -28929,11 +33013,7 @@
  				}
  				return 0;
  			}
@@ -6223,7 +6223,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  			ast_set_flag(&p->flags[1], SIP_PAGE2_DIALOG_ESTABLISHED);
  			transmit_response(p, "200 OK", req);
  			/* RFC 3265: A notification must be sent on every subscribe, so force it */
-@@ -29090,7 +33170,7 @@
+@@ -29280,7 +33360,7 @@
  
  		break;
  	case SIP_REFER:
@@ -6232,7 +6232,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		break;
  	case SIP_CANCEL:
  		res = handle_request_cancel(p, req);
-@@ -29550,7 +33630,7 @@
+@@ -29738,7 +33818,7 @@
   *  are processed.  The peer will still be valid however.
   *  \returns -1 on failure, 0 on success
   */
@@ -6241,7 +6241,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  {
  	/* Called with peer lock, but releases it */
  	struct sip_pvt *p;
-@@ -29580,7 +33660,7 @@
+@@ -29768,7 +33848,7 @@
  	if (!get_cached_mwi(peer, &newmsgs, &oldmsgs) && !cache_only) {
  		/* Fall back to manually checking the mailbox if not cache_only and get_cached_mwi failed */
  		struct ast_str *mailbox_str = ast_str_alloca(512);
@@ -6250,7 +6250,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		/* if there is no mailbox do nothing */
  		if (!ast_str_strlen(mailbox_str)) {
  			ao2_unlock(peer);
-@@ -29598,7 +33678,7 @@
+@@ -29786,7 +33866,7 @@
  
  	if (peer->mwipvt) {
  		/* Base message on subscription */
@@ -6259,7 +6259,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		ao2_unlock(peer);
  	} else {
  		ao2_unlock(peer);
-@@ -29648,13 +33728,356 @@
+@@ -29836,13 +33916,357 @@
  	/* the following will decrement the refcount on p as it finishes */
  	transmit_notify_with_mwi(p, newmsgs, oldmsgs, vmexten);
  	sip_pvt_unlock(p);
@@ -6325,7 +6325,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +	char *scheme, *hostport;
 +
 +	if (ast_sockaddr_isnull(&peer->addr) && ast_sockaddr_isnull(&peer->defaddr)) {
-+                return;
++		return;
 +	}
 +
 +	scheme = ast_strdupa(peer->fullcontact);
@@ -6362,6 +6362,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +		alias->peer->donotdisturb = peer->donotdisturb;
 +		alias->peer->huntgroup = peer->huntgroup;
 +
++		/* Peer hasn't changed */
 +		if (!ast_sockaddr_cmp(&peer->addr, &alias->peer->addr)) {
 +			continue;
 +		}
@@ -6438,7 +6439,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +		int newmsgs = 0, oldmsgs = 0;
 +		struct sip_alias *alias;
 +
-+		if (!(pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, NULL))) {
++		if (!(pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, 0))) {
 +			return -1;
 +		}
 +
@@ -6617,7 +6618,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  static struct ast_manager_event_blob *session_timeout_to_ami(struct stasis_message *msg)
  {
  	RAII_VAR(struct ast_str *, channel_string, NULL, ast_free);
-@@ -30357,6 +34780,25 @@
+@@ -30544,6 +34968,25 @@
  		ast_devstate_changed(AST_DEVICE_UNKNOWN, AST_DEVSTATE_CACHABLE, "SIP/%s", peer->name);
  	}
  
@@ -6643,7 +6644,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	/* Try again quickly */
  	AST_SCHED_REPLACE_UNREF(peer->pokeexpire, sched,
  			DEFAULT_FREQ_NOTOK, sip_poke_peer_s, peer,
-@@ -30510,13 +34952,13 @@
+@@ -30697,13 +35140,13 @@
  	char *host;
  	char *tmp;
  	struct sip_peer *p;
@@ -6659,7 +6660,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  	ast_debug(3, "Checking device state for peer %s\n", host);
  
-@@ -30554,7 +34996,7 @@
+@@ -30741,7 +35184,7 @@
  			else if (p->call_limit && p->busy_level && p->inuse >= p->busy_level)
  				/* We're forcing busy before we've reached the call limit */
  				res = AST_DEVICE_BUSY;
@@ -6668,7 +6669,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  				/* Not busy, but we do have a call */
  				res = AST_DEVICE_INUSE;
  			else if (p->maxms && ((p->lastms > p->maxms) || (p->lastms < 0)))
-@@ -30572,6 +35014,35 @@
+@@ -30759,6 +35202,35 @@
  	return res;
  }
  
@@ -6704,7 +6705,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  /*! \brief PBX interface function -build SIP pvt structure
   *	SIP calls initiated by the PBX arrive here.
   *
-@@ -31052,9 +35523,21 @@
+@@ -31253,9 +35725,21 @@
  	} else if (!strcasecmp(v->name, "rfc2833compensate")) {
  		ast_set_flag(&mask[1], SIP_PAGE2_RFC2833_COMPENSATE);
  		ast_set2_flag(&flags[1], ast_true(v->value), SIP_PAGE2_RFC2833_COMPENSATE);
@@ -6729,7 +6730,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	} else if (!strcasecmp(v->name, "rtcp_mux")) {
  		ast_set_flag(&mask[2], SIP_PAGE3_RTCP_MUX);
  		ast_set2_flag(&flags[2], ast_true(v->value), SIP_PAGE3_RTCP_MUX);
-@@ -31320,7 +35803,6 @@
+@@ -31521,7 +36005,6 @@
  	peer->stimer.st_max_se = global_max_se;
  	peer->timer_t1 = global_t1;
  	peer->timer_b = global_timer_b;
@@ -6737,7 +6738,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	peer->disallowed_methods = sip_cfg.disallowed_methods;
  	peer->transports = default_transports;
  	peer->default_outbound_transport = default_primary_transport;
-@@ -31328,6 +35810,8 @@
+@@ -31529,6 +36012,8 @@
  		ao2_ref(peer->outboundproxy, -1);
  		peer->outboundproxy = NULL;
  	}
@@ -6746,7 +6747,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  }
  
  /*! \brief Create temporary peer (used in autocreatepeer mode) */
-@@ -31379,7 +35863,6 @@
+@@ -31580,7 +36065,6 @@
  
  	while ((mbox = strsep(&next, ","))) {
  		struct sip_mailbox *mailbox;
@@ -6754,7 +6755,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  		/* remove leading/trailing whitespace from mailbox string */
  		mbox = ast_strip(mbox);
-@@ -31390,12 +35873,11 @@
+@@ -31591,12 +36075,11 @@
  		/* Check whether the mailbox is already in the list */
  		AST_LIST_TRAVERSE(&peer->mailboxes, mailbox, entry) {
  			if (!strcmp(mailbox->id, mbox)) {
@@ -6769,7 +6770,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  			continue;
  		}
  
-@@ -31411,6 +35893,87 @@
+@@ -31612,6 +36095,87 @@
  	}
  }
  
@@ -6857,7 +6858,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  /*! \brief Build peer from configuration (file or realtime static/dynamic) */
  static struct sip_peer *build_peer(const char *name, struct ast_variable *v_head, struct ast_variable *alt, int realtime, int devstate_only)
  {
-@@ -31434,6 +35997,7 @@
+@@ -31635,6 +36199,7 @@
  	int alt_fullcontact = alt ? 1 : 0, headercount = 0;
  	struct ast_str *fullcontact = ast_str_alloca(512);
  	int acl_change_subscription_needed = 0;
@@ -6865,7 +6866,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  	if (!realtime || ast_test_flag(&global_flags[1], SIP_PAGE2_RTCACHEFRIENDS)) {
  		/* Note we do NOT use sip_find_peer here, to avoid realtime recursion */
-@@ -31533,9 +36097,18 @@
+@@ -31732,9 +36297,18 @@
  
  	if (!devstate_only) {
  		struct sip_mailbox *mailbox;
@@ -6884,7 +6885,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	}
  
  	/* clear named callgroup and named pickup group container */
-@@ -31739,7 +36312,7 @@
+@@ -31949,7 +36523,7 @@
  			} else if (!strcasecmp(v->name, "regexten")) {
  				ast_string_field_set(peer, regexten, v->value);
  			} else if (!strcasecmp(v->name, "callbackextension")) {
@@ -6893,7 +6894,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  			} else if (!strcasecmp(v->name, "amaflags")) {
  				format = ast_channel_string2amaflag(v->value);
  				if (format < 0) {
-@@ -31909,6 +36482,40 @@
+@@ -32119,6 +36693,40 @@
  				ast_set2_flag(&peer->flags[2], ast_true(v->value), SIP_PAGE3_DISCARD_REMOTE_HOLD_RETRIEVAL);
  			} else if (!strcasecmp(v->name, "force_avp")) {
  				ast_set2_flag(&peer->flags[2], ast_true(v->value), SIP_PAGE3_FORCE_AVP);
@@ -6934,7 +6935,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  			} else {
  				ast_rtp_dtls_cfg_parse(&peer->dtls_cfg, v->name, v->value);
  			}
-@@ -31983,6 +36590,9 @@
+@@ -32201,6 +36809,9 @@
  
  	if (!devstate_only) {
  		struct sip_mailbox *mailbox;
@@ -6944,7 +6945,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		AST_LIST_TRAVERSE_SAFE_BEGIN(&peer->mailboxes, mailbox, entry) {
  			if (mailbox->status == SIP_MAILBOX_STATUS_UNKNOWN) {
  				AST_LIST_REMOVE_CURRENT(entry);
-@@ -31990,6 +36600,20 @@
+@@ -32208,6 +36819,20 @@
  			}
  		}
  		AST_LIST_TRAVERSE_SAFE_END;
@@ -6965,7 +6966,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	}
  
  	if (!can_parse_xml && (ast_get_cc_agent_policy(peer->cc_params) == AST_CC_AGENT_NATIVE)) {
-@@ -32150,6 +36774,22 @@
+@@ -32365,6 +36990,22 @@
  		reg_source_db(peer);
  	}
  
@@ -6988,7 +6989,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	/* If they didn't request that MWI is sent *only* on subscribe, go ahead and
  	 * subscribe to it now. */
  	if (!devstate_only && !ast_test_flag(&peer->flags[1], SIP_PAGE2_SUBSCRIBEMWIONLY) &&
-@@ -32158,7 +36798,12 @@
+@@ -32373,7 +37014,12 @@
  		/* Send MWI from the event cache only.  This is so we can send initial
  		 * MWI if app_voicemail got loaded before chan_sip.  If it is the other
  		 * way, then we will get events when app_voicemail gets loaded. */
@@ -7002,19 +7003,19 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	}
  
  	peer->the_mark = 0;
-@@ -32166,9 +36811,9 @@
+@@ -32381,9 +37027,9 @@
  	oldacl = ast_free_acl_list(oldacl);
  	oldcontactacl = ast_free_acl_list(oldcontactacl);
  	olddirectmediaacl = ast_free_acl_list(olddirectmediaacl);
 -	if (!ast_strlen_zero(peer->callback)) { /* build string from peer info */
 +	if (!ast_strlen_zero(peer->callbackexten)) { /* build string from peer info */
  		char *reg_string;
--		if (ast_asprintf(&reg_string, "%s?%s:%s@%s/%s", peer->name, peer->username, !ast_strlen_zero(peer->remotesecret) ? peer->remotesecret : peer->secret, peer->tohost, peer->callback) >= 0) {
-+		if (ast_asprintf(&reg_string, "%s?%s:%s@%s/%s", peer->name, peer->username, !ast_strlen_zero(peer->remotesecret) ? peer->remotesecret : peer->secret, peer->tohost, peer->callbackexten) >= 0) {
+-		if (ast_asprintf(&reg_string, "%s?%s:%s:%s@%s/%s", peer->name, S_OR(peer->fromuser, peer->username), S_OR(peer->remotesecret, peer->secret), peer->username, peer->tohost, peer->callback) >= 0) {
++		if (ast_asprintf(&reg_string, "%s?%s:%s:%s@%s/%s", peer->name, S_OR(peer->fromuser, peer->username), S_OR(peer->remotesecret, peer->secret), peer->username, peer->tohost, peer->callbackexten) >= 0) {
  			sip_register(reg_string, 0); /* XXX TODO: count in registry_count */
  			ast_free(reg_string);
  		}
-@@ -33760,6 +38405,7 @@
+@@ -34001,6 +38647,7 @@
  static char *app_dtmfmode = "SIPDtmfMode";
  static char *app_sipaddheader = "SIPAddHeader";
  static char *app_sipremoveheader = "SIPRemoveHeader";
@@ -7022,7 +7023,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  #ifdef TEST_FRAMEWORK
  static char *app_sipsendcustominfo = "SIPSendCustomINFO";
  #endif
-@@ -33891,6 +38537,425 @@
+@@ -34132,6 +38779,425 @@
  	return 0;
  }
  
@@ -7205,7 +7206,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +			ast_rtp_instance_activate(rtp);
 +		}
 +
-+		if (!(pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, NULL))) {
++		if (!(pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, 0))) {
 +			ast_log(LOG_ERROR, "Unable to build sip pvt data for refer (memory/socket error)\n");
 +			sip_unref_peer(peer, "unref peer");
 +			if (rtp) {
@@ -7380,7 +7381,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
 +	while ((target = AST_LIST_REMOVE_HEAD(&targets, entry))) {
 +		struct sip_pvt *pvt;
 +
-+		if (!(pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, NULL))) {
++		if (!(pvt = sip_alloc(NULL, NULL, 0, SIP_REFER, NULL, 0))) {
 +			ast_log(LOG_ERROR, "Unable to build sip pvt data for refer (memory/socket error)\n");
 +		} else {
 +			set_socket_transport(&pvt->socket, 0);
@@ -7448,7 +7449,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  #ifdef TEST_FRAMEWORK
  /*! \brief Send a custom INFO message via AST_CONTROL_CUSTOM indication */
  static int sip_sendcustominfo(struct ast_channel *chan, const char *data)
-@@ -33996,6 +39061,11 @@
+@@ -34237,6 +39303,11 @@
  	i = ao2_iterator_init(peers, 0);
  	while ((peer = ao2_t_iterator_next(&i, "iterate thru peers table"))) {
  		ao2_lock(peer);
@@ -7460,7 +7461,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		/* Don't schedule poking on a peer without qualify */
  		if (peer->maxms) {
  			if (num == global_qualify_peers) {
-@@ -34158,6 +39228,9 @@
+@@ -34382,6 +39453,9 @@
  	/* Send qualify (OPTIONS) to all peers */
  	sip_poke_all_peers();
  
@@ -7470,7 +7471,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	/* Send keepalive to all peers */
  	sip_keepalive_all_peers();
  
-@@ -34328,9 +39401,9 @@
+@@ -34528,9 +39602,9 @@
  static int peer_ipcmp_cb_full(void *obj, void *arg, void *data, int flags)
  {
  	struct sip_peer *peer = obj, *peer2 = arg;
@@ -7482,7 +7483,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  		/* We require a callback extension match, but don't have one */
  		return 0;
  	}
-@@ -34492,6 +39565,9 @@
+@@ -34692,6 +39766,9 @@
  	AST_CLI_DEFINE(sip_show_settings, "Show SIP global settings"),
  	AST_CLI_DEFINE(sip_show_mwi, "Show MWI subscriptions"),
  	AST_CLI_DEFINE(sip_cli_notify, "Send a notify packet to a SIP peer"),
@@ -7492,17 +7493,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  	AST_CLI_DEFINE(sip_show_channel, "Show detailed SIP channel info"),
  	AST_CLI_DEFINE(sip_show_history, "Show SIP dialog history"),
  	AST_CLI_DEFINE(sip_show_peer, "Show details on specific SIP peer"),
-@@ -35329,6 +40405,9 @@
- 	MEMBER(sip_peer, ringing, AST_DATA_INTEGER)		\
- 	MEMBER(sip_peer, onhold, AST_DATA_INTEGER)		\
- 	MEMBER(sip_peer, call_limit, AST_DATA_INTEGER)		\
-+	MEMBER(sip_peer, donotdisturb, AST_DATA_INTEGER)        \
-+	MEMBER(sip_peer, huntgroup, AST_DATA_INTEGER)           \
-+	MEMBER(sip_peer, callforward, AST_DATA_STRING)          \
- 	MEMBER(sip_peer, t38_maxdatagram, AST_DATA_INTEGER)	\
- 	MEMBER(sip_peer, maxcallbitrate, AST_DATA_INTEGER)	\
- 	MEMBER(sip_peer, rtptimeout, AST_DATA_SECONDS)		\
-@@ -35607,6 +40686,7 @@
+@@ -35601,6 +40678,7 @@
  	ast_register_application_xml(app_dtmfmode, sip_dtmfmode);
  	ast_register_application_xml(app_sipaddheader, sip_addheader);
  	ast_register_application_xml(app_sipremoveheader, sip_removeheader);
@@ -7510,7 +7501,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  #ifdef TEST_FRAMEWORK
  	ast_register_application_xml(app_sipsendcustominfo, sip_sendcustominfo);
  #endif
-@@ -35680,6 +40760,7 @@
+@@ -35675,6 +40753,7 @@
  
  	sip_register_tests();
  	network_change_stasis_subscribe();
@@ -7518,7 +7509,7 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  	if (sip_cfg.websocket_enabled) {
  		ast_websocket_add_protocol("sip", sip_websocket_callback);
-@@ -35706,6 +40787,7 @@
+@@ -35707,6 +40786,7 @@
  
  	network_change_stasis_unsubscribe();
  	acl_change_event_stasis_unsubscribe();
@@ -7526,10 +7517,10 @@ diff -durN asterisk-13.38.2.orig/channels/chan_sip.c asterisk-13.38.2/channels/c
  
  	/* First, take us out of the channel type list */
  	ast_channel_unregister(&sip_tech);
-diff -durN asterisk-13.38.2.orig/channels/sip/config_parser.c asterisk-13.38.2/channels/sip/config_parser.c
---- asterisk-13.38.2.orig/channels/sip/config_parser.c	2021-04-22 22:53:09.786424920 +1200
-+++ asterisk-13.38.2/channels/sip/config_parser.c	2021-04-22 22:54:57.431908049 +1200
-@@ -256,7 +256,7 @@
+diff -durN asterisk-18.3.0.orig/channels/sip/config_parser.c asterisk-18.3.0/channels/sip/config_parser.c
+--- asterisk-18.3.0.orig/channels/sip/config_parser.c	2021-04-22 22:53:43.909635956 +1200
++++ asterisk-18.3.0/channels/sip/config_parser.c	2021-04-22 22:59:42.841471830 +1200
+@@ -254,7 +254,7 @@
  	}
  
  	/* copy into sip_registry object */
@@ -7538,7 +7529,7 @@ diff -durN asterisk-13.38.2.orig/channels/sip/config_parser.c asterisk-13.38.2/c
  	ast_string_field_set(reg, username, ast_strip_quoted(S_OR(user2.user, ""), "\"", "\""));
  	ast_string_field_set(reg, hostname, ast_strip_quoted(S_OR(host3.host, ""), "\"", "\""));
  	ast_string_field_set(reg, authuser, ast_strip_quoted(S_OR(user3.authuser, ""), "\"", "\""));
-@@ -311,7 +311,7 @@
+@@ -309,7 +309,7 @@
  		goto alloc_fail;
  	} else if (
  	    sip_parse_register_line(reg, default_expiry, reg1, 1) ||
@@ -7547,7 +7538,7 @@ diff -durN asterisk-13.38.2.orig/channels/sip/config_parser.c asterisk-13.38.2/c
  		strcmp(reg->username, "name")       ||
  		strcmp(reg->regdomain, "")          ||
  		strcmp(reg->hostname, "domain")     ||
-@@ -340,7 +340,7 @@
+@@ -338,7 +338,7 @@
  		goto alloc_fail;
  	} else if (
  	    sip_parse_register_line(reg, default_expiry, reg2, 1) ||
@@ -7556,7 +7547,7 @@ diff -durN asterisk-13.38.2.orig/channels/sip/config_parser.c asterisk-13.38.2/c
  		strcmp(reg->username, "name")       ||
  		strcmp(reg->regdomain, "")          ||
  		strcmp(reg->hostname, "domain")     ||
-@@ -369,7 +369,7 @@
+@@ -367,7 +367,7 @@
  		goto alloc_fail;
  	} else if (
  	    sip_parse_register_line(reg, default_expiry, reg3, 1) ||
@@ -7565,7 +7556,7 @@ diff -durN asterisk-13.38.2.orig/channels/sip/config_parser.c asterisk-13.38.2/c
  		strcmp(reg->username, "name") ||
  		strcmp(reg->regdomain, "namedomain") ||
  		strcmp(reg->hostname, "domain")     ||
-@@ -398,7 +398,7 @@
+@@ -396,7 +396,7 @@
  		goto alloc_fail;
  	} else if (
  	    sip_parse_register_line(reg, default_expiry, reg4, 1) ||
@@ -7574,7 +7565,7 @@ diff -durN asterisk-13.38.2.orig/channels/sip/config_parser.c asterisk-13.38.2/c
  		strcmp(reg->username, "name") ||
  		strcmp(reg->regdomain, "namedomain") ||
  		strcmp(reg->hostname, "domain")     ||
-@@ -427,7 +427,7 @@
+@@ -425,7 +425,7 @@
  		goto alloc_fail;
  	} else if (
  	    sip_parse_register_line(reg, default_expiry, reg5, 1) ||
@@ -7583,7 +7574,7 @@ diff -durN asterisk-13.38.2.orig/channels/sip/config_parser.c asterisk-13.38.2/c
  		strcmp(reg->username, "name") ||
  		strcmp(reg->regdomain, "namedomain") ||
  		strcmp(reg->hostname, "domain")     ||
-@@ -456,7 +456,7 @@
+@@ -454,7 +454,7 @@
  		goto alloc_fail;
  	} else if (
  	    sip_parse_register_line(reg, default_expiry, reg6, 1) ||
@@ -7592,7 +7583,7 @@ diff -durN asterisk-13.38.2.orig/channels/sip/config_parser.c asterisk-13.38.2/c
  		strcmp(reg->username, "name") ||
  		strcmp(reg->regdomain, "namedomain") ||
  		strcmp(reg->hostname, "domain")     ||
-@@ -485,7 +485,7 @@
+@@ -483,7 +483,7 @@
  		goto alloc_fail;
  	} else if (
  	    sip_parse_register_line(reg, default_expiry, reg7, 1) ||
@@ -7601,7 +7592,7 @@ diff -durN asterisk-13.38.2.orig/channels/sip/config_parser.c asterisk-13.38.2/c
  		strcmp(reg->username, "name") ||
  		strcmp(reg->regdomain, "namedomain") ||
  		strcmp(reg->hostname, "domain")     ||
-@@ -514,7 +514,7 @@
+@@ -512,7 +512,7 @@
  		goto alloc_fail;
  	} else if (
  	    sip_parse_register_line(reg, default_expiry, reg8, 1) ||
@@ -7610,7 +7601,7 @@ diff -durN asterisk-13.38.2.orig/channels/sip/config_parser.c asterisk-13.38.2/c
  		strcmp(reg->username, "name") ||
  		strcmp(reg->regdomain, "namedomain") ||
  		strcmp(reg->hostname, "domain")     ||
-@@ -584,7 +584,7 @@
+@@ -582,7 +582,7 @@
  		goto alloc_fail;
  	} else if (
  	   sip_parse_register_line(reg, default_expiry, reg12, 1) ||
@@ -7619,7 +7610,7 @@ diff -durN asterisk-13.38.2.orig/channels/sip/config_parser.c asterisk-13.38.2/c
  		strcmp(reg->username, "name") ||
  		strcmp(reg->regdomain, "namedomain") ||
  		strcmp(reg->hostname, "domain")     ||
-@@ -613,7 +613,7 @@
+@@ -611,7 +611,7 @@
  		goto alloc_fail;
  	} else if (
  	   sip_parse_register_line(reg, default_expiry, reg13, 1) ||
@@ -7628,9 +7619,9 @@ diff -durN asterisk-13.38.2.orig/channels/sip/config_parser.c asterisk-13.38.2/c
  		strcmp(reg->username, "name") ||
  		strcmp(reg->regdomain, "namedomain") ||
  		strcmp(reg->hostname, "domain")     ||
-diff -durN asterisk-13.38.2.orig/channels/sip/include/sip.h asterisk-13.38.2/channels/sip/include/sip.h
---- asterisk-13.38.2.orig/channels/sip/include/sip.h	2021-04-22 22:53:09.786424920 +1200
-+++ asterisk-13.38.2/channels/sip/include/sip.h	2021-04-22 22:54:57.435907954 +1200
+diff -durN asterisk-18.3.0.orig/channels/sip/include/sip.h asterisk-18.3.0/channels/sip/include/sip.h
+--- asterisk-18.3.0.orig/channels/sip/include/sip.h	2021-04-22 22:53:43.909635956 +1200
++++ asterisk-18.3.0/channels/sip/include/sip.h	2021-04-22 22:59:42.849471643 +1200
 @@ -37,6 +37,7 @@
  #include "asterisk/rtp_engine.h"
  #include "asterisk/netsock2.h"
@@ -7706,7 +7697,7 @@ diff -durN asterisk-13.38.2.orig/channels/sip/include/sip.h asterisk-13.38.2/cha
  };
  
  /*! \brief The number of media types in enum \ref media_type below. */
-@@ -927,10 +948,14 @@
+@@ -934,10 +955,14 @@
  		AST_STRING_FIELD(replaces_callid);      /*!< Replace info: callid */
  		AST_STRING_FIELD(replaces_callid_totag);   /*!< Replace info: to-tag */
  		AST_STRING_FIELD(replaces_callid_fromtag); /*!< Replace info: from-tag */
@@ -7721,7 +7712,7 @@ diff -durN asterisk-13.38.2.orig/channels/sip/include/sip.h asterisk-13.38.2/cha
  };
  
  /*! \brief Struct to handle custom SIP notify requests. Dynamically allocated when needed */
-@@ -1046,6 +1071,10 @@
+@@ -1053,6 +1078,10 @@
  		AST_STRING_FIELD(msg_body);     /*!< Text for a MESSAGE body */
  		AST_STRING_FIELD(tel_phone_context);       /*!< The phone-context portion of a TEL URI */
  		AST_STRING_FIELD(sessionunique_remote);    /*!< Remote UA's SDP Session unique parts */
@@ -7732,7 +7723,7 @@ diff -durN asterisk-13.38.2.orig/channels/sip/include/sip.h asterisk-13.38.2/cha
  	);
  	char via[128];                          /*!< Via: header */
  	int maxforwards;                        /*!< SIP Loop prevention */
-@@ -1171,6 +1200,9 @@
+@@ -1178,6 +1207,9 @@
  	struct ast_sdp_srtp *srtp;              /*!< Structure to hold Secure RTP session data for audio */
  	struct ast_sdp_srtp *vsrtp;             /*!< Structure to hold Secure RTP session data for video */
  	struct ast_sdp_srtp *tsrtp;             /*!< Structure to hold Secure RTP session data for text */
@@ -7742,7 +7733,7 @@ diff -durN asterisk-13.38.2.orig/channels/sip/include/sip.h asterisk-13.38.2/cha
  
  	int red;                            /*!< T.140 RTP Redundancy */
  	int hangupcause;                    /*!< Storage of hangupcause copied from our owner before we disconnect from the AST channel (only used at hangup) */
-@@ -1204,6 +1236,7 @@
+@@ -1211,6 +1243,7 @@
  	struct ast_cc_config_params *cc_params;
  	struct sip_epa_entry *epa_entry;
  	int fromdomainport;                 /*!< Domain port to show in from field */
@@ -7750,7 +7741,7 @@ diff -durN asterisk-13.38.2.orig/channels/sip/include/sip.h asterisk-13.38.2/cha
  
  	struct ast_rtp_dtls_cfg dtls_cfg;
  };
-@@ -1253,6 +1286,30 @@
+@@ -1260,6 +1293,30 @@
  	char id[1];
  };
  
@@ -7781,7 +7772,7 @@ diff -durN asterisk-13.38.2.orig/channels/sip/include/sip.h asterisk-13.38.2/cha
  /*! \brief Structure for SIP peer data, we place calls to peers if registered  or fixed IP address (host)
  */
  /* XXX field 'name' must be first otherwise sip_addrcmp() will fail, as will astobj2 hashing of the structure */
-@@ -1288,7 +1345,13 @@
+@@ -1295,7 +1352,13 @@
  		AST_STRING_FIELD(zone);         /*!< Tonezone for this device */
  		AST_STRING_FIELD(record_on_feature); /*!< Feature to use when receiving INFO with record: on during a call */
  		AST_STRING_FIELD(record_off_feature); /*!< Feature to use when receiving INFO with record: off during a call */
@@ -7796,7 +7787,7 @@ diff -durN asterisk-13.38.2.orig/channels/sip/include/sip.h asterisk-13.38.2/cha
  		);
  	struct sip_socket socket;       /*!< Socket used for this peer */
  	enum ast_transport default_outbound_transport;   /*!< Peer Registration may change the default outbound transport.
-@@ -1311,6 +1374,9 @@
+@@ -1318,6 +1381,9 @@
  	int inuse;                      /*!< Number of calls in use */
  	int ringing;                    /*!< Number of calls ringing */
  	int onhold;                     /*!< Peer has someone on hold */
@@ -7806,7 +7797,7 @@ diff -durN asterisk-13.38.2.orig/channels/sip/include/sip.h asterisk-13.38.2/cha
  	int call_limit;                 /*!< Limit of concurrent calls */
  	unsigned int t38_maxdatagram;            /*!< T.38 FaxMaxDatagram override */
  	int busy_level;                 /*!< Level of active channels where we signal busy */
-@@ -1323,6 +1389,15 @@
+@@ -1330,6 +1396,15 @@
  	/*! Mailboxes that this peer cares about */
  	AST_LIST_HEAD_NOLOCK(, sip_mailbox) mailboxes;
  
@@ -7822,7 +7813,7 @@ diff -durN asterisk-13.38.2.orig/channels/sip/include/sip.h asterisk-13.38.2/cha
  	int maxcallbitrate;             /*!<  Maximum Bitrate for a video call */
  	int expire;                     /*!<  When to expire this peer registration */
  	struct ast_format_cap *caps;            /*!<  Codec capability */
-@@ -1351,11 +1426,16 @@
+@@ -1358,11 +1433,16 @@
  	struct ast_acl_list *directmediaacl;   /*!<  Restrict what IPs are allowed to interchange direct media with */
  	struct ast_variable *chanvars;  /*!<  Variables to set for channel created by user */
  	struct sip_pvt *mwipvt;         /*!<  Subscription for MWI */
@@ -7839,7 +7830,7 @@ diff -durN asterisk-13.38.2.orig/channels/sip/include/sip.h asterisk-13.38.2/cha
  
  	/*XXX Seems like we suddenly have two flags with the same content. Why? To be continued... */
  	enum sip_peer_type type; /*!< Distinguish between "user" and "peer" types. This is used solely for CLI and manager commands */
-@@ -1394,7 +1474,7 @@
+@@ -1401,7 +1481,7 @@
  		AST_STRING_FIELD(hostname);   /*!< Domain or host we register to */
  		AST_STRING_FIELD(secret);     /*!< Password in clear text */
  		AST_STRING_FIELD(md5secret);  /*!< Password in md5 */
@@ -7848,7 +7839,7 @@ diff -durN asterisk-13.38.2.orig/channels/sip/include/sip.h asterisk-13.38.2/cha
  		AST_STRING_FIELD(peername);   /*!< Peer registering to */
  		AST_STRING_FIELD(localtag);   /*!< Local tag generated same time as callid */
  	);
-@@ -1435,6 +1515,50 @@
+@@ -1442,6 +1522,50 @@
  };
  
  /*!
@@ -7899,9 +7890,9 @@ diff -durN asterisk-13.38.2.orig/channels/sip/include/sip.h asterisk-13.38.2/cha
   * \brief Definition of an MWI subscription to another server
   */
  struct sip_subscription_mwi {
-diff -durN asterisk-13.38.2.orig/configs/samples/res_parking.conf.sample asterisk-13.38.2/configs/samples/res_parking.conf.sample
---- asterisk-13.38.2.orig/configs/samples/res_parking.conf.sample	2021-04-22 22:53:09.790424827 +1200
-+++ asterisk-13.38.2/configs/samples/res_parking.conf.sample	2021-04-22 22:54:57.435907954 +1200
+diff -durN asterisk-18.3.0.orig/configs/samples/res_parking.conf.sample asterisk-18.3.0/configs/samples/res_parking.conf.sample
+--- asterisk-18.3.0.orig/configs/samples/res_parking.conf.sample	2021-04-22 22:53:43.917635770 +1200
++++ asterisk-18.3.0/configs/samples/res_parking.conf.sample	2021-04-22 22:59:42.849471643 +1200
 @@ -68,6 +68,7 @@
                                  ; extensions if parkext is set
  
@@ -7910,10 +7901,10 @@ diff -durN asterisk-13.38.2.orig/configs/samples/res_parking.conf.sample asteris
  
  ;comebacktoorigin = yes         ; Setting this option configures the behavior of call parking when the
                                  ; parked call times out (See the parkingtime option).  The default value is 'yes'.
-diff -durN asterisk-13.38.2.orig/configs/samples/sip.conf.sample asterisk-13.38.2/configs/samples/sip.conf.sample
---- asterisk-13.38.2.orig/configs/samples/sip.conf.sample	2021-04-22 22:53:09.790424827 +1200
-+++ asterisk-13.38.2/configs/samples/sip.conf.sample	2021-04-22 22:54:57.435907954 +1200
-@@ -1573,6 +1573,22 @@
+diff -durN asterisk-18.3.0.orig/configs/samples/sip.conf.sample asterisk-18.3.0/configs/samples/sip.conf.sample
+--- asterisk-18.3.0.orig/configs/samples/sip.conf.sample	2021-04-22 22:53:43.917635770 +1200
++++ asterisk-18.3.0/configs/samples/sip.conf.sample	2021-04-22 22:59:42.849471643 +1200
+@@ -1602,6 +1602,22 @@
  ;defaultip=192.168.0.4           ; IP address to use until registration
  ;defaultuser=goran               ; Username to use when calling this device before registration
                                   ; Normally you do NOT need to set this parameter
@@ -7936,9 +7927,9 @@ diff -durN asterisk-13.38.2.orig/configs/samples/sip.conf.sample asterisk-13.38.
  ;setvar=CUSTID=5678              ; Channel variable to be set for all calls from or to this device
  ;setvar=ATTENDED_TRANSFER_COMPLETE_SOUND=beep   ; This channel variable will
                                                  ; cause the given audio file to
-diff -durN asterisk-13.38.2.orig/configs/samples/sip_notify.conf.sample asterisk-13.38.2/configs/samples/sip_notify.conf.sample
---- asterisk-13.38.2.orig/configs/samples/sip_notify.conf.sample	2021-04-22 22:53:09.790424827 +1200
-+++ asterisk-13.38.2/configs/samples/sip_notify.conf.sample	2021-04-22 22:54:57.439907859 +1200
+diff -durN asterisk-18.3.0.orig/configs/samples/sip_notify.conf.sample asterisk-18.3.0/configs/samples/sip_notify.conf.sample
+--- asterisk-18.3.0.orig/configs/samples/sip_notify.conf.sample	2021-04-22 22:53:43.917635770 +1200
++++ asterisk-18.3.0/configs/samples/sip_notify.conf.sample	2021-04-22 22:59:42.849471643 +1200
 @@ -55,3 +55,26 @@
  
  [cisco-check-cfg]
@@ -7966,21 +7957,9 @@ diff -durN asterisk-13.38.2.orig/configs/samples/sip_notify.conf.sample asterisk
 +Content=>SoftkeyVersionStamp={00000000-0000-0000-0000-000000000000}
 +Content=>FeatureControlVersionStamp={00000000-0000-0000-0000-000000000000}
 +
-diff -durN asterisk-13.38.2.orig/include/asterisk/channel.h asterisk-13.38.2/include/asterisk/channel.h
---- asterisk-13.38.2.orig/include/asterisk/channel.h	2021-04-22 22:53:09.822424092 +1200
-+++ asterisk-13.38.2/include/asterisk/channel.h	2021-04-22 22:54:57.439907859 +1200
-@@ -637,6 +637,8 @@
- 
- 	int (* const devicestate)(const char *device_number);	/*!< Devicestate call back */
- 
-+	int (* const presencestate)(const char *presence_number, char **subtype, char **message);   /*!< Presencestate call back */
-+
- 	/*!
- 	 * \brief Start sending a literal DTMF digit
- 	 *
-diff -durN asterisk-13.38.2.orig/include/asterisk/parking.h asterisk-13.38.2/include/asterisk/parking.h
---- asterisk-13.38.2.orig/include/asterisk/parking.h	2021-04-22 22:53:09.822424092 +1200
-+++ asterisk-13.38.2/include/asterisk/parking.h	2021-04-22 22:54:57.439907859 +1200
+diff -durN asterisk-18.3.0.orig/include/asterisk/parking.h asterisk-18.3.0/include/asterisk/parking.h
+--- asterisk-18.3.0.orig/include/asterisk/parking.h	2021-04-22 22:53:43.933635398 +1200
++++ asterisk-18.3.0/include/asterisk/parking.h	2021-04-22 22:59:42.849471643 +1200
 @@ -50,6 +50,7 @@
  	PARKED_CALL_UNPARKED,
  	PARKED_CALL_FAILED,
@@ -7989,10 +7968,10 @@ diff -durN asterisk-13.38.2.orig/include/asterisk/parking.h asterisk-13.38.2/inc
  };
  
  /*!
-diff -durN asterisk-13.38.2.orig/main/cel.c asterisk-13.38.2/main/cel.c
---- asterisk-13.38.2.orig/main/cel.c	2021-04-22 22:53:09.826424000 +1200
-+++ asterisk-13.38.2/main/cel.c	2021-04-22 22:54:57.443907764 +1200
-@@ -1150,6 +1150,8 @@
+diff -durN asterisk-18.3.0.orig/main/cel.c asterisk-18.3.0/main/cel.c
+--- asterisk-18.3.0.orig/main/cel.c	2021-04-22 22:53:43.937635305 +1200
++++ asterisk-18.3.0/main/cel.c	2021-04-22 22:59:42.853471549 +1200
+@@ -1137,6 +1137,8 @@
  	case PARKED_CALL_SWAP:
  		reason = "ParkedCallSwap";
  		break;
@@ -8001,70 +7980,10 @@ diff -durN asterisk-13.38.2.orig/main/cel.c asterisk-13.38.2/main/cel.c
  	}
  
  	if (parked_payload->retriever) {
-diff -durN asterisk-13.38.2.orig/main/channel.c asterisk-13.38.2/main/channel.c
---- asterisk-13.38.2.orig/main/channel.c	2021-04-22 22:53:09.826424000 +1200
-+++ asterisk-13.38.2/main/channel.c	2021-04-22 22:54:57.443907764 +1200
-@@ -60,6 +60,7 @@
- #include "asterisk/app.h"
- #include "asterisk/transcap.h"
- #include "asterisk/devicestate.h"
-+#include "asterisk/presencestate.h"
- #include "asterisk/threadstorage.h"
- #include "asterisk/slinfactory.h"
- #include "asterisk/audiohook.h"
-@@ -273,7 +274,7 @@
- /*! \brief Show channel types - CLI command */
- static char *handle_cli_core_show_channeltypes(struct ast_cli_entry *e, int cmd, struct ast_cli_args *a)
- {
--#define FORMAT  "%-15.15s  %-40.40s %-12.12s %-12.12s %-12.12s\n"
-+#define FORMAT  "%-15.15s  %-40.40s %-13.13s %-13.13s %-13.13s %-13.13s\n"
- 	struct chanlist *cl;
- 	int count_chan = 0;
- 
-@@ -292,13 +293,13 @@
- 	if (a->argc != 3)
- 		return CLI_SHOWUSAGE;
- 
--	ast_cli(a->fd, FORMAT, "Type", "Description",       "Devicestate", "Indications", "Transfer");
--	ast_cli(a->fd, FORMAT, "-----------", "-----------", "-----------", "-----------", "-----------");
-+	ast_cli(a->fd, FORMAT, "Type", "Description", "Devicestate", "Presencestate", "Indications", "Transfer");
- 
- 	AST_RWLIST_RDLOCK(&backends);
- 	AST_RWLIST_TRAVERSE(&backends, cl, list) {
- 		ast_cli(a->fd, FORMAT, cl->tech->type, cl->tech->description,
- 			(cl->tech->devicestate) ? "yes" : "no",
-+			(cl->tech->presencestate) ? "yes" : "no",
- 			(cl->tech->indicate) ? "yes" : "no",
- 			(cl->tech->transfer) ? "yes" : "no");
- 		count_chan++;
-@@ -371,6 +372,7 @@
- 	ast_cli(a->fd,
- 		"-- Info about channel driver: %s --\n"
- 		"  Device State: %s\n"
-+		"Presence State: %s\n"
- 		"    Indication: %s\n"
- 		"     Transfer : %s\n"
- 		"  Capabilities: %s\n"
-@@ -381,6 +383,7 @@
- 		"  Text Support: %s\n",
- 		cl->tech->type,
- 		(cl->tech->devicestate) ? "yes" : "no",
-+		(cl->tech->presencestate) ? "yes" : "no",
- 		(cl->tech->indicate) ? "yes" : "no",
- 		(cl->tech->transfer) ? "yes" : "no",
- 		ast_format_cap_get_names(cl->tech->capabilities, &codec_buf),
-@@ -7944,6 +7947,7 @@
- 		ast_data_add_str(data_type, "name", cl->tech->type);
- 		ast_data_add_str(data_type, "description", cl->tech->description);
- 		ast_data_add_bool(data_type, "devicestate", cl->tech->devicestate ? 1 : 0);
-+		ast_data_add_bool(data_type, "presencestate", cl->tech->presencestate ? 1 : 0);
- 		ast_data_add_bool(data_type, "indications", cl->tech->indicate ? 1 : 0);
- 		ast_data_add_bool(data_type, "transfer", cl->tech->transfer ? 1 : 0);
- 		ast_data_add_bool(data_type, "send_digit_begin", cl->tech->send_digit_begin ? 1 : 0);
-diff -durN asterisk-13.38.2.orig/main/pbx.c asterisk-13.38.2/main/pbx.c
---- asterisk-13.38.2.orig/main/pbx.c	2021-04-22 22:53:09.830423909 +1200
-+++ asterisk-13.38.2/main/pbx.c	2021-04-22 22:54:57.447907669 +1200
-@@ -5190,7 +5190,7 @@
+diff -durN asterisk-18.3.0.orig/main/pbx.c asterisk-18.3.0/main/pbx.c
+--- asterisk-18.3.0.orig/main/pbx.c	2021-04-22 22:53:43.941635212 +1200
++++ asterisk-18.3.0/main/pbx.c	2021-04-22 22:59:42.857471455 +1200
+@@ -5232,7 +5232,7 @@
  		return CLI_SUCCESS;
  	}
  	/* ... we have hints ... */
@@ -8073,7 +7992,7 @@ diff -durN asterisk-13.38.2.orig/main/pbx.c asterisk-13.38.2/main/pbx.c
  
  	i = ao2_iterator_init(hints, 0);
  	for (; (hint = ao2_iterator_next(&i)); ao2_ref(hint, -1)) {
-@@ -5217,8 +5217,7 @@
+@@ -5259,8 +5259,7 @@
  	}
  	ao2_iterator_destroy(&i);
  
@@ -8083,10 +8002,10 @@ diff -durN asterisk-13.38.2.orig/main/pbx.c asterisk-13.38.2/main/pbx.c
  	return CLI_SUCCESS;
  }
  
-diff -durN asterisk-13.38.2.orig/main/presencestate.c asterisk-13.38.2/main/presencestate.c
---- asterisk-13.38.2.orig/main/presencestate.c	2021-04-22 22:53:09.830423909 +1200
-+++ asterisk-13.38.2/main/presencestate.c	2021-04-22 22:54:57.447907669 +1200
-@@ -73,13 +73,13 @@
+diff -durN asterisk-18.3.0.orig/main/presencestate.c asterisk-18.3.0/main/presencestate.c
+--- asterisk-18.3.0.orig/main/presencestate.c	2021-04-22 22:53:43.941635212 +1200
++++ asterisk-18.3.0/main/presencestate.c	2021-04-22 22:59:42.857471455 +1200
+@@ -72,13 +72,13 @@
  	enum ast_presence_state state;
  
  } state2string[] = {
@@ -8107,36 +8026,10 @@ diff -durN asterisk-13.38.2.orig/main/presencestate.c asterisk-13.38.2/main/pres
  };
  
  static struct ast_manager_event_blob *presence_state_to_ami(struct stasis_message *msg);
-@@ -147,6 +147,7 @@
- static enum ast_presence_state ast_presence_state_helper(const char *presence_provider, char **subtype, char **message, int check_cache)
- {
- 	struct presence_state_provider *provider;
-+	const struct ast_channel_tech *chan_tech;
- 	char *address;
- 	char *label = ast_strdupa(presence_provider);
- 	int res = AST_PRESENCE_INVALID;
-@@ -161,6 +162,17 @@
- 		}
- 	}
- 
-+	if ((address = strchr(label, '/'))) {
-+		*address = '\0';
-+		address++;
-+
-+		if ((chan_tech = ast_get_channel_tech(label)) && chan_tech->presencestate) {
-+			res = chan_tech->presencestate(address, subtype, message);
-+		}
-+
-+		return res;
-+	}
-+
- 	if ((address = strchr(label, ':'))) {
- 		*address = '\0';
- 		address++;
-diff -durN asterisk-13.38.2.orig/res/parking/parking_applications.c asterisk-13.38.2/res/parking/parking_applications.c
---- asterisk-13.38.2.orig/res/parking/parking_applications.c	2021-04-22 22:53:09.838423725 +1200
-+++ asterisk-13.38.2/res/parking/parking_applications.c	2021-04-22 22:54:57.451907574 +1200
-@@ -79,6 +79,11 @@
+diff -durN asterisk-18.3.0.orig/res/parking/parking_applications.c asterisk-18.3.0/res/parking/parking_applications.c
+--- asterisk-18.3.0.orig/res/parking/parking_applications.c	2021-04-22 22:53:43.949635026 +1200
++++ asterisk-18.3.0/res/parking/parking_applications.c	2021-04-22 22:59:42.857471455 +1200
+@@ -77,6 +77,11 @@
  						<para>Use a timeout of <literal>duration</literal> seconds instead
  							of the timeout specified by the parking lot.</para>
  					</option>
@@ -8148,7 +8041,7 @@ diff -durN asterisk-13.38.2.orig/res/parking/parking_applications.c asterisk-13.
  				</optionlist>
  			</parameter>
  		</syntax>
-@@ -243,6 +248,7 @@
+@@ -241,6 +246,7 @@
  enum park_args {
  	OPT_ARG_COMEBACK,
  	OPT_ARG_TIMEOUT,
@@ -8156,7 +8049,7 @@ diff -durN asterisk-13.38.2.orig/res/parking/parking_applications.c asterisk-13.
  	OPT_ARG_ARRAY_SIZE /* Always the last element of the enum */
  };
  
-@@ -252,6 +258,7 @@
+@@ -250,6 +256,7 @@
  	MUXFLAG_NOANNOUNCE = (1 << 2),
  	MUXFLAG_COMEBACK_OVERRIDE = (1 << 3),
  	MUXFLAG_TIMEOUT_OVERRIDE = (1 << 4),
@@ -8164,7 +8057,7 @@ diff -durN asterisk-13.38.2.orig/res/parking/parking_applications.c asterisk-13.
  };
  
  AST_APP_OPTIONS(park_opts, {
-@@ -260,6 +267,7 @@
+@@ -258,6 +265,7 @@
  	AST_APP_OPTION('s', MUXFLAG_NOANNOUNCE),
  	AST_APP_OPTION_ARG('c', MUXFLAG_COMEBACK_OVERRIDE, OPT_ARG_COMEBACK),
  	AST_APP_OPTION_ARG('t', MUXFLAG_TIMEOUT_OVERRIDE, OPT_ARG_TIMEOUT),
@@ -8172,7 +8065,7 @@ diff -durN asterisk-13.38.2.orig/res/parking/parking_applications.c asterisk-13.
  });
  
  static int apply_option_timeout (int *var, char *timeout_arg)
-@@ -277,7 +285,22 @@
+@@ -275,7 +283,22 @@
  	return 0;
  }
  
@@ -8196,7 +8089,7 @@ diff -durN asterisk-13.38.2.orig/res/parking/parking_applications.c asterisk-13.
  {
  	char *parse;
  	struct ast_flags flags = { 0 };
-@@ -300,6 +323,12 @@
+@@ -298,6 +321,12 @@
  			}
  		}
  
@@ -8209,7 +8102,7 @@ diff -durN asterisk-13.38.2.orig/res/parking/parking_applications.c asterisk-13.
  		if (ast_test_flag(&flags, MUXFLAG_COMEBACK_OVERRIDE)) {
  			*comeback_override = ast_strdup(opts[OPT_ARG_COMEBACK]);
  		}
-@@ -362,7 +391,7 @@
+@@ -360,7 +389,7 @@
  	ast_channel_unlock(chan);
  }
  
@@ -8218,7 +8111,7 @@ diff -durN asterisk-13.38.2.orig/res/parking/parking_applications.c asterisk-13.
  {
  	struct ast_datastore *datastore = NULL;
  	struct park_common_datastore *park_datastore;
-@@ -414,6 +443,7 @@
+@@ -412,6 +441,7 @@
  
  	park_datastore->randomize = randomize;
  	park_datastore->time_limit = time_limit;
@@ -8226,7 +8119,7 @@ diff -durN asterisk-13.38.2.orig/res/parking/parking_applications.c asterisk-13.
  	park_datastore->silence_announce = silence_announce;
  
  	if (comeback_override) {
-@@ -462,6 +492,7 @@
+@@ -460,6 +490,7 @@
  
  	data_copy->randomize = data->randomize;
  	data_copy->time_limit = data->time_limit;
@@ -8234,7 +8127,7 @@ diff -durN asterisk-13.38.2.orig/res/parking/parking_applications.c asterisk-13.
  	data_copy->silence_announce = data->silence_announce;
  
  	if (data->comeback_override) {
-@@ -485,7 +516,7 @@
+@@ -483,7 +514,7 @@
  
  struct ast_bridge *park_common_setup(struct ast_channel *parkee, struct ast_channel *parker,
  		const char *lot_name, const char *comeback_override,
@@ -8243,7 +8136,7 @@ diff -durN asterisk-13.38.2.orig/res/parking/parking_applications.c asterisk-13.
  {
  	struct ast_bridge *parking_bridge;
  	RAII_VAR(struct parking_lot *, lot, NULL, ao2_cleanup);
-@@ -521,7 +552,7 @@
+@@ -519,7 +550,7 @@
  	/* Apply relevant bridge roles and such to the parking channel */
  	parking_channel_set_roles(parkee, lot, use_ringing);
  	setup_park_common_datastore(parkee, ast_channel_uniqueid(parker), comeback_override, randomize, time_limit,
@@ -8252,7 +8145,7 @@ diff -durN asterisk-13.38.2.orig/res/parking/parking_applications.c asterisk-13.
  	return parking_bridge;
  }
  
-@@ -531,16 +562,17 @@
+@@ -529,16 +560,17 @@
  	int use_ringing = 0;
  	int randomize = 0;
  	int time_limit = -1;
@@ -8272,9 +8165,9 @@ diff -durN asterisk-13.38.2.orig/res/parking/parking_applications.c asterisk-13.
  
  }
  
-diff -durN asterisk-13.38.2.orig/res/parking/parking_bridge.c asterisk-13.38.2/res/parking/parking_bridge.c
---- asterisk-13.38.2.orig/res/parking/parking_bridge.c	2021-04-22 22:53:09.838423725 +1200
-+++ asterisk-13.38.2/res/parking/parking_bridge.c	2021-04-22 22:54:57.451907574 +1200
+diff -durN asterisk-18.3.0.orig/res/parking/parking_bridge.c asterisk-18.3.0/res/parking/parking_bridge.c
+--- asterisk-18.3.0.orig/res/parking/parking_bridge.c	2021-04-22 22:53:43.949635026 +1200
++++ asterisk-18.3.0/res/parking/parking_bridge.c	2021-04-22 22:59:42.857471455 +1200
 @@ -106,7 +106,7 @@
   *
   * \note ao2_cleanup this reference when you are done using it or you'll cause leaks.
@@ -8317,10 +8210,10 @@ diff -durN asterisk-13.38.2.orig/res/parking/parking_bridge.c asterisk-13.38.2/r
  
  	/* Set this to the bridge pvt so that we don't have to refind the parked user associated with this bridge channel again. */
  	bridge_channel->bridge_pvt = pu;
-diff -durN asterisk-13.38.2.orig/res/parking/parking_bridge_features.c asterisk-13.38.2/res/parking/parking_bridge_features.c
---- asterisk-13.38.2.orig/res/parking/parking_bridge_features.c	2021-04-22 22:53:09.838423725 +1200
-+++ asterisk-13.38.2/res/parking/parking_bridge_features.c	2021-04-22 22:54:57.451907574 +1200
-@@ -663,6 +663,15 @@
+diff -durN asterisk-18.3.0.orig/res/parking/parking_bridge_features.c asterisk-18.3.0/res/parking/parking_bridge_features.c
+--- asterisk-18.3.0.orig/res/parking/parking_bridge_features.c	2021-04-22 22:53:43.949635026 +1200
++++ asterisk-18.3.0/res/parking/parking_bridge_features.c	2021-04-22 22:59:42.861471361 +1200
+@@ -680,6 +680,15 @@
  	return -1;
  }
  
@@ -8336,7 +8229,7 @@ diff -durN asterisk-13.38.2.orig/res/parking/parking_bridge_features.c asterisk-
  void say_parking_space(struct ast_bridge_channel *bridge_channel, const char *payload)
  {
  	unsigned int numeric_value;
-@@ -711,6 +720,33 @@
+@@ -728,6 +737,33 @@
  		ao2_ref(user, -1);
  	}
  }
@@ -8368,12 +8261,12 @@ diff -durN asterisk-13.38.2.orig/res/parking/parking_bridge_features.c asterisk-
 +	}
 +}
  
- struct ast_parking_bridge_feature_fn_table parking_provider = {
- 	.module_version = PARKING_MODULE_VERSION,
-diff -durN asterisk-13.38.2.orig/res/parking/parking_manager.c asterisk-13.38.2/res/parking/parking_manager.c
---- asterisk-13.38.2.orig/res/parking/parking_manager.c	2021-04-22 22:53:09.838423725 +1200
-+++ asterisk-13.38.2/res/parking/parking_manager.c	2021-04-22 22:54:57.455907479 +1200
-@@ -455,7 +455,7 @@
+ /*! \brief  Dial plan function to get the parking lot channel of an occupied parking lot */
+ static int func_get_parkingslot_channel(struct ast_channel *chan, const char *function, char *data, char *buf, size_t len)
+diff -durN asterisk-18.3.0.orig/res/parking/parking_manager.c asterisk-18.3.0/res/parking/parking_manager.c
+--- asterisk-18.3.0.orig/res/parking/parking_manager.c	2021-04-22 22:53:43.949635026 +1200
++++ asterisk-18.3.0/res/parking/parking_manager.c	2021-04-22 22:59:42.865471267 +1200
+@@ -453,7 +453,7 @@
  		struct ast_channel *chan, const char *parkinglot, int timeout_override)
  {
  	struct ast_bridge *parking_bridge = park_common_setup(chan,
@@ -8382,7 +8275,7 @@ diff -durN asterisk-13.38.2.orig/res/parking/parking_manager.c asterisk-13.38.2/
  
  	if (!parking_bridge) {
  		astman_send_error(s, m, "Park action failed\n");
-@@ -659,6 +659,9 @@
+@@ -657,6 +657,9 @@
  	case PARKED_CALL_SWAP:
  		event_type = "ParkedCallSwap";
  		break;
@@ -8392,10 +8285,10 @@ diff -durN asterisk-13.38.2.orig/res/parking/parking_manager.c asterisk-13.38.2/
  	case PARKED_CALL_FAILED:
  		/* PARKED_CALL_FAILED doesn't currently get a message and is used exclusively for bridging */
  		return;
-diff -durN asterisk-13.38.2.orig/res/parking/parking_ui.c asterisk-13.38.2/res/parking/parking_ui.c
---- asterisk-13.38.2.orig/res/parking/parking_ui.c	2021-04-22 22:53:09.838423725 +1200
-+++ asterisk-13.38.2/res/parking/parking_ui.c	2021-04-22 22:54:57.455907479 +1200
-@@ -60,6 +60,7 @@
+diff -durN asterisk-18.3.0.orig/res/parking/parking_ui.c asterisk-18.3.0/res/parking/parking_ui.c
+--- asterisk-18.3.0.orig/res/parking/parking_ui.c	2021-04-22 22:53:43.949635026 +1200
++++ asterisk-18.3.0/res/parking/parking_ui.c	2021-04-22 22:59:42.865471267 +1200
+@@ -58,6 +58,7 @@
  	ast_cli(fd, "Parking Context     :  %s\n", lot->cfg->parking_con);
  	ast_cli(fd, "Parking Spaces      :  %d-%d\n", lot->cfg->parking_start, lot->cfg->parking_stop);
  	ast_cli(fd, "Parking Time        :  %u sec\n", lot->cfg->parkingtime);
@@ -8403,9 +8296,9 @@ diff -durN asterisk-13.38.2.orig/res/parking/parking_ui.c asterisk-13.38.2/res/p
  	ast_cli(fd, "Comeback to Origin  :  %s\n", lot->cfg->comebacktoorigin ? "yes" : "no");
  	ast_cli(fd, "Comeback Context    :  %s%s\n", lot->cfg->comebackcontext, lot->cfg->comebacktoorigin ? " (comebacktoorigin=yes, not used)" : "");
  	ast_cli(fd, "Comeback Dial Time  :  %u sec\n", lot->cfg->comebackdialtime);
-diff -durN asterisk-13.38.2.orig/res/parking/res_parking.h asterisk-13.38.2/res/parking/res_parking.h
---- asterisk-13.38.2.orig/res/parking/res_parking.h	2021-04-22 22:53:09.838423725 +1200
-+++ asterisk-13.38.2/res/parking/res_parking.h	2021-04-22 22:54:57.455907479 +1200
+diff -durN asterisk-18.3.0.orig/res/parking/res_parking.h asterisk-18.3.0/res/parking/res_parking.h
+--- asterisk-18.3.0.orig/res/parking/res_parking.h	2021-04-22 22:53:43.949635026 +1200
++++ asterisk-18.3.0/res/parking/res_parking.h	2021-04-22 22:59:42.865471267 +1200
 @@ -67,6 +67,7 @@
  	int parking_stop;                         /*!< Last space in the parking lot */
  
@@ -8422,7 +8315,7 @@ diff -durN asterisk-13.38.2.orig/res/parking/res_parking.h asterisk-13.38.2/res/
  	struct parking_lot *lot;                  /*!< Which parking lot the user is parked to */
  	enum park_call_resolution resolution;     /*!< How did the parking session end? If the call is in a bridge, lock parked_user before checking/setting */
  };
-@@ -255,6 +257,16 @@
+@@ -268,6 +270,15 @@
  void parking_set_duration(struct ast_bridge_features *features, struct parked_user *user);
  
  /*!
@@ -8434,12 +8327,11 @@ diff -durN asterisk-13.38.2.orig/res/parking/res_parking.h asterisk-13.38.2/res/
 + */
 +void parking_set_reminder(struct ast_bridge_features *features, struct parked_user *user);
 +
-+
 +/*!
   * \since 12.0.0
   * \brief Get a pointer to the parking lot container for purposes such as iteration
   *
-@@ -409,7 +421,7 @@
+@@ -422,7 +433,7 @@
   */
  struct ast_bridge *park_common_setup(struct ast_channel *parkee, struct ast_channel *parker,
  		const char *lot_name, const char *comeback_override,
@@ -8448,7 +8340,7 @@ diff -durN asterisk-13.38.2.orig/res/parking/res_parking.h asterisk-13.38.2/res/
  
  /*!
   * \since 12.0.0
-@@ -438,6 +450,7 @@
+@@ -451,6 +462,7 @@
  	char *comeback_override;     /*!< Optional goto string for where to send the call after we are done */
  	int randomize;               /*!< Pick a parking space to enter on at random */
  	int time_limit;              /*!< time limit override. -1 values don't override, 0 for unlimited time, >0 for custom time limit in seconds */
@@ -8456,10 +8348,10 @@ diff -durN asterisk-13.38.2.orig/res/parking/res_parking.h asterisk-13.38.2/res/
  	int silence_announce;        /*!< Used when a call parks itself to keep it from hearing the parked call announcement */
  };
  
-diff -durN asterisk-13.38.2.orig/res/res_format_attr_h264.c asterisk-13.38.2/res/res_format_attr_h264.c
---- asterisk-13.38.2.orig/res/res_format_attr_h264.c	2021-04-22 22:53:09.838423725 +1200
-+++ asterisk-13.38.2/res/res_format_attr_h264.c	2021-04-22 22:54:57.455907479 +1200
-@@ -49,6 +49,7 @@
+diff -durN asterisk-18.3.0.orig/res/res_format_attr_h264.c asterisk-18.3.0/res/res_format_attr_h264.c
+--- asterisk-18.3.0.orig/res/res_format_attr_h264.c	2021-04-22 22:53:43.953634933 +1200
++++ asterisk-18.3.0/res/res_format_attr_h264.c	2021-04-22 22:59:42.865471267 +1200
+@@ -47,6 +47,7 @@
   *   length. It must ALWAYS be a string literal representation of one less than
   *   H264_MAX_SPS_PPS_SIZE */
  #define H264_MAX_SPS_PPS_SIZE_SCAN_LIMIT "15"
@@ -8467,7 +8359,7 @@ diff -durN asterisk-13.38.2.orig/res/res_format_attr_h264.c asterisk-13.38.2/res
  
  struct h264_attr {
  	unsigned int PROFILE_IDC;
-@@ -73,6 +74,7 @@
+@@ -71,6 +72,7 @@
  	unsigned int LEVEL_ASYMMETRY_ALLOWED;
  	char SPS[H264_MAX_SPS_PPS_SIZE];
  	char PPS[H264_MAX_SPS_PPS_SIZE];
@@ -8475,7 +8367,7 @@ diff -durN asterisk-13.38.2.orig/res/res_format_attr_h264.c asterisk-13.38.2/res
  };
  
  static void h264_destroy(struct ast_format *format)
-@@ -162,6 +164,12 @@
+@@ -160,6 +162,12 @@
  		ast_copy_string(attr->PPS, attr2->PPS, sizeof(attr->PPS));
  	}
  
@@ -8488,7 +8380,7 @@ diff -durN asterisk-13.38.2.orig/res/res_format_attr_h264.c asterisk-13.38.2/res
  	return cloned;
  }
  
-@@ -309,6 +317,42 @@
+@@ -307,6 +315,42 @@
  	return;
  }
  
@@ -8531,7 +8423,7 @@ diff -durN asterisk-13.38.2.orig/res/res_format_attr_h264.c asterisk-13.38.2/res
  static struct ast_format_interface h264_interface = {
  	.format_destroy = h264_destroy,
  	.format_clone = h264_clone,
-@@ -316,6 +360,8 @@
+@@ -314,6 +358,8 @@
  	.format_get_joint = h264_getjoint,
  	.format_parse_sdp_fmtp = h264_parse_sdp_fmtp,
  	.format_generate_sdp_fmtp = h264_generate_sdp_fmtp,
@@ -8540,9 +8432,9 @@ diff -durN asterisk-13.38.2.orig/res/res_format_attr_h264.c asterisk-13.38.2/res
  };
  
  static int unload_module(void)
-diff -durN asterisk-13.38.2.orig/res/res_parking.c asterisk-13.38.2/res/res_parking.c
---- asterisk-13.38.2.orig/res/res_parking.c	2021-04-22 22:53:09.838423725 +1200
-+++ asterisk-13.38.2/res/res_parking.c	2021-04-22 22:54:57.459907384 +1200
+diff -durN asterisk-18.3.0.orig/res/res_parking.c asterisk-18.3.0/res/res_parking.c
+--- asterisk-18.3.0.orig/res/res_parking.c	2021-04-22 22:53:43.953634933 +1200
++++ asterisk-18.3.0/res/res_parking.c	2021-04-22 22:59:42.865471267 +1200
 @@ -113,6 +113,9 @@
  				<configOption name="parkingtime" default="45">
  					<synopsis>Amount of time a call will remain parked before giving up (in seconds).</synopsis>
@@ -8553,7 +8445,7 @@ diff -durN asterisk-13.38.2.orig/res/res_parking.c asterisk-13.38.2/res/res_park
  				<configOption name="parkedmusicclass">
  					<synopsis>Which music class to use for parked calls. They will use the default if unspecified.</synopsis>
  				</configOption>
-@@ -958,6 +961,7 @@
+@@ -953,6 +956,7 @@
  	cfg->parking_start = source->parking_start;
  	cfg->parking_stop = source->parking_stop;
  	cfg->parkingtime = source->parkingtime;
@@ -8561,7 +8453,7 @@ diff -durN asterisk-13.38.2.orig/res/res_parking.c asterisk-13.38.2/res/res_park
  	cfg->comebackdialtime = source->comebackdialtime;
  	cfg->parkfindnext = source->parkfindnext;
  	cfg->parkext_exclusive = source->parkext_exclusive;
-@@ -1235,6 +1239,7 @@
+@@ -1225,6 +1229,7 @@
  	aco_option_register(&cfg_info, "parkext", ACO_EXACT, parking_lot_types, "", OPT_STRINGFIELD_T, 0, STRFLDSET(struct parking_lot_cfg, parkext));
  	aco_option_register(&cfg_info, "context", ACO_EXACT, parking_lot_types, "parkedcalls", OPT_STRINGFIELD_T, 0, STRFLDSET(struct parking_lot_cfg, parking_con));
  	aco_option_register(&cfg_info, "parkingtime", ACO_EXACT, parking_lot_types, "45", OPT_UINT_T, 0, FLDSET(struct parking_lot_cfg, parkingtime));
