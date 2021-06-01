@@ -16,14 +16,9 @@ See [Patching Asterisk](http://usecallmanager.nz/patching-asterisk.html)
 and [VPN Connection](http://usecallmanager.nz/vpn-group.html) for more
 information.
 
----
-
 ## Latest Patch Versions
 
-Asterisk 18: cisco-usecallmanager-18.3.0.patch
-
-Asterisk 16: cisco-usecallmanager-16.17.0.patch
-
-Asterisk 13: cisco-usecallmanager-13.38.2.patch (!) security fixes only
-
-OCServ: cisco-webvpnlogin-0.12.6.patch
+* Asterisk 18: [cisco-usecallmanager-18.3.0.patch](asterisk/cisco-usecallmanager-18.3.0.patch).
+* Asterisk 16: [cisco-usecallmanager-16.17.0.patch](asterisk/cisco-usecallmanager-16.17.0.patch).
+* Asterisk 13: [cisco-usecallmanager-13.38.2.patch](asterisk/cisco-usecallmanager-13.38.2.patch).
+* OCServ: [cisco-webvpnlogin-0.12.6.patch](ocserv/cisco-webvpnlogin-0.12.6.patch).
