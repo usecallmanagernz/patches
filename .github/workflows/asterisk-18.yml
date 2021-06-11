@@ -6,7 +6,6 @@ on:
       - master
     paths:
       - asterisk/cisco-usecallmanager-18.*.patch
-      - .github/workflows/asterisk-18.yml
 
   pull_request:
     branches:

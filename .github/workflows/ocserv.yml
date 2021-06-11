@@ -6,7 +6,6 @@ on:
       - master
     paths:
       - ocserv/cisco-webvpnlogin-*.patch
-      - .github/workflows/ocserv.yml
 
   pull_request:
     branches:
@@ -38,7 +37,7 @@ jobs:
 
           echo "PATCH_FILE=$PATCH_FILE" >> $GITHUB_ENV
 
-          OCSERV_VERSION="${PATCH_FILE#ocserv/cisco-webvpnlogin-}"
+          OCSERV_VERSION="${PATCH_FILE#cisco-webvpnlogin-}"
           OCSERV_VERSION="${OCSERV_VERSION%.patch}"
 
           echo "OCSERV_VERSION=$OCSERV_VERSION" >> $GITHUB_ENV
