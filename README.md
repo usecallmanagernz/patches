@@ -1,3 +1,5 @@
+[![asterisk-18 build check](https://github.com/usecallmanagernz/patches/actions/workflows/asterisk-18.yml/badge.svg?branch=master)](https://github.com/usecallmanagernz/patches/actions/workflows/asterisk-18.yml) [![asterisk-16 build check](https://github.com/usecallmanagernz/patches/actions/workflows/asterisk-16.yml/badge.svg?branch=master)](https://github.com/usecallmanagernz/patches/actions/workflows/asterisk-16.yml) [![ocserv build check](https://github.com/usecallmanagernz/patches/actions/workflows/ocserv.yml/badge.svg?branch=master)](https://github.com/usecallmanagernz/patches/actions/workflows/ocserv.yml)
+
 # Asterisk and Ocserv Patches
 
 This repository contains patches for Asterisk and OpenConnect Server
