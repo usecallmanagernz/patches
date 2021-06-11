@@ -23,4 +23,4 @@ information.
 * Asterisk 18: [cisco-usecallmanager-18.4.0.patch](asterisk/cisco-usecallmanager-18.4.0.patch).
 * Asterisk 16: [cisco-usecallmanager-16.18.0.patch](asterisk/cisco-usecallmanager-16.18.0.patch).
 * Asterisk 13: [cisco-usecallmanager-13.38.2.patch](asterisk/cisco-usecallmanager-13.38.2.patch).
-* OCServ: [cisco-webvpnlogin-0.12.6.patch](ocserv/cisco-webvpnlogin-0.12.6.patch).
+* OCServ: [cisco-webvpnlogin-1.1.3.patch](ocserv/cisco-webvpnlogin-1.1.3.patch).
