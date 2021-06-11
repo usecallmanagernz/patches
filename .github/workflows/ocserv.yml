@@ -1,17 +1,17 @@
-name: ocserv build check
+name: ocserv build
 
 on:
   push:
     branches:
       - master
     paths:
-      - ocserv/cisco-webvpnlogin-*.patch
+      - 'ocserv/cisco-webvpnlogin-*.patch'
 
   pull_request:
     branches:
       - master
     paths:
-      - ocserv/cisco-webvpnlogin-*.patch
+      - 'ocserv/cisco-webvpnlogin-*.patch'
 
 env:
   OCSERV_URL: ftp://ftp.infradead.org/pub/ocserv

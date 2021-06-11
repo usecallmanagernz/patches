@@ -1,17 +1,17 @@
-name: asterisk-18 build check
+name: asterisk-18 build
 
 on:
   push:
     branches:
       - master
     paths:
-      - asterisk/cisco-usecallmanager-18.*.patch
+      - 'asterisk/cisco-usecallmanager-18.*.patch'
 
   pull_request:
     branches:
       - master
     paths:
-      - asterisk/cisco-usecallmanager-18.*.patch
+      - 'asterisk/cisco-usecallmanager-18.*.patch'
 
 env:
   ASTERISK_URL: http://downloads.asterisk.org/pub/telephony/asterisk
