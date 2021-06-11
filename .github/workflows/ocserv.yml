@@ -1,0 +1,67 @@
+name: ocserv build check
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - ocserv/cisco-webvpnlogin-*.patch
+      - .github/workflows/ocserv.yml
+
+  pull_request:
+    branches:
+      - master
+    paths:
+      - ocserv/cisco-webvpnlogin-*.patch
+
+env:
+  OCSERV_URL: ftp://ftp.infradead.org/pub/ocserv
+
+jobs:
+  build:
+    name: Patch and build ocserv
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install packages
+        run: |
+          sudo apt install wget patch build-essential pkg-config nettle-dev \
+              libgnutls28-dev libev-dev
+
+      - name: Get patch version
+        run: |
+          PATCH_FILE=$(ls -1 -v ocserv/cisco-webvpnlogin-*.patch | tail -1)
+          PATCH_FILE="${PATCH_FILE#ocserv/}"
+
+          echo "PATCH_FILE=$PATCH_FILE" >> $GITHUB_ENV
+
+          OCSERV_VERSION="${PATCH_FILE#ocserv/cisco-webvpnlogin-}"
+          OCSERV_VERSION="${OCSERV_VERSION%.patch}"
+
+          echo "OCSERV_VERSION=$OCSERV_VERSION" >> $GITHUB_ENV
+
+      - name: Fetch source archive
+        run: |
+          mkdir downloads
+          cd downloads
+
+          wget ${{ env.OCSERV_URL }}/ocserv-${{ env.OCSERV_VERSION }}.tar.xz
+
+      - name: Extract source archive
+        run: |
+          cd downloads
+          tar -Jxvf ocserv-${{ env.OCSERV_VERSION }}.tar.xz
+
+      - name: Apply patch
+        run: |
+          cd downloads/ocserv-${{ env.OCSERV_VERSION }}
+          patch -p1 < ../../ocserv/${{ env.PATCH_FILE }}
+
+      - name: Run configure and make
+        run: |
+          cd downloads/ocserv-${{ env.OCSERV_VERSION }}
+          ./configure --disable-maintainer-mode
+          make
