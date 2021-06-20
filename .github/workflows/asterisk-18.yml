@@ -29,7 +29,7 @@ jobs:
         run: |
           sudo apt install wget patch build-essential zlib1g-dev libssl-dev \
               libncurses-dev libreadline-dev libedit-dev uuid-dev libxml2-dev \
-              libsqlite3-dev libjansson-dev
+              libsqlite3-dev libjansson-dev libsrtp2-dev
 
       - name: Get patch version
         run: |
@@ -64,5 +64,8 @@ jobs:
       - name: Run configure and make
         run: |
           cd downloads/asterisk-${{ env.ASTERISK_VERSION }}
+
+          export CFLAGS="-DENABLE_SRTP_AES_GCM -DENABLE_SRTP_AES_256"
           ./configure --without-pjproject
+
           make

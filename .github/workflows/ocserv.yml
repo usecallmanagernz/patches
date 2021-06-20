@@ -28,7 +28,7 @@ jobs:
       - name: Install packages
         run: |
           sudo apt install wget patch build-essential pkg-config nettle-dev \
-              libgnutls28-dev libev-dev
+              libgnutls28-dev libev-dev libreadline-dev
 
       - name: Get patch version
         run: |
