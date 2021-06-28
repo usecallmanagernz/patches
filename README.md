@@ -1,4 +1,4 @@
-[![asterisk-18 build](https://github.com/usecallmanagernz/patches/actions/workflows/asterisk-18.yml/badge.svg?branch=master)](https://github.com/usecallmanagernz/patches/actions/workflows/asterisk-18.yml) [![asterisk-16 build](https://github.com/usecallmanagernz/patches/actions/workflows/asterisk-16.yml/badge.svg?branch=master)](https://github.com/usecallmanagernz/patches/actions/workflows/asterisk-16.yml) [![ocserv build](https://github.com/usecallmanagernz/patches/actions/workflows/ocserv.yml/badge.svg?branch=master)](https://github.com/usecallmanagernz/patches/actions/workflows/ocserv.yml)
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/usecallmanagernz/patches/asterisk-18%20build/master?label=asterisk-18%20build) ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/usecallmanagernz/patches/asterisk-16%20build/master?label=asterisk-16%20build) ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/usecallmanagernz/patches/ocserv%20build/master?label=ocserv%20build)
 
 # Asterisk and Ocserv Patches
 
