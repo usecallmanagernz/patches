@@ -6,15 +6,17 @@ on:
       - master
     paths:
       - 'asterisk/cisco-usecallmanager-16.*.patch'
+      - '.github/workflows/asterisk-16.yml'
 
   pull_request:
     branches:
       - master
     paths:
       - 'asterisk/cisco-usecallmanager-16.*.patch'
+      - '.github/workflows/asterisk-16.yml'
 
 env:
-  ASTERISK_URL: http://downloads.asterisk.org/pub/telephony/asterisk
+  ASTERISK_URL: https://downloads.asterisk.org/pub/telephony/asterisk
 
 jobs:
   build:

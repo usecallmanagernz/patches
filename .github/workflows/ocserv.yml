@@ -6,15 +6,17 @@ on:
       - master
     paths:
       - 'ocserv/cisco-webvpnlogin-*.patch'
+      - '.github/workflows/ocserv.yml'
 
   pull_request:
     branches:
       - master
     paths:
       - 'ocserv/cisco-webvpnlogin-*.patch'
+      - '.github/workflows/ocserv.yml'
 
 env:
-  OCSERV_URL: ftp://ftp.infradead.org/pub/ocserv
+  OCSERV_URL: https://www.infradead.org/ocserv/download
 
 jobs:
   build:
