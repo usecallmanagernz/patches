@@ -1,4 +1,4 @@
-[![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/usecallmanagernz/patches/asterisk-18%20build/master?label=asterisk-18%20build)](https://github.com/usecallmanagernz/patches/actions/workflows/asterisk-18.yml) [![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/usecallmanagernz/patches/asterisk-16%20build/master?label=asterisk-16%20build)](https://github.com/usecallmanagernz/patches/actions/workflows/asterisk-16.yml) [![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/usecallmanagernz/patches/ocserv%20build/master?label=ocserv%20build)](https://github.com/usecallmanagernz/patches/actions/workflows/ocserv.yml)
+[![Workflow Status](https://img.shields.io/github/workflow/status/usecallmanagernz/patches/asterisk-18%20build/master?label=asterisk-18%20build)](https://github.com/usecallmanagernz/patches/actions/workflows/asterisk-18.yml) [![Workflow Status](https://img.shields.io/github/workflow/status/usecallmanagernz/patches/asterisk-16%20build/master?label=asterisk-16%20build)](https://github.com/usecallmanagernz/patches/actions/workflows/asterisk-16.yml) [![Workflow Status](https://img.shields.io/github/workflow/status/usecallmanagernz/patches/ocserv%20build/master?label=ocserv%20build)](https://github.com/usecallmanagernz/patches/actions/workflows/ocserv.yml) [![Licence](https://img.shields.io/github/license/usecallmanagernz/patches?color=red)](LICENSE)
 
 # Asterisk and Ocserv Patches
 
@@ -20,7 +20,7 @@ information.
 
 ## Latest Patch Versions
 
-* Asterisk 18: [cisco-usecallmanager-18.5.0.patch](asterisk/cisco-usecallmanager-18.5.0.patch).
-* Asterisk 16: [cisco-usecallmanager-16.19.0.patch](asterisk/cisco-usecallmanager-16.19.0.patch).
+* Asterisk 18: [cisco-usecallmanager-18.6.0.patch](asterisk/cisco-usecallmanager-18.6.0.patch).
+* Asterisk 16: [cisco-usecallmanager-16.20.0.patch](asterisk/cisco-usecallmanager-16.20.0.patch).
 * Asterisk 13: [cisco-usecallmanager-13.38.2.patch](asterisk/cisco-usecallmanager-13.38.2.patch).
 * OCServ: [cisco-webvpnlogin-1.1.3.patch](ocserv/cisco-webvpnlogin-1.1.3.patch).
