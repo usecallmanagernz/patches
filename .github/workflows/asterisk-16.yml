@@ -71,3 +71,9 @@ jobs:
           ./configure --without-pjproject
 
           make
+
+      - name: Validate documentaton
+        run: |
+          cd downloads/asterisk-${{ env.ASTERISK_VERSION }}
+
+          make validate-docs
