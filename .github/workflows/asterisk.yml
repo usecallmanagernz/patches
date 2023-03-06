@@ -31,7 +31,7 @@ jobs:
         run: |
           sudo apt install wget patch build-essential zlib1g-dev libssl-dev \
               libncurses-dev libreadline-dev libedit-dev uuid-dev libxml2-dev \
-              libsqlite3-dev libjansson-dev libsrtp2-dev pkg-config
+              libsqlite3-dev libjansson-dev libsrtp2-dev pkg-config xmllint
 
       - name: Get patch version
         run: |
