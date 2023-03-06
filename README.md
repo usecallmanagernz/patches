@@ -20,5 +20,5 @@ information.
 
 ## Latest Patch Versions
 
-* Asterisk 18: [cisco-usecallmanager-18.15.0.patch](asterisk/cisco-usecallmanager-18.15.0.patch).
+* Asterisk 18: [cisco-usecallmanager-18.16.0.patch](asterisk/cisco-usecallmanager-18.16.0.patch).
 * OCServ: [cisco-webvpnlogin-1.1.6.patch](ocserv/cisco-webvpnlogin-1.1.6.patch).
