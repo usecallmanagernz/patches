@@ -14,6 +14,7 @@ on:
     paths:
       - 'ocserv/cisco-webvpnlogin-*.patch'
       - '.github/workflows/ocserv.yml'
+
   workflow_dispatch:
 
 env:
