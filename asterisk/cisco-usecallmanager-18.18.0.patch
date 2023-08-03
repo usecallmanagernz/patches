@@ -1,6 +1,6 @@
 diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/chan_sip.c
 --- asterisk-18.18.0.orig/channels/chan_sip.c	2023-06-17 22:26:39.378134971 +1200
-+++ asterisk-18.18.0/channels/chan_sip.c	2023-06-17 22:27:40.496515552 +1200
++++ asterisk-18.18.0/channels/chan_sip.c	2023-07-01 22:17:48.043783033 +1200
 @@ -367,6 +367,67 @@
  			application is only available if TEST_FRAMEWORK is defined.</para>
  		</description>
@@ -2933,7 +2933,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  
  		if (!(p = sip_alloc(NULL, NULL, 0, SIP_NOTIFY, NULL, 0))) {
  			ast_log(LOG_WARNING, "Unable to build sip pvt data for notify (memory/socket error)\n");
-@@ -22957,36 +24066,214 @@
+@@ -22957,36 +24066,220 @@
  		/* Notify is outgoing call */
  		ast_set_flag(&p->flags[0], SIP_OUTGOING);
  		sip_notify_alloc(p);
@@ -3038,6 +3038,8 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
 +	}
 +	if (!peer->is_realtime) {
 +		ast_db_put("SIP/DoNotDisturb", peer->name, donotdisturb ? "yes" : "no");
++	} else if (sip_cfg.peer_rtupdate && ast_check_realtime("sippeers")) {
++		ast_update_realtime("sippeers", "name", peer->name, "donotdisturb", donotdisturb ? "yes" : "no", SENTINEL);
 +	}
 +	sip_send_donotdisturb(peer);
 +	peer = sip_unref_peer(peer, "unref after sip_find_peer");
@@ -3092,6 +3094,8 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
 +	}
 +	if (!peer->is_realtime) {
 +		ast_db_put("SIP/HuntGroup", peer->name, huntgroup ? "yes" : "no");
++	} else if (sip_cfg.peer_rtupdate && ast_check_realtime("sippeers")) {
++		ast_update_realtime("sippeers", "name", peer->name, "huntgroup", huntgroup ? "yes" : "no", SENTINEL);
 +	}
 +	sip_send_huntgroup(peer);
 +	peer = sip_unref_peer(peer, "unref after sip_find_peer");
@@ -3151,6 +3155,8 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
 +		} else {
 +			ast_db_put("SIP/CallForward", peer->name, callforward);
 +		}
++	} else if (sip_cfg.peer_rtupdate && ast_check_realtime("sippeers")) {
++		ast_update_realtime("sippeers", "name", peer->name, "callforward", peer->callforward, SENTINEL);
 +	}
 +	sip_send_callforward(peer);
 +	peer = sip_unref_peer(peer, "unref after sip_find_peer");
@@ -3158,7 +3164,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  	return CLI_SUCCESS;
  }
  
-@@ -23424,7 +24711,7 @@
+@@ -23424,7 +24717,7 @@
  };
  
  /*! \brief  ${SIPPEER()} Dialplan function - reads peer data */
@@ -3167,7 +3173,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  {
  	struct sip_peer *peer;
  	char *colname;
-@@ -23478,7 +24765,7 @@
+@@ -23478,7 +24771,7 @@
  		ast_copy_string(buf, peer->useragent, len);
  	} else  if (!strcasecmp(colname, "mailbox")) {
  		struct ast_str *mailbox_str = ast_str_alloca(512);
@@ -3176,7 +3182,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  		ast_copy_string(buf, ast_str_buffer(mailbox_str), len);
  	} else  if (!strcasecmp(colname, "context")) {
  		ast_copy_string(buf, peer->context, len);
-@@ -23519,11 +24806,82 @@
+@@ -23519,11 +24812,88 @@
  		} else {
  			buf[0] = '\0';
  		}
@@ -3231,6 +3237,8 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
 +		}
 +		if (!peer->is_realtime) {
 +			ast_db_put("SIP/DoNotDisturb", peer->name, peer->donotdisturb ? "yes" : "no");
++		} else if (sip_cfg.peer_rtupdate && ast_check_realtime("sippeers")) {
++			ast_update_realtime("sippeers", "name", peer->name, "donotdisturb", peer->donotdisturb ? "yes" : "no", SENTINEL);
 +		}
 +		sip_send_donotdisturb(peer);
 +	} else if (!strncasecmp(colname, "huntgroup", 9)) {
@@ -3242,6 +3250,8 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
 +		}
 +		if (!peer->is_realtime) {
 +			ast_db_put("SIP/HuntGroup", peer->name, peer->huntgroup ? "yes" : "no");
++		} else if (sip_cfg.peer_rtupdate && ast_check_realtime("sippeers")) {
++			ast_update_realtime("sippeers", "name", peer->name, "huntgroup", peer->huntgroup ? "yes" : "no", SENTINEL);
 +		}
 +		sip_send_huntgroup(peer);
 +	} else if (!strncasecmp(colname, "callforward", 11)) {
@@ -3252,6 +3262,8 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
 +			} else {
 +				ast_db_put("SIP/CallForward", peer->name, peer->callforward);
 +			}
++		} else if (sip_cfg.peer_rtupdate && ast_check_realtime("sippeers")) {
++			ast_update_realtime("sippeers", "name", peer->name, "callforward", peer->callforward, SENTINEL);
 +		}
 +		sip_send_callforward(peer);
 +	}
@@ -3260,7 +3272,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  
  	return 0;
  }
-@@ -23531,7 +24889,8 @@
+@@ -23531,7 +24901,8 @@
  /*! \brief Structure to declare a dialplan function: SIPPEER */
  static struct ast_custom_function sippeer_function = {
  	.name = "SIPPEER",
@@ -3270,7 +3282,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  };
  
  /*! \brief update redirecting information for a channel based on headers
-@@ -24131,6 +25490,35 @@
+@@ -24131,6 +25502,35 @@
  					ast_devstate_changed(AST_DEVICE_UNKNOWN, AST_DEVSTATE_NOT_CACHABLE, "SIP/%s", p->relatedpeer->name);
  				}
  			}
@@ -3306,7 +3318,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  		}
  		if (find_sdp(req)) {
  			if (p->invitestate != INV_CANCELLED) {
-@@ -24391,6 +25779,20 @@
+@@ -24391,6 +25791,20 @@
  		ast_set_flag(&p->flags[1], SIP_PAGE2_DIALOG_ESTABLISHED);
  		xmitres = transmit_request(p, SIP_ACK, seqno, XMIT_UNRELIABLE, TRUE);
  		sched_check_pendings(p);
@@ -3327,7 +3339,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  		break;
  
  	case 407: /* Proxy authentication */
-@@ -24723,6 +26125,7 @@
+@@ -24723,6 +26137,7 @@
  		return;
  
  	switch (resp) {
@@ -3335,7 +3347,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  	case 202:   /* Transfer accepted */
  		/* We need  to do something here */
  		/* The transferee is now sending INVITE to target */
-@@ -24974,6 +26377,8 @@
+@@ -24974,6 +26389,8 @@
  	struct sip_peer *peer = /* sip_ref_peer( */ p->relatedpeer /* , "bump refcount on p, as it is being used in this function(handle_response_peerpoke)")*/ ; /* hope this is already refcounted! */
  	int statechanged, is_reachable, was_reachable;
  	int pingtime = ast_tvdiff_ms(ast_tvnow(), peer->ps);
@@ -3344,7 +3356,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  
  	/*
  	 * Compute the response time to a ping (goes in peer->lastms.)
-@@ -24997,26 +26402,24 @@
+@@ -24997,26 +26414,24 @@
  	is_reachable = pingtime <= peer->maxms;
  	statechanged = peer->lastms == 0 /* yes, unknown before */
  		|| was_reachable != is_reachable;
@@ -3377,7 +3389,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  				"time", pingtime);
  			ast_endpoint_blob_publish(peer->endpoint, ast_endpoint_state_type(), blob);
  		}
-@@ -25026,6 +26429,38 @@
+@@ -25026,6 +26441,38 @@
  		}
  	}
  
@@ -3395,7 +3407,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
 +					alias->peer->name, status, pingtime, alias->peer->maxms);
 +				ast_devstate_changed(AST_DEVICE_UNKNOWN, AST_DEVSTATE_CACHABLE, "SIP/%s", alias->peer->name);
 +				if (sip_cfg.peer_rtupdate) {
-+					ast_update_realtime(ast_check_realtime("sipregs") ? "sipregs" : "sippeers", "name", alias->peer->name, "lastms", lastms, SENTINEL);
++					ast_update_realtime("sippeers", "name", alias->peer->name, "lastms", lastms, SENTINEL);
 +				}
 +				if (alias->peer->endpoint) {
 +					RAII_VAR(struct ast_json *, blob, NULL, ast_json_unref);
@@ -3416,7 +3428,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  	pvt_set_needdestroy(p, "got OPTIONS response");
  
  	/* Try again eventually */
-@@ -25558,6 +26993,9 @@
+@@ -25558,6 +27005,9 @@
  
  				/* Wait for 487, then destroy */
  			} else if (sipmethod == SIP_BYE) {
@@ -3426,7 +3438,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  				pvt_set_needdestroy(p, "transaction completed");
  			}
  			break;
-@@ -25656,6 +27094,2237 @@
+@@ -25656,6 +27106,2239 @@
  	return 0;
  }
  
@@ -3487,6 +3499,8 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
 +	}
 +	if (!peer->is_realtime) {
 +		ast_db_put("SIP/HuntGroup", peer->name, peer->huntgroup ? "yes" : "no");
++	} else if (sip_cfg.peer_rtupdate && ast_check_realtime("sippeers")) {
++		ast_update_realtime("sippeers", "name", peer->name, "huntgroup", peer->huntgroup ? "yes" : "no", SENTINEL);
 +	}
 +	sip_send_huntgroup(peer);
 +
@@ -5664,7 +5678,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  /*! \brief Get tag from packet
   *
   * \return pointer to the provided tag buffer.
-@@ -25738,16 +29407,133 @@
+@@ -25738,16 +29421,133 @@
  	return 0;
  }
  
@@ -5800,7 +5814,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  		*sep++ = '\0';
  	}
  
-@@ -25762,6 +29548,7 @@
+@@ -25762,6 +29562,7 @@
  		char *buf, *cmd, *code;
  		int respcode;
  		int success = TRUE;
@@ -5808,7 +5822,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  
  		/* EventID for each transfer... EventID is basically the REFER cseq
  
-@@ -25770,7 +29557,13 @@
+@@ -25770,7 +29571,13 @@
  		 Check if we have an owner of this event */
  
  		/* Check the content type */
@@ -5823,7 +5837,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  			/* We need a sipfrag */
  			transmit_response(p, "400 Bad request", req);
  			sip_scheddestroy(p, DEFAULT_TRANS_TIMEOUT);
-@@ -25778,7 +29571,7 @@
+@@ -25778,7 +29585,7 @@
  		}
  
  		/* Get the text of the attachment */
@@ -5832,7 +5846,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  			ast_log(LOG_WARNING, "Unable to retrieve attachment from NOTIFY %s\n", p->callid);
  			transmit_response(p, "400 Bad request", req);
  			sip_scheddestroy(p, DEFAULT_TRANS_TIMEOUT);
-@@ -25892,6 +29685,11 @@
+@@ -25892,6 +29699,11 @@
  		transmit_response(p, "200 OK", req);
  	} else if (!strcmp(event, "call-completion")) {
  		res = handle_cc_notify(p, req);
@@ -5844,7 +5858,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  	} else {
  		/* We don't understand this event. */
  		transmit_response(p, "489 Bad event", req);
-@@ -27196,6 +30994,11 @@
+@@ -27196,6 +31008,11 @@
  
  	ast_set_flag(&transferer->flags[0], SIP_DEFER_BYE_ON_TRANSFER);	/* Delay hangup */
  
@@ -5856,7 +5870,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  	sip_pvt_unlock(transferer);
  	ast_channel_unlock(transferer_chan);
  	*nounlock = 1;
-@@ -27339,7 +31142,7 @@
+@@ -27339,7 +31156,7 @@
  	We can't destroy dialogs, since we want the call to continue.
  
  	*/
@@ -5865,7 +5879,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  {
  	char *refer_to = NULL;
  	char *refer_to_context = NULL;
-@@ -27348,6 +31151,46 @@
+@@ -27348,6 +31165,46 @@
  	enum ast_transfer_result transfer_res;
  	RAII_VAR(struct ast_channel *, transferer, NULL, ast_channel_cleanup);
  	RAII_VAR(struct ast_str *, replaces_str, NULL, ast_free_ptr);
@@ -5912,7 +5926,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  
  	if (req->debug) {
  		ast_verbose("Call %s got a SIP call transfer from %s: (REFER)!\n",
-@@ -27610,7 +31453,12 @@
+@@ -27610,7 +31467,12 @@
  				break;
  			}
  		}
@@ -5926,7 +5940,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  		transmit_response(p, "200 OK", req);
  		return 1;
  	} else {
-@@ -27827,6 +31675,10 @@
+@@ -27827,6 +31689,10 @@
  		transmit_response(p, "200 OK", req);
  	}
  
@@ -5937,7 +5951,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  	/* Destroy any pending invites so we won't try to do another
  	 * scheduled reINVITE. */
  	stop_reinvite_retry(p);
-@@ -28197,7 +32049,7 @@
+@@ -28197,7 +32063,7 @@
  		return FALSE;
  	}
  
@@ -5946,7 +5960,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  		ast_log(LOG_WARNING, "Unable to get PIDF body\n");
  		return FALSE;
  	}
-@@ -28317,6 +32169,100 @@
+@@ -28317,6 +32183,102 @@
  	return res;
  }
  
@@ -6027,6 +6041,8 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
 +			}
 +			if (!peer->is_realtime) {
 +				ast_db_put("SIP/DoNotDisturb", peer->name, peer->donotdisturb ? "yes" : "no");
++			} else if (sip_cfg.peer_rtupdate && ast_check_realtime("sippeers")) {
++				ast_update_realtime("sippeers", "name", peer->name, "donotdisturb", donotdisturb ? "yes" : "no", SENTINEL);
 +			}
 +		}
 +
@@ -6047,7 +6063,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  #endif /* HAVE_LIBXML2 */
  
  static int handle_sip_publish_initial(struct sip_pvt *p, struct sip_request *req, struct event_state_compositor *esc, const int expires)
-@@ -28589,6 +32535,178 @@
+@@ -28589,6 +32551,182 @@
  	return 0;
  }
  
@@ -6133,6 +6149,8 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
 +			ast_presence_state_changed(AST_PRESENCE_NOT_SET, NULL, NULL, "SIP/%s", peer->name);
 +			if (!peer->is_realtime) {
 +				ast_db_put("SIP/DoNotDisturb", peer->name, peer->donotdisturb ? "yes" : "no");
++			} else if (sip_cfg.peer_rtupdate && ast_check_realtime("sippeers")) {
++				ast_update_realtime("sippeers", "name", peer->name, "donotdisturb", donotdisturb ? "yes" : "no", SENTINEL);
 +			}
 +		}
 +
@@ -6206,6 +6224,8 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
 +				} else {
 +					ast_db_put("SIP/CallForward", peer->name, peer->callforward);
 +				}
++			} else if (sip_cfg.peer_rtupdate && ast_check_realtime("sippeers")) {
++				ast_update_realtime("sippeers", "name", peer->name, "callforward", peer->callforward, SENTINEL);
 +			}
 +		}
 +
@@ -6226,7 +6246,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  /*! \brief  Handle incoming SUBSCRIBE request */
  static int handle_request_subscribe(struct sip_pvt *p, struct sip_request *req, struct ast_sockaddr *addr, uint32_t seqno, const char *e)
  {
-@@ -28597,6 +32715,7 @@
+@@ -28597,6 +32735,7 @@
  	char *event = ast_strdupa(sip_get_header(req, "Event")); /* Get Event package name */
  	int resubscribe = (p->subscribed != NONE) && !req->ignore;
  	char *options;
@@ -6234,7 +6254,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  
  	if (p->initreq.headers) {
  		/* We already have a dialog */
-@@ -28730,12 +32849,19 @@
+@@ -28730,12 +32869,19 @@
  					subscribed = XPIDF_XML; /* Older versions of Polycom firmware will claim pidf+xml, but really they only support xpidf+xml */
  				} else {
  					subscribed = PIDF_XML; /* RFC 3863 format */
@@ -6255,7 +6275,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  			} else if (strstr(accept, "application/xpidf+xml")) {
  				subscribed = XPIDF_XML;        /* Early pre-RFC 3863 format with MSN additions (Microsoft Messenger) */
  			} else {
-@@ -28858,6 +32984,33 @@
+@@ -28858,6 +33004,33 @@
  			p->relatedpeer = sip_ref_peer(authpeer, "setting dialog's relatedpeer pointer");
  		}
  		/* Do not release authpeer here */
@@ -6289,7 +6309,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  	} else if (!strcmp(event, "call-completion")) {
  		handle_cc_subscribe(p, req);
  	} else { /* At this point, Asterisk does not understand the specified event */
-@@ -28902,6 +33055,9 @@
+@@ -28902,6 +33075,9 @@
  			if (p->subscribed == MWI_NOTIFICATION && p->relatedpeer) {
  				ast_debug(2, "%s subscription for mailbox notification - peer %s\n",
  						action, p->relatedpeer->name);
@@ -6299,7 +6319,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  			} else if (p->subscribed == CALL_COMPLETION) {
  				ast_debug(2, "%s CC subscription for peer %s\n", action, p->username);
  			} else {
-@@ -28924,10 +33080,38 @@
+@@ -28924,10 +33100,38 @@
  				struct sip_peer *peer = p->relatedpeer;
  				sip_ref_peer(peer, "ensure a peer ref is held during MWI sending");
  				ao2_unlock(p);
@@ -6339,7 +6359,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  		} else if (p->subscribed != CALL_COMPLETION) {
  			struct state_notify_data data = { 0, };
  			char *subtype = NULL;
-@@ -28948,6 +33132,9 @@
+@@ -28948,6 +33152,9 @@
  
  			sip_pvt_unlock(p);
  			data.state = ast_extension_state_extended(NULL, p->context, p->exten, &device_state_info);
@@ -6349,7 +6369,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  			sip_pvt_lock(p);
  
  			if (data.state < 0) {
-@@ -28962,11 +33149,7 @@
+@@ -28962,11 +33169,7 @@
  				}
  				return 0;
  			}
@@ -6362,7 +6382,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  			ast_set_flag(&p->flags[1], SIP_PAGE2_DIALOG_ESTABLISHED);
  			transmit_response(p, "200 OK", req);
  			/* RFC 3265: A notification must be sent on every subscribe, so force it */
-@@ -29313,7 +33496,7 @@
+@@ -29313,7 +33516,7 @@
  
  		break;
  	case SIP_REFER:
@@ -6371,7 +6391,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  		break;
  	case SIP_CANCEL:
  		res = handle_request_cancel(p, req);
-@@ -29773,7 +33956,7 @@
+@@ -29773,7 +33976,7 @@
   *  \retval -1 on failure.
   *  \retval 0 on success.
   */
@@ -6380,7 +6400,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  {
  	/* Called with peer lock, but releases it */
  	struct sip_pvt *p;
-@@ -29803,7 +33986,7 @@
+@@ -29803,7 +34006,7 @@
  	if (!get_cached_mwi(peer, &newmsgs, &oldmsgs) && !cache_only) {
  		/* Fall back to manually checking the mailbox if not cache_only and get_cached_mwi failed */
  		struct ast_str *mailbox_str = ast_str_alloca(512);
@@ -6389,7 +6409,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  		/* if there is no mailbox do nothing */
  		if (!ast_str_strlen(mailbox_str)) {
  			ao2_unlock(peer);
-@@ -29821,7 +34004,7 @@
+@@ -29821,7 +34024,7 @@
  
  	if (peer->mwipvt) {
  		/* Base message on subscription */
@@ -6398,7 +6418,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  		ao2_unlock(peer);
  	} else {
  		ao2_unlock(peer);
-@@ -29871,13 +34054,360 @@
+@@ -29871,13 +34074,360 @@
  	/* the following will decrement the refcount on p as it finishes */
  	transmit_notify_with_mwi(p, newmsgs, oldmsgs, vmexten);
  	sip_pvt_unlock(p);
@@ -6760,7 +6780,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  static struct ast_manager_event_blob *session_timeout_to_ami(struct stasis_message *msg)
  {
  	RAII_VAR(struct ast_str *, channel_string, NULL, ast_free);
-@@ -30579,6 +35109,25 @@
+@@ -30579,6 +35129,25 @@
  		ast_devstate_changed(AST_DEVICE_UNKNOWN, AST_DEVSTATE_CACHABLE, "SIP/%s", peer->name);
  	}
  
@@ -6786,7 +6806,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  	/* Try again quickly */
  	AST_SCHED_REPLACE_UNREF(peer->pokeexpire, sched,
  			DEFAULT_FREQ_NOTOK, sip_poke_peer_s, peer,
-@@ -30732,13 +35281,13 @@
+@@ -30732,13 +35301,13 @@
  	char *host;
  	char *tmp;
  	struct sip_peer *p;
@@ -6802,7 +6822,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  
  	ast_debug(3, "Checking device state for peer %s\n", host);
  
-@@ -30776,7 +35325,7 @@
+@@ -30776,7 +35345,7 @@
  			else if (p->call_limit && p->busy_level && p->inuse >= p->busy_level)
  				/* We're forcing busy before we've reached the call limit */
  				res = AST_DEVICE_BUSY;
@@ -6811,7 +6831,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  				/* Not busy, but we do have a call */
  				res = AST_DEVICE_INUSE;
  			else if (p->maxms && ((p->lastms > p->maxms) || (p->lastms < 0)))
-@@ -30794,6 +35343,35 @@
+@@ -30794,6 +35363,35 @@
  	return res;
  }
  
@@ -6847,7 +6867,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  /*! \brief PBX interface function -build SIP pvt structure
   *	SIP calls initiated by the PBX arrive here.
   *
-@@ -31288,9 +35866,21 @@
+@@ -31288,9 +35886,21 @@
  	} else if (!strcasecmp(v->name, "rfc2833compensate")) {
  		ast_set_flag(&mask[1], SIP_PAGE2_RFC2833_COMPENSATE);
  		ast_set2_flag(&flags[1], ast_true(v->value), SIP_PAGE2_RFC2833_COMPENSATE);
@@ -6872,7 +6892,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  	} else if (!strcasecmp(v->name, "rtcp_mux")) {
  		ast_set_flag(&mask[2], SIP_PAGE3_RTCP_MUX);
  		ast_set2_flag(&flags[2], ast_true(v->value), SIP_PAGE3_RTCP_MUX);
-@@ -31552,7 +36142,6 @@
+@@ -31552,7 +36162,6 @@
  	peer->stimer.st_max_se = global_max_se;
  	peer->timer_t1 = global_t1;
  	peer->timer_b = global_timer_b;
@@ -6880,7 +6900,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  	peer->disallowed_methods = sip_cfg.disallowed_methods;
  	peer->transports = default_transports;
  	peer->default_outbound_transport = default_primary_transport;
-@@ -31560,6 +36149,8 @@
+@@ -31560,6 +36169,8 @@
  		ao2_ref(peer->outboundproxy, -1);
  		peer->outboundproxy = NULL;
  	}
@@ -6889,7 +6909,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  }
  
  /*! \brief Create temporary peer (used in autocreatepeer mode) */
-@@ -31611,7 +36202,6 @@
+@@ -31611,7 +36222,6 @@
  
  	while ((mbox = strsep(&next, ","))) {
  		struct sip_mailbox *mailbox;
@@ -6897,7 +6917,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  
  		/* remove leading/trailing whitespace from mailbox string */
  		mbox = ast_strip(mbox);
-@@ -31622,12 +36212,11 @@
+@@ -31622,12 +36232,11 @@
  		/* Check whether the mailbox is already in the list */
  		AST_LIST_TRAVERSE(&peer->mailboxes, mailbox, entry) {
  			if (!strcmp(mailbox->id, mbox)) {
@@ -6912,7 +6932,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  			continue;
  		}
  
-@@ -31643,6 +36232,87 @@
+@@ -31643,6 +36252,87 @@
  	}
  }
  
@@ -7000,7 +7020,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  /*! \brief Build peer from configuration (file or realtime static/dynamic) */
  static struct sip_peer *build_peer(const char *name, struct ast_variable *v_head, struct ast_variable *alt, int realtime, int devstate_only)
  {
-@@ -31666,6 +36336,7 @@
+@@ -31666,6 +36356,7 @@
  	int alt_fullcontact = alt ? 1 : 0, headercount = 0;
  	struct ast_str *fullcontact = ast_str_alloca(512);
  	int acl_change_subscription_needed = 0;
@@ -7008,7 +7028,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  
  	if (!realtime || ast_test_flag(&global_flags[1], SIP_PAGE2_RTCACHEFRIENDS)) {
  		/* Note we do NOT use sip_find_peer here, to avoid realtime recursion */
-@@ -31763,9 +36434,18 @@
+@@ -31763,9 +36454,18 @@
  
  	if (!devstate_only) {
  		struct sip_mailbox *mailbox;
@@ -7027,7 +7047,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  	}
  
  	/* clear named callgroup and named pickup group container */
-@@ -31980,7 +36660,7 @@
+@@ -31980,7 +36680,7 @@
  			} else if (!strcasecmp(v->name, "regexten")) {
  				ast_string_field_set(peer, regexten, v->value);
  			} else if (!strcasecmp(v->name, "callbackextension")) {
@@ -7036,7 +7056,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  			} else if (!strcasecmp(v->name, "amaflags")) {
  				format = ast_channel_string2amaflag(v->value);
  				if (format < 0) {
-@@ -32150,6 +36830,40 @@
+@@ -32150,6 +36850,46 @@
  				ast_set2_flag(&peer->flags[2], ast_true(v->value), SIP_PAGE3_DISCARD_REMOTE_HOLD_RETRIEVAL);
  			} else if (!strcasecmp(v->name, "force_avp")) {
  				ast_set2_flag(&peer->flags[2], ast_true(v->value), SIP_PAGE3_FORCE_AVP);
@@ -7074,10 +7094,16 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
 +				}
 +			} else if (!strcasecmp(v->name, "cisco_qrt_url")) {
 +				ast_string_field_set(peer, cisco_qrt_url, v->value); 
++			} else if (realtime && !strcasecmp(v->name, "donotdisturb")) {
++				peer->donotdisturb = ast_true(v->value);
++			} else if (realtime && !strcasecmp(v->name, "callforward")) {
++				ast_string_field_set(peer, callforward, v->value);
++			} else if (realtime && !strcasecmp(v->name, "huntgroup")) {
++				peer->huntgroup = ast_true(v->value);
  			} else {
  				ast_rtp_dtls_cfg_parse(&peer->dtls_cfg, v->name, v->value);
  			}
-@@ -32232,6 +36946,9 @@
+@@ -32232,6 +36972,9 @@
  
  	if (!devstate_only) {
  		struct sip_mailbox *mailbox;
@@ -7087,7 +7113,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  		AST_LIST_TRAVERSE_SAFE_BEGIN(&peer->mailboxes, mailbox, entry) {
  			if (mailbox->status == SIP_MAILBOX_STATUS_UNKNOWN) {
  				AST_LIST_REMOVE_CURRENT(entry);
-@@ -32239,6 +36956,20 @@
+@@ -32239,6 +36982,20 @@
  			}
  		}
  		AST_LIST_TRAVERSE_SAFE_END;
@@ -7108,11 +7134,11 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  	}
  
  	if (!can_parse_xml && (ast_get_cc_agent_policy(peer->cc_params) == AST_CC_AGENT_NATIVE)) {
-@@ -32396,6 +37127,22 @@
+@@ -32396,6 +37153,22 @@
  		reg_source_db(peer);
  	}
  
-+	if (!peer->is_realtime) {
++	if (!realtime) {
 +		char data[128];
 +
 +		if (!ast_db_get("SIP/DoNotDisturb", peer->name, data, sizeof(data))) {
@@ -7131,7 +7157,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  	/* If they didn't request that MWI is sent *only* on subscribe, go ahead and
  	 * subscribe to it now. */
  	if (!devstate_only && !ast_test_flag(&peer->flags[1], SIP_PAGE2_SUBSCRIBEMWIONLY) &&
-@@ -32404,7 +37151,12 @@
+@@ -32404,7 +37177,12 @@
  		/* Send MWI from the event cache only.  This is so we can send initial
  		 * MWI if app_voicemail got loaded before chan_sip.  If it is the other
  		 * way, then we will get events when app_voicemail gets loaded. */
@@ -7145,7 +7171,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  	}
  
  	peer->the_mark = 0;
-@@ -32412,9 +37164,9 @@
+@@ -32412,9 +37190,9 @@
  	oldacl = ast_free_acl_list(oldacl);
  	oldcontactacl = ast_free_acl_list(oldcontactacl);
  	olddirectmediaacl = ast_free_acl_list(olddirectmediaacl);
@@ -7157,7 +7183,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  			sip_register(reg_string, 0); /* XXX TODO: count in registry_count */
  			ast_free(reg_string);
  		}
-@@ -34032,6 +38784,7 @@
+@@ -34032,6 +38810,7 @@
  static char *app_dtmfmode = "SIPDtmfMode";
  static char *app_sipaddheader = "SIPAddHeader";
  static char *app_sipremoveheader = "SIPRemoveHeader";
@@ -7165,7 +7191,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  #ifdef TEST_FRAMEWORK
  static char *app_sipsendcustominfo = "SIPSendCustomINFO";
  #endif
-@@ -34163,6 +38916,430 @@
+@@ -34163,6 +38942,430 @@
  	return 0;
  }
  
@@ -7596,7 +7622,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  #ifdef TEST_FRAMEWORK
  /*! \brief Send a custom INFO message via AST_CONTROL_CUSTOM indication */
  static int sip_sendcustominfo(struct ast_channel *chan, const char *data)
-@@ -34268,6 +39445,11 @@
+@@ -34268,6 +39471,11 @@
  	i = ao2_iterator_init(peers, 0);
  	while ((peer = ao2_t_iterator_next(&i, "iterate thru peers table"))) {
  		ao2_lock(peer);
@@ -7608,7 +7634,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  		/* Don't schedule poking on a peer without qualify */
  		if (peer->maxms) {
  			if (num == global_qualify_peers) {
-@@ -34413,6 +39595,9 @@
+@@ -34413,6 +39621,9 @@
  	/* Send qualify (OPTIONS) to all peers */
  	sip_poke_all_peers();
  
@@ -7618,7 +7644,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  	/* Send keepalive to all peers */
  	sip_keepalive_all_peers();
  
-@@ -34559,9 +39744,9 @@
+@@ -34559,9 +39770,9 @@
  static int peer_ipcmp_cb_full(void *obj, void *arg, void *data, int flags)
  {
  	struct sip_peer *peer = obj, *peer2 = arg;
@@ -7630,7 +7656,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  		/* We require a callback extension match, but don't have one */
  		return 0;
  	}
-@@ -34723,6 +39908,9 @@
+@@ -34723,6 +39934,9 @@
  	AST_CLI_DEFINE(sip_show_settings, "Show SIP global settings"),
  	AST_CLI_DEFINE(sip_show_mwi, "Show MWI subscriptions"),
  	AST_CLI_DEFINE(sip_cli_notify, "Send a notify packet to a SIP peer"),
@@ -7640,7 +7666,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  	AST_CLI_DEFINE(sip_show_channel, "Show detailed SIP channel info"),
  	AST_CLI_DEFINE(sip_show_history, "Show SIP dialog history"),
  	AST_CLI_DEFINE(sip_show_peer, "Show details on specific SIP peer"),
-@@ -35632,6 +40820,7 @@
+@@ -35632,6 +40846,7 @@
  	ast_register_application_xml(app_dtmfmode, sip_dtmfmode);
  	ast_register_application_xml(app_sipaddheader, sip_addheader);
  	ast_register_application_xml(app_sipremoveheader, sip_removeheader);
@@ -7648,7 +7674,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  #ifdef TEST_FRAMEWORK
  	ast_register_application_xml(app_sipsendcustominfo, sip_sendcustominfo);
  #endif
-@@ -35706,6 +40895,7 @@
+@@ -35706,6 +40921,7 @@
  
  	sip_register_tests();
  	network_change_stasis_subscribe();
@@ -7656,7 +7682,7 @@ diff -durN asterisk-18.18.0.orig/channels/chan_sip.c asterisk-18.18.0/channels/c
  
  	if (sip_cfg.websocket_enabled) {
  		ast_websocket_add_protocol("sip", sip_websocket_callback);
-@@ -35738,6 +40928,7 @@
+@@ -35738,6 +40954,7 @@
  
  	network_change_stasis_unsubscribe();
  	acl_change_event_stasis_unsubscribe();
@@ -8115,6 +8141,32 @@ diff -durN asterisk-18.18.0.orig/configs/samples/sip_notify.conf.sample asterisk
 +Content-Type=>text/plain
 +Content=>action=prt-report
 +Content=>RegisterCallId={${SIPPEER(${PEERNAME},regcallid)}}
+diff -durN asterisk-18.18.0.orig/contrib/realtime/mysql/mysql_config.sql asterisk-18.18.0/contrib/realtime/mysql/mysql_config.sql
+--- asterisk-18.18.0.orig/contrib/realtime/mysql/mysql_config.sql	2023-06-17 22:26:39.390134653 +1200
++++ asterisk-18.18.0/contrib/realtime/mysql/mysql_config.sql	2023-07-01 21:58:13.776115928 +1200
+@@ -95,6 +95,9 @@
+     dynamic ENUM('yes','no'), 
+     path VARCHAR(256), 
+     supportpath ENUM('yes','no'), 
++    donotdisturb ENUM('yes','no'),
++    callforward VARCHAR(40),
++    huntgroup ENUM('yes','no'),
+     PRIMARY KEY (id), 
+     UNIQUE (name)
+ );
+diff -durN asterisk-18.18.0.orig/contrib/realtime/postgresql/postgresql_config.sql asterisk-18.18.0/contrib/realtime/postgresql/postgresql_config.sql
+--- asterisk-18.18.0.orig/contrib/realtime/postgresql/postgresql_config.sql	2023-06-17 22:26:39.390134653 +1200
++++ asterisk-18.18.0/contrib/realtime/postgresql/postgresql_config.sql	2023-07-01 21:58:34.123552840 +1200
+@@ -115,6 +115,9 @@
+     dynamic yes_no_values, 
+     path VARCHAR(256), 
+     supportpath yes_no_values, 
++    donotdisturb yes_no_values,
++    callforward VARCHAR(40),
++    huntgroup yes_no_values,
+     PRIMARY KEY (id), 
+     UNIQUE (name)
+ );
 diff -durN asterisk-18.18.0.orig/include/asterisk/callerid.h asterisk-18.18.0/include/asterisk/callerid.h
 --- asterisk-18.18.0.orig/include/asterisk/callerid.h	2023-06-17 22:26:39.398134441 +1200
 +++ asterisk-18.18.0/include/asterisk/callerid.h	2023-06-17 22:27:40.508515234 +1200
