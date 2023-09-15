@@ -43,7 +43,7 @@ diff -durN asterisk-18.19.0.orig/channels/chan_sip.c asterisk-18.19.0/channels/c
 +					<argument name="x" required="true">
 +						<para>Volume. Must be a number between 1 and 100</para>
 +					</argument>
-+					<para>Force the receive volume on the phone</para> 
++					<para>Force the receive volume on the phone</para>
 +				</option>
 +				<option name="d">
 +					<argument name="x" required="true">
@@ -63,7 +63,7 @@ diff -durN asterisk-18.19.0.orig/channels/chan_sip.c asterisk-18.19.0/channels/c
 +		<description>
 +			<para>Using the RTP streaming API, send a request to the specified peers to
 +			receive RTP audio. Supported codecs are G711 (mulaw and alaw), G722 and
-+			G729a. RTP is transmitted as unicast unless the m() option is used.</para> 
++			G729a. RTP is transmitted as unicast unless the m() option is used.</para>
 +		</description>
 +	</application>
  	<function name="SIP_HEADER" language="en_US">
@@ -3187,7 +3187,7 @@ diff -durN asterisk-18.19.0.orig/channels/chan_sip.c asterisk-18.19.0/channels/c
  			buf[0] = '\0';
  		}
 +	} else if (!strncasecmp(colname, "vmexten", 7)) {
-+		ast_copy_string(buf, peer->vmexten, len); 
++		ast_copy_string(buf, peer->vmexten, len);
 +	} else if (!strncasecmp(colname, "donotdisturb", 12)) {
 +		ast_copy_string(buf, peer->donotdisturb ? "yes" : "no", len);
 +	} else if (!strncasecmp(colname, "callforward", 11)) {
@@ -3303,7 +3303,7 @@ diff -durN asterisk-18.19.0.orig/channels/chan_sip.c asterisk-18.19.0/channels/c
 +						ast_str_append(&content, 0, "<dialogid>\n");
 +						ast_str_append(&content, 0, "<callid>%s</callid>\n", p->callid);
 +						ast_str_append(&content, 0, "<localtag>%s</localtag>\n", p->theirtag);
-+						ast_str_append(&content, 0, "<remotetag>%s</remotetag>\n", p->tag); 
++						ast_str_append(&content, 0, "<remotetag>%s</remotetag>\n", p->tag);
 +						ast_str_append(&content, 0, "</dialogid>\n");
 +						ast_str_append(&content, 0, "</answercallreq>\n");
 +						ast_str_append(&content, 0, "</x-cisco-remotecc-request>\n");
@@ -3544,7 +3544,7 @@ diff -durN asterisk-18.19.0.orig/channels/chan_sip.c asterisk-18.19.0/channels/c
 +	ast_bridge_set_talker_src_video_mode(conference->bridge);
 +
 +	conference->confid = ++next_confid;
-+	conference->keep = ast_test_flag(&pvt->flags[2], SIP_PAGE3_CISCO_KEEP_CONFERENCE) ? 1 : 0; 
++	conference->keep = ast_test_flag(&pvt->flags[2], SIP_PAGE3_CISCO_KEEP_CONFERENCE) ? 1 : 0;
 +	conference->multiadmin = ast_test_flag(&pvt->flags[2], SIP_PAGE3_CISCO_MULTIADMIN_CONFERENCE) ? 1 : 0;
 +	AST_LIST_HEAD_INIT_NOLOCK(&conference->participants);
 +
@@ -3775,7 +3775,7 @@ diff -durN asterisk-18.19.0.orig/channels/chan_sip.c asterisk-18.19.0/channels/c
 +
 +		ast_channel_unref(chan);
 +		ast_channel_unref(bridged);
-+	} else { 
++	} else {
 +		conference = pvt->conference;
 +		ao2_ref(conference, +1);
 +
@@ -3992,7 +3992,7 @@ diff -durN asterisk-18.19.0.orig/channels/chan_sip.c asterisk-18.19.0/channels/c
 +	}
 +
 +	dialog_ref(pvt, "copying dialog pvt into conference_data struct");
-+	conference_data->pvt = pvt; 
++	conference_data->pvt = pvt;
 +	conference_data->joining = !strcmp(remotecc_data->softkeyevent, "Join");
 +
 +	ast_string_field_set(conference_data, callid, remotecc_data->dialogid.callid);
@@ -4318,7 +4318,7 @@ diff -durN asterisk-18.19.0.orig/channels/chan_sip.c asterisk-18.19.0/channels/c
 +
 +		ast_str_append(&content, 0, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 +		/* "parmams" is a typo in the the Cisco API, duh. */
-+		ast_str_append(&content, 0, "<dialog-info xmlns=\"urn:ietf:parmams:xml:ns:dialog-info\" xmlns:call=\"urn:x-cisco:parmams:xml:ns:dialog-info:dialog:callinfo-dialog\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"%d\" state=\"full\" entity=\"%d@%s\">\n", park_data->pvt->dialogver, parkingspace, fromdomain); 
++		ast_str_append(&content, 0, "<dialog-info xmlns=\"urn:ietf:parmams:xml:ns:dialog-info\" xmlns:call=\"urn:x-cisco:parmams:xml:ns:dialog-info:dialog:callinfo-dialog\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"%d\" state=\"full\" entity=\"%d@%s\">\n", park_data->pvt->dialogver, parkingspace, fromdomain);
 +		ast_str_append(&content, 0, "<dialog id=\"%d\">\n", parkingspace);
 +		if (event_type == PARKED_CALL || event_type == PARKED_CALL_REMINDER) {
 +			ast_str_append(&content, 0, "<state>confirmed</state>\n");
@@ -4383,7 +4383,7 @@ diff -durN asterisk-18.19.0.orig/channels/chan_sip.c asterisk-18.19.0/channels/c
 +
 +		if (strcmp(park_data->uniqueid, payload->parkee->base->uniqueid)) {
 +			return;
-+		} 
++		}
 +
 +		/* Send notification before hanging up the call so the dialog still exists on the phone */
 +		remotecc_park_notify(park_data, payload->event_type, payload->parkingspace, payload->timeout);
@@ -4714,7 +4714,7 @@ diff -durN asterisk-18.19.0.orig/channels/chan_sip.c asterisk-18.19.0/channels/c
 +
 +static void parse_rtp_stats(struct sip_pvt *pvt, struct sip_request *req)
 +{
-+	char *rxstat, *txstat; 
++	char *rxstat, *txstat;
 +	int dur = 0, rxpkt = 0, rxoct = 0, txpkt = 0, txoct = 0, latepkt = 0, lostpkt = 0, avgjit = 0;
 +	struct sip_peer *peer;
 +
@@ -4771,7 +4771,7 @@ diff -durN asterisk-18.19.0.orig/channels/chan_sip.c asterisk-18.19.0/channels/c
 +
 +	if ((peer = sip_find_peer(pvt->peername, NULL, TRUE, FINDALLDEVICES, FALSE, 0))) {
 +		send_qrt_url(peer);
-+		sip_unref_peer(peer, "unref after sip_find_peer"); 
++		sip_unref_peer(peer, "unref after sip_find_peer");
 +	}
 +}
 +
@@ -5506,7 +5506,7 @@ diff -durN asterisk-18.19.0.orig/channels/chan_sip.c asterisk-18.19.0/channels/c
 +			ast_xml_free_text(softkeyevent_text);
 +		}
 +
-+		if ((dialogid_node = ast_xml_find_element(softkeyeventmsg_children, "dialogid", NULL, NULL)) && 
++		if ((dialogid_node = ast_xml_find_element(softkeyeventmsg_children, "dialogid", NULL, NULL)) &&
 +		    (dialogid_children = ast_xml_node_get_children(dialogid_node))) {
 +			if ((callid_node = ast_xml_find_element(dialogid_children, "callid", NULL, NULL))) {
 +				callid_text = ast_xml_get_text(callid_node);
@@ -5553,7 +5553,7 @@ diff -durN asterisk-18.19.0.orig/channels/chan_sip.c asterisk-18.19.0/channels/c
 +			if ((callid_node = ast_xml_find_element(joindialogid_children, "callid", NULL, NULL))) {
 +				callid_text = ast_xml_get_text(callid_node);
 +				remotecc_data.joindialogid.callid = ast_strdupa(callid_text);
-+				ast_xml_free_text(callid_text); 
++				ast_xml_free_text(callid_text);
 +			}
 +
 +			if ((localtag_node = ast_xml_find_element(joindialogid_children, "localtag", NULL, NULL))) {
@@ -6339,7 +6339,7 @@ diff -durN asterisk-18.19.0.orig/channels/chan_sip.c asterisk-18.19.0/channels/c
 +				if (feature == FE_DONOTDISTURB) {
 +					add_content(&resp, "<SetDoNotDisturbResponse xmlns=\"http://www.ecma-international.org/standards/ecma-323/csta/ed3\" />\n");
 +				} else if (feature == FE_CALLFORWARD) {
-+					add_content(&resp, "<SetForwardingResponse xmlns=\"http://www.ecma-international.org/standards/ecma-323/csta/ed3\" />\n"); 
++					add_content(&resp, "<SetForwardingResponse xmlns=\"http://www.ecma-international.org/standards/ecma-323/csta/ed3\" />\n");
 +				}
 +			}
 +			send_response(p, &resp, XMIT_UNRELIABLE, 0);
@@ -6431,7 +6431,7 @@ diff -durN asterisk-18.19.0.orig/channels/chan_sip.c asterisk-18.19.0/channels/c
  }
  
 +/*!
-+ * \brief Expire bulk-register aliases 
++ * \brief Expire bulk-register aliases
 + */
 +static void expire_peer_aliases(struct sip_peer *peer)
 +{
@@ -6476,7 +6476,7 @@ diff -durN asterisk-18.19.0.orig/channels/chan_sip.c asterisk-18.19.0/channels/c
 +}
 +
 +/*!
-+ * \brief Update bulk-register aliases 
++ * \brief Update bulk-register aliases
 + */
 +static void register_peer_aliases(struct sip_peer *peer)
 +{
@@ -6743,7 +6743,7 @@ diff -durN asterisk-18.19.0.orig/channels/chan_sip.c asterisk-18.19.0/channels/c
 +		} else {
 +			add_header(&req, "Subscription-State", "terminated;reason=timeout");
 +		}
-+		snprintf(tmp, sizeof(tmp), "multipart/mixed; boundary=%s", boundary); 
++		snprintf(tmp, sizeof(tmp), "multipart/mixed; boundary=%s", boundary);
 +		add_header(&req, "Content-Type", tmp);
 +
 +		snprintf(tmp, sizeof(tmp), "--%s\r\n", boundary);
@@ -7062,7 +7062,7 @@ diff -durN asterisk-18.19.0.orig/channels/chan_sip.c asterisk-18.19.0/channels/c
  				ast_set2_flag(&peer->flags[2], ast_true(v->value), SIP_PAGE3_FORCE_AVP);
 +			} else if (!strcasecmp(v->name, "register")) {
 +				if (!strcasecmp(peer->name, v->value)) {
-+					ast_log(LOG_WARNING, "Invalid register '%s', same name as peer at line %d of %s\n", v->value, v->lineno, config); 
++					ast_log(LOG_WARNING, "Invalid register '%s', same name as peer at line %d of %s\n", v->value, v->lineno, config);
 +				} else {
 +					add_peer_alias(peer, v->value, &lineindex);
 +				}
@@ -7093,7 +7093,7 @@ diff -durN asterisk-18.19.0.orig/channels/chan_sip.c asterisk-18.19.0/channels/c
 +					peer->cisco_pickupnotify_timer = 5;
 +				}
 +			} else if (!strcasecmp(v->name, "cisco_qrt_url")) {
-+				ast_string_field_set(peer, cisco_qrt_url, v->value); 
++				ast_string_field_set(peer, cisco_qrt_url, v->value);
 +			} else if (realtime && !strcasecmp(v->name, "donotdisturb")) {
 +				peer->donotdisturb = ast_true(v->value);
 +			} else if (realtime && !strcasecmp(v->name, "callforward")) {
@@ -7524,7 +7524,7 @@ diff -durN asterisk-18.19.0.orig/channels/chan_sip.c asterisk-18.19.0/channels/c
 +		if (ast_waitfor(chan, 10000) < 1) {
 +			break;
 +		}
-+	 	frame = ast_read(chan);
++		frame = ast_read(chan);
 +
 +		if (!frame || (frame->frametype == AST_FRAME_CONTROL && frame->subclass.integer == AST_CONTROL_HANGUP)) {
 +			if (frame) {
@@ -7848,7 +7848,7 @@ diff -durN asterisk-18.19.0.orig/channels/sip/include/sip.h asterisk-18.19.0/cha
 +#define SIP_PAGE3_CISCO_PICKUPNOTIFY_FROM (1 << 22) /*!> P: Include the from number in the statusline for pickup notify */
 +#define SIP_PAGE3_CISCO_PICKUPNOTIFY_TO (1 << 23) /*!> P: Include the to number in the statusline for pickup notify */
 +#define SIP_PAGE3_CISCO_PICKUPNOTIFY_BEEP (1 << 24) /*!> P: Play a beep for pickup notify */
-+#define SIP_PAGE3_TRANSFER_RESPONSE      (1 << 25) /*!< D: Send specific transfer-response for call */ 
++#define SIP_PAGE3_TRANSFER_RESPONSE      (1 << 25) /*!< D: Send specific transfer-response for call */
  
  #define SIP_PAGE3_FLAGS_TO_COPY \
  	(SIP_PAGE3_SNOM_AOC | SIP_PAGE3_SRTP_TAG_32 | SIP_PAGE3_NAT_AUTO_RPORT | SIP_PAGE3_NAT_AUTO_COMEDIA | \
@@ -8443,7 +8443,7 @@ diff -durN asterisk-18.19.0.orig/res/parking/parking_bridge.c asterisk-18.19.0/r
  
  	new_parked_user->start = ast_tvnow();
  	new_parked_user->time_limit = (time_limit >= 0) ? time_limit : lot->cfg->parkingtime;
-+	new_parked_user->reminder_delay = (reminder_delay >= 0) ? reminder_delay : lot->cfg->remindertime; 
++	new_parked_user->reminder_delay = (reminder_delay >= 0) ? reminder_delay : lot->cfg->remindertime;
  
  	if (parker_dial_string) {
  		new_parked_user->parker_dial_string = ast_strdup(parker_dial_string);
@@ -8648,7 +8648,7 @@ diff -durN asterisk-18.19.0.orig/res/res_format_attr_h264.c asterisk-18.19.0/res
   *   length. It must ALWAYS be a string literal representation of one less than
   *   H264_MAX_SPS_PPS_SIZE */
  #define H264_MAX_SPS_PPS_SIZE_SCAN_LIMIT "15"
-+#define H264_MAX_IMAGEATTR_SIZE 256 
++#define H264_MAX_IMAGEATTR_SIZE 256
  
  struct h264_attr {
  	unsigned int PROFILE_IDC;
