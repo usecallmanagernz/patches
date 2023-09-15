@@ -16,7 +16,7 @@ available on some phone models.
 See [Patching Asterisk](http://usecallmanager.nz/patching-asterisk.html)
 for more information.
 
-The latest patch version is [cisco-usecallmanager-18.18.0.patch](asterisk/cisco-usecallmanager-18.18.0.patch).
+The latest patch version is [cisco-usecallmanager-18.19.0.patch](asterisk/cisco-usecallmanager-18.19.0.patch).
 
 ## OpenConnect Patch
 
