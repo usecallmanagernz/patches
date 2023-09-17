@@ -1,4 +1,4 @@
-[![Asterisk Build](https://img.shields.io/github/actions/workflow/status/usecallmanagernz/patches/asterisk.yml?branch=master&label=asterisk%20build)](https://github.com/usecallmanagernz/patches/actions/workflows/asterisk.yml) [![Licence](https://img.shields.io/github/license/usecallmanagernz/patches?color=red)](LICENSE)
+[![Asterisk 18 Build](https://img.shields.io/github/actions/workflow/status/usecallmanagernz/patches/asterisk-18.yml?branch=master&label=asterisk%2018%20build)](https://github.com/usecallmanagernz/patches/actions/workflows/asterisk-18.yml) [![Asterisk 20 Build](https://img.shields.io/github/actions/workflow/status/usecallmanagernz/patches/asterisk-20.yml?branch=master&label=asterisk%2020%20build)](https://github.com/usecallmanagernz/patches/actions/workflows/asterisk-20.yml) [![Licence](https://img.shields.io/github/license/usecallmanagernz/patches?color=red)](LICENSE)
 
 # Asterisk Patch
 
@@ -18,8 +18,8 @@ for more information.
 
 ## Latest Patch Versions
 
-* Asterisk 20: [cisco-usecallmanager-20.4.0.patch](asterisk/cisco-usecallmanager-20.4.0.patch).
 * Asterisk 18: [cisco-usecallmanager-18.19.0.patch](asterisk/cisco-usecallmanager-18.19.0.patch).
+* Asterisk 20: [cisco-usecallmanager-20.4.0.patch](asterisk/cisco-usecallmanager-20.4.0.patch).
 
 ## OpenConnect Patch
 
