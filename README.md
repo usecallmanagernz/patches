@@ -18,8 +18,8 @@ for more information.
 
 ## Latest Patch Versions
 
-* Asterisk 18: [cisco-usecallmanager-18.20.0.patch](asterisk/cisco-usecallmanager-18.20.0.patch).
-* Asterisk 20: [cisco-usecallmanager-20.5.0.patch](asterisk/cisco-usecallmanager-20.5.0.patch).
+* Asterisk 18: [cisco-usecallmanager-18.21.0.patch](asterisk/cisco-usecallmanager-18.21.0.patch).
+* Asterisk 20: [cisco-usecallmanager-20.6.0.patch](asterisk/cisco-usecallmanager-20.6.0.patch).
 
 ## OpenConnect Patch
 
