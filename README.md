@@ -1,4 +1,4 @@
-[![Asterisk 18 Build](https://img.shields.io/github/actions/workflow/status/usecallmanagernz/patches/asterisk-18.yml?branch=master&label=asterisk%2018%20build)](https://github.com/usecallmanagernz/patches/actions/workflows/asterisk-18.yml) [![Asterisk 20 Build](https://img.shields.io/github/actions/workflow/status/usecallmanagernz/patches/asterisk-20.yml?branch=master&label=asterisk%2020%20build)](https://github.com/usecallmanagernz/patches/actions/workflows/asterisk-20.yml) [![Licence](https://img.shields.io/github/license/usecallmanagernz/patches?color=red)](LICENSE)
+[![Asterisk 20 Build](https://img.shields.io/github/actions/workflow/status/usecallmanagernz/patches/asterisk-20.yml?branch=master&label=asterisk%2020%20build)](https://github.com/usecallmanagernz/patches/actions/workflows/asterisk-20.yml) [![Asterisk 18 Build](https://img.shields.io/github/actions/workflow/status/usecallmanagernz/patches/asterisk-18.yml?branch=master&label=asterisk%2018%20build)](https://github.com/usecallmanagernz/patches/actions/workflows/asterisk-18.yml) [![Licence](https://img.shields.io/github/license/usecallmanagernz/patches?color=red)](LICENSE)
 
 # Asterisk Patch
 
@@ -18,11 +18,11 @@ for more information.
 
 ## Latest Patch Versions
 
-* Asterisk 18: [cisco-usecallmanager-18.24.0.patch](asterisk/cisco-usecallmanager-18.24.0.patch).
-* Asterisk 20: [cisco-usecallmanager-20.9.0.patch](asterisk/cisco-usecallmanager-20.9.0.patch).
+* Asterisk 20: [cisco-usecallmanager-20.9.3.patch](asterisk/cisco-usecallmanager-20.9.3.patch).
+* Asterisk 18: [cisco-usecallmanager-18.24.3.patch](asterisk/cisco-usecallmanager-18.24.3.patch).
 
 ## OpenConnect Patch
 
 Patches for OpenConnect are located in `ocserv` directory. These are
 no longer required as support for the phone's VPN client was added
-in version 1.2.0 and are kept here for historical reference.
+in version 1.2.0 and are only kept here for historical reference.
