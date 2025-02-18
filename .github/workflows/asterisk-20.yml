@@ -47,7 +47,7 @@ jobs:
 
           echo "ASTERISK_VERSION=$ASTERISK_VERSION" >> $GITHUB_ENV
 
-      - name: Fetch source archive
+      - name: Fetch and extract source archive
         run: |
           mkdir downloads
           cd downloads
@@ -55,9 +55,6 @@ jobs:
           wget ${{ env.ASTERISK_URL }}/asterisk-${{ env.ASTERISK_VERSION }}.tar.gz \
               || wget ${{ env.ASTERISK_URL }}/old-releases/asterisk-${{ env.ASTERISK_VERSION }}.tar.gz
 
-      - name: Extract source archive
-        run: |
-          cd downloads
           tar -zxvf asterisk-${{ env.ASTERISK_VERSION }}.tar.gz
 
       - name: Apply patch
