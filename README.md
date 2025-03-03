@@ -3,10 +3,9 @@
 # Asterisk Patch
 
 This repository contains patches for Asterisk that add support for
-the features needed by Cisco Enterprise IP Phones.
-
-Please note that only the latest version of the patches should be used,
-the older versions are kept here for historical reference.
+the features needed by Cisco Enterprise IP Phones. Only the latest
+version of the patches should be used, the older versions are kept
+here for historical reference.
 
 Patches are only created for LTS versions of Asterisk.
 
@@ -32,16 +31,22 @@ not be suitable for production use.
 ## Version 22 ChangeLog
 
 * Removed support for DTLS and WebSocket transports.
-* Configuration options `rpid_update` and `rpid_immediate` are now always enabled.
-* Remove configuration options `insecure`, `allowguest`, `autocreatepeer`, `compactheaders`, `notifymime`,
-  `snom_aoc_enabled` and `legacy_option_parsing`.
-* Removed callbackexten support for outbound registrations.
-* Removed support the for `Also` header in BYE as this was replaced by the REFER method.
-* Off-hook status for the peer is shown in the CLI.
+* Options `rpid_update` and `rpid_immediate` are now always enabled.
+* Removed global options `insecure`, `allowguest`, `autocreatepeer`,
+  `compactheaders`, `notifymime`, `snom_aoc_enabled` , `storesipcause`,
+  `regcontext`, `regextenonqualify` and `legacy_option_parsing`.
+* Removed peer options `username`, `callbackexten` and `regexten`.
+* Removed DMTF mode INFO. Use either `rfc2833` or `inband`.
+* Removed support the for `Also` header in BYE as this was replaced by
+  the REFER method.
+* Removed support for the `cpim-pidf-xml` events and Digium presence
+  elements in dialog-info.
+* Removed support for `call-completion`.
+* Off-hook status for the peer is shown is available in the CLI and Manager.
 * Outbound MWI subscriptions can now use TCP and TLS transports.
 
 ## OpenConnect Patch
 
 Patches for OpenConnect are located in `ocserv` directory. These are
-no longer required as support for the phone's VPN client was added
-in version 1.2.0 and are only kept here for historical reference.
+no longer required as support for the phone's VPN client was added in
+version 1.2.0 and are only kept here for historical reference.
