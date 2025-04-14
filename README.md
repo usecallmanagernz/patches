@@ -20,13 +20,13 @@ As part of the version 22 some features have been removed as they are either
 not supported by Cisco phones, are obsolete or are almost never enabled. See
 [Version 22 ChangeLog](#Version-22-ChangeLog) for the full list.
 
-**Note**: The patch for Asterisk 22 is currently in development and should
-not be suitable for production use.
+**Note**: The patch for Asterisk 22 is currently in development and may not 
+be suitable for production use.
 
 ## Latest Patch Versions
 
 * Asterisk 20 (Stable): [cisco-usecallmanager-20.12.0.patch](asterisk/cisco-usecallmanager-20.12.0.patch).
-* Asterisk 22 (Development): [cisco-usecallmanager-22.2.0.patch](asterisk/cisco-usecallmanager-22.2.0.patch).
+* Asterisk 22 (Development): [cisco-usecallmanager-22.3.0.patch](asterisk/cisco-usecallmanager-22.3.0.patch).
 
 ## Version 22 ChangeLog
 
@@ -34,7 +34,8 @@ not be suitable for production use.
 * Options `rpid_update` and `rpid_immediate` are now always enabled.
 * Removed global options `insecure`, `allowguest`, `autocreatepeer`,
   `compactheaders`, `notifymime`, `snom_aoc_enabled` , `storesipcause`,
-  `regcontext`, `regextenonqualify` and `legacy_option_parsing`.
+  `regcontext`, `regextenonqualify`, `legacy_option_parsing`
+  `discard_hold_retrieval`.
 * Removed peer options `username`, `callbackexten` and `regexten`.
 * Removed DMTF mode INFO. Use either `rfc2833` or `inband`.
 * Removed support the for `Also` header in BYE as this was replaced by
