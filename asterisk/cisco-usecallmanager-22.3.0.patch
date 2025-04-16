@@ -1,6 +1,6 @@
 diff -durN asterisk-22.3.0.orig/channels/Makefile asterisk-22.3.0/channels/Makefile
---- asterisk-22.3.0.orig/channels/Makefile	2025-04-14 18:35:50.612812649 +1200
-+++ asterisk-22.3.0/channels/Makefile	2025-04-14 18:35:59.999562495 +1200
+--- asterisk-22.3.0.orig/channels/Makefile	2025-04-17 11:10:31.735064449 +1200
++++ asterisk-22.3.0/channels/Makefile	2025-04-17 11:11:22.784703995 +1200
 @@ -29,4 +29,7 @@
  chan_unistim.o: _ASTCFLAGS+=$(AST_NO_FORMAT_TRUNCATION)
  chan_phone.o: _ASTCFLAGS+=$(AST_NO_FORMAT_TRUNCATION)
@@ -11,7 +11,7 @@ diff -durN asterisk-22.3.0.orig/channels/Makefile asterisk-22.3.0/channels/Makef
  $(call MOD_ADD_C,console_video.c vgrabbers.c console_board.c)
 diff -durN asterisk-22.3.0.orig/channels/chan_sip.c asterisk-22.3.0/channels/chan_sip.c
 --- asterisk-22.3.0.orig/channels/chan_sip.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/chan_sip.c	2025-04-14 18:36:00.003562389 +1200
++++ asterisk-22.3.0/channels/chan_sip.c	2025-04-17 11:11:22.785703968 +1200
 @@ -0,0 +1,657 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -672,7 +672,7 @@ diff -durN asterisk-22.3.0.orig/channels/chan_sip.c asterisk-22.3.0/channels/cha
 +);
 diff -durN asterisk-22.3.0.orig/channels/sip/auth_realms.c asterisk-22.3.0/channels/sip/auth_realms.c
 --- asterisk-22.3.0.orig/channels/sip/auth_realms.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/auth_realms.c	2025-04-14 18:36:00.005562336 +1200
++++ asterisk-22.3.0/channels/sip/auth_realms.c	2025-04-17 11:11:22.787703915 +1200
 @@ -0,0 +1,144 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -820,7 +820,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/auth_realms.c asterisk-22.3.0/chann
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/callback.c asterisk-22.3.0/channels/sip/callback.c
 --- asterisk-22.3.0.orig/channels/sip/callback.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/callback.c	2025-04-14 18:36:00.008562256 +1200
++++ asterisk-22.3.0/channels/sip/callback.c	2025-04-17 11:11:22.787703915 +1200
 @@ -0,0 +1,465 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -1289,7 +1289,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/callback.c asterisk-22.3.0/channels
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/chan_tech.c asterisk-22.3.0/channels/sip/chan_tech.c
 --- asterisk-22.3.0.orig/channels/sip/chan_tech.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/chan_tech.c	2025-04-14 18:36:00.013562122 +1200
++++ asterisk-22.3.0/channels/sip/chan_tech.c	2025-04-17 11:11:22.788703889 +1200
 @@ -0,0 +1,1999 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -3292,7 +3292,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/chan_tech.c asterisk-22.3.0/channel
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/cli.c asterisk-22.3.0/channels/sip/cli.c
 --- asterisk-22.3.0.orig/channels/sip/cli.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/cli.c	2025-04-14 18:36:00.017562016 +1200
++++ asterisk-22.3.0/channels/sip/cli.c	2025-04-17 11:11:22.790703835 +1200
 @@ -0,0 +1,2237 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -5533,7 +5533,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/cli.c asterisk-22.3.0/channels/sip/
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/conference.c asterisk-22.3.0/channels/sip/conference.c
 --- asterisk-22.3.0.orig/channels/sip/conference.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/conference.c	2025-04-14 18:36:00.020561936 +1200
++++ asterisk-22.3.0/channels/sip/conference.c	2025-04-17 11:11:22.790703835 +1200
 @@ -0,0 +1,1021 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -6558,7 +6558,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/conference.c asterisk-22.3.0/channe
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/config.c asterisk-22.3.0/channels/sip/config.c
 --- asterisk-22.3.0.orig/channels/sip/config.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/config.c	2025-04-14 18:36:00.022561882 +1200
++++ asterisk-22.3.0/channels/sip/config.c	2025-04-17 11:11:22.792703782 +1200
 @@ -0,0 +1,1389 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -7951,7 +7951,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/config.c asterisk-22.3.0/channels/s
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/dialog.c asterisk-22.3.0/channels/sip/dialog.c
 --- asterisk-22.3.0.orig/channels/sip/dialog.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/dialog.c	2025-04-14 18:36:00.026561776 +1200
++++ asterisk-22.3.0/channels/sip/dialog.c	2025-04-17 11:11:22.794703729 +1200
 @@ -0,0 +1,4447 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -12402,7 +12402,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/dialog.c asterisk-22.3.0/channels/s
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/dialplan_apps.c asterisk-22.3.0/channels/sip/dialplan_apps.c
 --- asterisk-22.3.0.orig/channels/sip/dialplan_apps.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/dialplan_apps.c	2025-04-14 18:36:00.027561749 +1200
++++ asterisk-22.3.0/channels/sip/dialplan_apps.c	2025-04-17 11:11:22.795703702 +1200
 @@ -0,0 +1,748 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -13154,7 +13154,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/dialplan_apps.c asterisk-22.3.0/cha
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/dialplan_funcs.c asterisk-22.3.0/channels/sip/dialplan_funcs.c
 --- asterisk-22.3.0.orig/channels/sip/dialplan_funcs.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/dialplan_funcs.c	2025-04-14 18:36:00.028561723 +1200
++++ asterisk-22.3.0/channels/sip/dialplan_funcs.c	2025-04-17 11:11:22.796703675 +1200
 @@ -0,0 +1,883 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -14041,7 +14041,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/dialplan_funcs.c asterisk-22.3.0/ch
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/domain.c asterisk-22.3.0/channels/sip/domain.c
 --- asterisk-22.3.0.orig/channels/sip/domain.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/domain.c	2025-04-14 18:36:00.029561696 +1200
++++ asterisk-22.3.0/channels/sip/domain.c	2025-04-17 11:11:22.796703675 +1200
 @@ -0,0 +1,129 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -14174,7 +14174,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/domain.c asterisk-22.3.0/channels/s
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/events.c asterisk-22.3.0/channels/sip/events.c
 --- asterisk-22.3.0.orig/channels/sip/events.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/events.c	2025-04-14 18:36:00.030561669 +1200
++++ asterisk-22.3.0/channels/sip/events.c	2025-04-17 11:11:22.797703649 +1200
 @@ -0,0 +1,149 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -14327,7 +14327,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/events.c asterisk-22.3.0/channels/s
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/fax.c asterisk-22.3.0/channels/sip/fax.c
 --- asterisk-22.3.0.orig/channels/sip/fax.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/fax.c	2025-04-14 18:36:00.030561669 +1200
++++ asterisk-22.3.0/channels/sip/fax.c	2025-04-17 11:11:22.797703649 +1200
 @@ -0,0 +1,336 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -14667,7 +14667,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/fax.c asterisk-22.3.0/channels/sip/
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/handlers.c asterisk-22.3.0/channels/sip/handlers.c
 --- asterisk-22.3.0.orig/channels/sip/handlers.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/handlers.c	2025-04-14 18:36:00.033561589 +1200
++++ asterisk-22.3.0/channels/sip/handlers.c	2025-04-17 11:11:45.996085420 +1200
 @@ -0,0 +1,5593 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -16246,7 +16246,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/handlers.c asterisk-22.3.0/channels
 +
 +	/* At this point, we hold a reference to auth_peer (if not NULL). It must be released when done. */
 +	/* Check if this device  is allowed to subscribe at all */
-+	if (ast_test_flag(&dialog->flags[1], SIP_ALLOW_SUBSCRIBE)) {
++	if (!ast_test_flag(&dialog->flags[1], SIP_ALLOW_SUBSCRIBE)) {
 +		sip_send_response(dialog, "403 Forbidden", request);
 +		sip_dialog_set_need_destroy(dialog, "subscription not allowed");
 +
@@ -20264,7 +20264,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/handlers.c asterisk-22.3.0/channels
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/include/auth_realms.h asterisk-22.3.0/channels/sip/include/auth_realms.h
 --- asterisk-22.3.0.orig/channels/sip/include/auth_realms.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/auth_realms.h	2025-04-14 18:36:00.034561563 +1200
++++ asterisk-22.3.0/channels/sip/include/auth_realms.h	2025-04-17 11:11:22.802703516 +1200
 @@ -0,0 +1,48 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -20316,7 +20316,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/auth_realms.h asterisk-22.3
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/callback.h asterisk-22.3.0/channels/sip/include/callback.h
 --- asterisk-22.3.0.orig/channels/sip/include/callback.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/callback.h	2025-04-14 18:36:00.035561536 +1200
++++ asterisk-22.3.0/channels/sip/include/callback.h	2025-04-17 11:11:22.802703516 +1200
 @@ -0,0 +1,43 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -20363,7 +20363,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/callback.h asterisk-22.3.0/
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/chan_tech.h asterisk-22.3.0/channels/sip/include/chan_tech.h
 --- asterisk-22.3.0.orig/channels/sip/include/chan_tech.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/chan_tech.h	2025-04-14 18:36:00.035561536 +1200
++++ asterisk-22.3.0/channels/sip/include/chan_tech.h	2025-04-17 11:11:22.802703516 +1200
 @@ -0,0 +1,59 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -20426,7 +20426,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/chan_tech.h asterisk-22.3.0
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/cli.h asterisk-22.3.0/channels/sip/include/cli.h
 --- asterisk-22.3.0.orig/channels/sip/include/cli.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/cli.h	2025-04-14 18:36:00.035561536 +1200
++++ asterisk-22.3.0/channels/sip/include/cli.h	2025-04-17 11:11:22.802703516 +1200
 @@ -0,0 +1,55 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -20485,7 +20485,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/cli.h asterisk-22.3.0/chann
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/conference.h asterisk-22.3.0/channels/sip/include/conference.h
 --- asterisk-22.3.0.orig/channels/sip/include/conference.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/conference.h	2025-04-14 18:36:00.035561536 +1200
++++ asterisk-22.3.0/channels/sip/include/conference.h	2025-04-17 11:11:22.802703516 +1200
 @@ -0,0 +1,84 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -20573,7 +20573,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/conference.h asterisk-22.3.
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/config.h asterisk-22.3.0/channels/sip/include/config.h
 --- asterisk-22.3.0.orig/channels/sip/include/config.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/config.h	2025-04-14 18:36:00.036561509 +1200
++++ asterisk-22.3.0/channels/sip/include/config.h	2025-04-17 11:11:22.803703489 +1200
 @@ -0,0 +1,158 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -20735,7 +20735,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/config.h asterisk-22.3.0/ch
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/dialog.h asterisk-22.3.0/channels/sip/include/dialog.h
 --- asterisk-22.3.0.orig/channels/sip/include/dialog.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/dialog.h	2025-04-14 18:36:00.037561483 +1200
++++ asterisk-22.3.0/channels/sip/include/dialog.h	2025-04-17 11:11:22.803703489 +1200
 @@ -0,0 +1,448 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -21187,7 +21187,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/dialog.h asterisk-22.3.0/ch
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/dialplan_apps.h asterisk-22.3.0/channels/sip/include/dialplan_apps.h
 --- asterisk-22.3.0.orig/channels/sip/include/dialplan_apps.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/dialplan_apps.h	2025-04-14 18:36:00.037561483 +1200
++++ asterisk-22.3.0/channels/sip/include/dialplan_apps.h	2025-04-17 11:11:22.805703436 +1200
 @@ -0,0 +1,32 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -21223,7 +21223,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/dialplan_apps.h asterisk-22
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/dialplan_funcs.h asterisk-22.3.0/channels/sip/include/dialplan_funcs.h
 --- asterisk-22.3.0.orig/channels/sip/include/dialplan_funcs.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/dialplan_funcs.h	2025-04-14 18:36:00.037561483 +1200
++++ asterisk-22.3.0/channels/sip/include/dialplan_funcs.h	2025-04-17 11:11:22.805703436 +1200
 @@ -0,0 +1,39 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -21266,7 +21266,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/dialplan_funcs.h asterisk-2
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/domain.h asterisk-22.3.0/channels/sip/include/domain.h
 --- asterisk-22.3.0.orig/channels/sip/include/domain.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/domain.h	2025-04-14 18:36:00.037561483 +1200
++++ asterisk-22.3.0/channels/sip/include/domain.h	2025-04-17 11:11:22.805703436 +1200
 @@ -0,0 +1,49 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -21319,7 +21319,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/domain.h asterisk-22.3.0/ch
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/events.h asterisk-22.3.0/channels/sip/include/events.h
 --- asterisk-22.3.0.orig/channels/sip/include/events.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/events.h	2025-04-14 18:36:00.037561483 +1200
++++ asterisk-22.3.0/channels/sip/include/events.h	2025-04-17 11:11:22.805703436 +1200
 @@ -0,0 +1,35 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -21358,7 +21358,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/events.h asterisk-22.3.0/ch
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/fax.h asterisk-22.3.0/channels/sip/include/fax.h
 --- asterisk-22.3.0.orig/channels/sip/include/fax.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/fax.h	2025-04-14 18:36:00.038561456 +1200
++++ asterisk-22.3.0/channels/sip/include/fax.h	2025-04-17 11:11:22.805703436 +1200
 @@ -0,0 +1,35 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -21397,7 +21397,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/fax.h asterisk-22.3.0/chann
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/handlers.h asterisk-22.3.0/channels/sip/include/handlers.h
 --- asterisk-22.3.0.orig/channels/sip/include/handlers.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/handlers.h	2025-04-14 18:36:00.038561456 +1200
++++ asterisk-22.3.0/channels/sip/include/handlers.h	2025-04-17 11:11:22.807703382 +1200
 @@ -0,0 +1,62 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -21463,7 +21463,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/handlers.h asterisk-22.3.0/
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/manager.h asterisk-22.3.0/channels/sip/include/manager.h
 --- asterisk-22.3.0.orig/channels/sip/include/manager.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/manager.h	2025-04-14 18:36:00.038561456 +1200
++++ asterisk-22.3.0/channels/sip/include/manager.h	2025-04-17 11:11:22.807703382 +1200
 @@ -0,0 +1,38 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -21505,7 +21505,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/manager.h asterisk-22.3.0/c
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/mwi_subscriptions.h asterisk-22.3.0/channels/sip/include/mwi_subscriptions.h
 --- asterisk-22.3.0.orig/channels/sip/include/mwi_subscriptions.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/mwi_subscriptions.h	2025-04-14 18:36:00.038561456 +1200
++++ asterisk-22.3.0/channels/sip/include/mwi_subscriptions.h	2025-04-17 11:11:22.807703382 +1200
 @@ -0,0 +1,56 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -21565,7 +21565,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/mwi_subscriptions.h asteris
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/netsock.h asterisk-22.3.0/channels/sip/include/netsock.h
 --- asterisk-22.3.0.orig/channels/sip/include/netsock.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/netsock.h	2025-04-14 18:36:00.039561429 +1200
++++ asterisk-22.3.0/channels/sip/include/netsock.h	2025-04-17 11:11:22.807703382 +1200
 @@ -0,0 +1,101 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -21670,7 +21670,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/netsock.h asterisk-22.3.0/c
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/parking.h asterisk-22.3.0/channels/sip/include/parking.h
 --- asterisk-22.3.0.orig/channels/sip/include/parking.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/parking.h	2025-04-14 18:36:00.039561429 +1200
++++ asterisk-22.3.0/channels/sip/include/parking.h	2025-04-17 11:11:22.807703382 +1200
 @@ -0,0 +1,38 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -21712,7 +21712,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/parking.h asterisk-22.3.0/c
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/peers.h asterisk-22.3.0/channels/sip/include/peers.h
 --- asterisk-22.3.0.orig/channels/sip/include/peers.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/peers.h	2025-04-14 18:36:00.039561429 +1200
++++ asterisk-22.3.0/channels/sip/include/peers.h	2025-04-17 11:11:22.808703356 +1200
 @@ -0,0 +1,238 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -21954,7 +21954,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/peers.h asterisk-22.3.0/cha
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/pickup.h asterisk-22.3.0/channels/sip/include/pickup.h
 --- asterisk-22.3.0.orig/channels/sip/include/pickup.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/pickup.h	2025-04-14 18:36:00.040561403 +1200
++++ asterisk-22.3.0/channels/sip/include/pickup.h	2025-04-17 11:11:22.808703356 +1200
 @@ -0,0 +1,33 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -21991,7 +21991,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/pickup.h asterisk-22.3.0/ch
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/proxy.h asterisk-22.3.0/channels/sip/include/proxy.h
 --- asterisk-22.3.0.orig/channels/sip/include/proxy.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/proxy.h	2025-04-14 18:36:00.040561403 +1200
++++ asterisk-22.3.0/channels/sip/include/proxy.h	2025-04-17 11:11:22.808703356 +1200
 @@ -0,0 +1,47 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -22042,7 +22042,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/proxy.h asterisk-22.3.0/cha
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/realtime.h asterisk-22.3.0/channels/sip/include/realtime.h
 --- asterisk-22.3.0.orig/channels/sip/include/realtime.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/realtime.h	2025-04-14 18:36:00.040561403 +1200
++++ asterisk-22.3.0/channels/sip/include/realtime.h	2025-04-17 11:11:22.809703329 +1200
 @@ -0,0 +1,33 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -22079,7 +22079,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/realtime.h asterisk-22.3.0/
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/recording.h asterisk-22.3.0/channels/sip/include/recording.h
 --- asterisk-22.3.0.orig/channels/sip/include/recording.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/recording.h	2025-04-14 18:36:00.040561403 +1200
++++ asterisk-22.3.0/channels/sip/include/recording.h	2025-04-17 11:11:22.809703329 +1200
 @@ -0,0 +1,40 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -22123,7 +22123,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/recording.h asterisk-22.3.0
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/registry.h asterisk-22.3.0/channels/sip/include/registry.h
 --- asterisk-22.3.0.orig/channels/sip/include/registry.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/registry.h	2025-04-14 18:36:00.041561376 +1200
++++ asterisk-22.3.0/channels/sip/include/registry.h	2025-04-17 11:11:22.810703302 +1200
 @@ -0,0 +1,112 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -22239,7 +22239,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/registry.h asterisk-22.3.0/
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/request.h asterisk-22.3.0/channels/sip/include/request.h
 --- asterisk-22.3.0.orig/channels/sip/include/request.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/request.h	2025-04-14 18:36:00.041561376 +1200
++++ asterisk-22.3.0/channels/sip/include/request.h	2025-04-17 11:11:22.810703302 +1200
 @@ -0,0 +1,140 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -22383,7 +22383,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/request.h asterisk-22.3.0/c
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/response.h asterisk-22.3.0/channels/sip/include/response.h
 --- asterisk-22.3.0.orig/channels/sip/include/response.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/response.h	2025-04-14 18:36:00.041561376 +1200
++++ asterisk-22.3.0/channels/sip/include/response.h	2025-04-17 11:11:22.810703302 +1200
 @@ -0,0 +1,57 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -22444,7 +22444,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/response.h asterisk-22.3.0/
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/route.h asterisk-22.3.0/channels/sip/include/route.h
 --- asterisk-22.3.0.orig/channels/sip/include/route.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/route.h	2025-04-14 18:36:00.042561349 +1200
++++ asterisk-22.3.0/channels/sip/include/route.h	2025-04-17 11:11:22.811703276 +1200
 @@ -0,0 +1,56 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -22504,7 +22504,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/route.h asterisk-22.3.0/cha
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/rtp_glue.h asterisk-22.3.0/channels/sip/include/rtp_glue.h
 --- asterisk-22.3.0.orig/channels/sip/include/rtp_glue.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/rtp_glue.h	2025-04-14 18:36:00.042561349 +1200
++++ asterisk-22.3.0/channels/sip/include/rtp_glue.h	2025-04-17 11:11:22.811703276 +1200
 @@ -0,0 +1,39 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -22547,7 +22547,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/rtp_glue.h asterisk-22.3.0/
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/sdp.h asterisk-22.3.0/channels/sip/include/sdp.h
 --- asterisk-22.3.0.orig/channels/sip/include/sdp.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/sdp.h	2025-04-14 18:36:00.042561349 +1200
++++ asterisk-22.3.0/channels/sip/include/sdp.h	2025-04-17 11:11:22.811703276 +1200
 @@ -0,0 +1,57 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -22608,7 +22608,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/sdp.h asterisk-22.3.0/chann
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/security_events.h asterisk-22.3.0/channels/sip/include/security_events.h
 --- asterisk-22.3.0.orig/channels/sip/include/security_events.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/security_events.h	2025-04-14 18:36:00.042561349 +1200
++++ asterisk-22.3.0/channels/sip/include/security_events.h	2025-04-17 11:11:22.812703249 +1200
 @@ -0,0 +1,44 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -22656,7 +22656,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/security_events.h asterisk-
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/sip.h asterisk-22.3.0/channels/sip/include/sip.h
 --- asterisk-22.3.0.orig/channels/sip/include/sip.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/sip.h	2025-04-14 18:36:00.043561323 +1200
++++ asterisk-22.3.0/channels/sip/include/sip.h	2025-04-17 11:11:22.812703249 +1200
 @@ -0,0 +1,221 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -22881,7 +22881,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/sip.h asterisk-22.3.0/chann
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/stimer.h asterisk-22.3.0/channels/sip/include/stimer.h
 --- asterisk-22.3.0.orig/channels/sip/include/stimer.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/stimer.h	2025-04-14 18:36:00.043561323 +1200
++++ asterisk-22.3.0/channels/sip/include/stimer.h	2025-04-17 11:11:22.813703222 +1200
 @@ -0,0 +1,75 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -22960,7 +22960,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/stimer.h asterisk-22.3.0/ch
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/include/utils.h asterisk-22.3.0/channels/sip/include/utils.h
 --- asterisk-22.3.0.orig/channels/sip/include/utils.h	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/include/utils.h	2025-04-14 18:36:00.043561323 +1200
++++ asterisk-22.3.0/channels/sip/include/utils.h	2025-04-17 11:11:22.813703222 +1200
 @@ -0,0 +1,182 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -23146,7 +23146,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/include/utils.h asterisk-22.3.0/cha
 +#endif
 diff -durN asterisk-22.3.0.orig/channels/sip/manager.c asterisk-22.3.0/channels/sip/manager.c
 --- asterisk-22.3.0.orig/channels/sip/manager.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/manager.c	2025-04-14 18:36:00.044561296 +1200
++++ asterisk-22.3.0/channels/sip/manager.c	2025-04-17 11:11:22.814703196 +1200
 @@ -0,0 +1,781 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -23931,7 +23931,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/manager.c asterisk-22.3.0/channels/
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/mwi_subscriptions.c asterisk-22.3.0/channels/sip/mwi_subscriptions.c
 --- asterisk-22.3.0.orig/channels/sip/mwi_subscriptions.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/mwi_subscriptions.c	2025-04-14 18:36:00.044561296 +1200
++++ asterisk-22.3.0/channels/sip/mwi_subscriptions.c	2025-04-17 11:11:22.815703169 +1200
 @@ -0,0 +1,406 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -24341,7 +24341,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/mwi_subscriptions.c asterisk-22.3.0
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/netsock.c asterisk-22.3.0/channels/sip/netsock.c
 --- asterisk-22.3.0.orig/channels/sip/netsock.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/netsock.c	2025-04-14 18:36:00.045561270 +1200
++++ asterisk-22.3.0/channels/sip/netsock.c	2025-04-17 11:11:22.815703169 +1200
 @@ -0,0 +1,1327 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -25672,7 +25672,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/netsock.c asterisk-22.3.0/channels/
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/parking.c asterisk-22.3.0/channels/sip/parking.c
 --- asterisk-22.3.0.orig/channels/sip/parking.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/parking.c	2025-04-14 18:36:00.045561270 +1200
++++ asterisk-22.3.0/channels/sip/parking.c	2025-04-17 11:11:22.816703143 +1200
 @@ -0,0 +1,350 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -26026,7 +26026,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/parking.c asterisk-22.3.0/channels/
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/peers.c asterisk-22.3.0/channels/sip/peers.c
 --- asterisk-22.3.0.orig/channels/sip/peers.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/peers.c	2025-04-14 18:36:00.046561243 +1200
++++ asterisk-22.3.0/channels/sip/peers.c	2025-04-17 11:11:22.817703116 +1200
 @@ -0,0 +1,3156 @@
 + /*
 + * Asterisk -- An open source telephony toolkit.
@@ -29186,7 +29186,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/peers.c asterisk-22.3.0/channels/si
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/pickup.c asterisk-22.3.0/channels/sip/pickup.c
 --- asterisk-22.3.0.orig/channels/sip/pickup.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/pickup.c	2025-04-14 18:36:00.047561216 +1200
++++ asterisk-22.3.0/channels/sip/pickup.c	2025-04-17 11:11:22.818703089 +1200
 @@ -0,0 +1,346 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -29536,7 +29536,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/pickup.c asterisk-22.3.0/channels/s
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/proxy.c asterisk-22.3.0/channels/sip/proxy.c
 --- asterisk-22.3.0.orig/channels/sip/proxy.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/proxy.c	2025-04-14 18:36:00.047561216 +1200
++++ asterisk-22.3.0/channels/sip/proxy.c	2025-04-17 11:11:22.818703089 +1200
 @@ -0,0 +1,169 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -29709,7 +29709,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/proxy.c asterisk-22.3.0/channels/si
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/realtime.c asterisk-22.3.0/channels/sip/realtime.c
 --- asterisk-22.3.0.orig/channels/sip/realtime.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/realtime.c	2025-04-14 18:36:00.048561190 +1200
++++ asterisk-22.3.0/channels/sip/realtime.c	2025-04-17 11:11:22.819703063 +1200
 @@ -0,0 +1,219 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -29932,7 +29932,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/realtime.c asterisk-22.3.0/channels
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/recording.c asterisk-22.3.0/channels/sip/recording.c
 --- asterisk-22.3.0.orig/channels/sip/recording.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/recording.c	2025-04-14 18:36:00.048561190 +1200
++++ asterisk-22.3.0/channels/sip/recording.c	2025-04-17 11:11:22.819703063 +1200
 @@ -0,0 +1,250 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -30186,7 +30186,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/recording.c asterisk-22.3.0/channel
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/registry.c asterisk-22.3.0/channels/sip/registry.c
 --- asterisk-22.3.0.orig/channels/sip/registry.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/registry.c	2025-04-14 18:36:00.049561163 +1200
++++ asterisk-22.3.0/channels/sip/registry.c	2025-04-17 11:11:22.820703036 +1200
 @@ -0,0 +1,682 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -30872,7 +30872,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/registry.c asterisk-22.3.0/channels
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/request.c asterisk-22.3.0/channels/sip/request.c
 --- asterisk-22.3.0.orig/channels/sip/request.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/request.c	2025-04-14 18:36:00.050561136 +1200
++++ asterisk-22.3.0/channels/sip/request.c	2025-04-17 11:11:22.821703009 +1200
 @@ -0,0 +1,2552 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -33428,7 +33428,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/request.c asterisk-22.3.0/channels/
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/response.c asterisk-22.3.0/channels/sip/response.c
 --- asterisk-22.3.0.orig/channels/sip/response.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/response.c	2025-04-14 18:36:00.050561136 +1200
++++ asterisk-22.3.0/channels/sip/response.c	2025-04-17 11:11:22.822702982 +1200
 @@ -0,0 +1,765 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -34197,7 +34197,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/response.c asterisk-22.3.0/channels
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/route.c asterisk-22.3.0/channels/sip/route.c
 --- asterisk-22.3.0.orig/channels/sip/route.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/route.c	2025-04-14 18:36:00.051561110 +1200
++++ asterisk-22.3.0/channels/sip/route.c	2025-04-17 11:11:22.822702982 +1200
 @@ -0,0 +1,201 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -34402,7 +34402,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/route.c asterisk-22.3.0/channels/si
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/rtp_glue.c asterisk-22.3.0/channels/sip/rtp_glue.c
 --- asterisk-22.3.0.orig/channels/sip/rtp_glue.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/rtp_glue.c	2025-04-14 18:36:00.051561110 +1200
++++ asterisk-22.3.0/channels/sip/rtp_glue.c	2025-04-17 11:11:22.822702982 +1200
 @@ -0,0 +1,360 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -34766,7 +34766,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/rtp_glue.c asterisk-22.3.0/channels
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/sdp.c asterisk-22.3.0/channels/sip/sdp.c
 --- asterisk-22.3.0.orig/channels/sip/sdp.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/sdp.c	2025-04-14 18:36:00.052561083 +1200
++++ asterisk-22.3.0/channels/sip/sdp.c	2025-04-17 11:11:22.823702956 +1200
 @@ -0,0 +1,2532 @@
 + /*
 + * Asterisk -- An open source telephony toolkit.
@@ -37302,7 +37302,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/sdp.c asterisk-22.3.0/channels/sip/
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/security_events.c asterisk-22.3.0/channels/sip/security_events.c
 --- asterisk-22.3.0.orig/channels/sip/security_events.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/security_events.c	2025-04-14 18:36:00.053561056 +1200
++++ asterisk-22.3.0/channels/sip/security_events.c	2025-04-17 11:11:22.824702929 +1200
 @@ -0,0 +1,320 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -37626,7 +37626,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/security_events.c asterisk-22.3.0/c
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/stimer.c asterisk-22.3.0/channels/sip/stimer.c
 --- asterisk-22.3.0.orig/channels/sip/stimer.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/stimer.c	2025-04-14 18:36:00.053561056 +1200
++++ asterisk-22.3.0/channels/sip/stimer.c	2025-04-17 11:11:22.824702929 +1200
 @@ -0,0 +1,448 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -38078,7 +38078,7 @@ diff -durN asterisk-22.3.0.orig/channels/sip/stimer.c asterisk-22.3.0/channels/s
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/utils.c asterisk-22.3.0/channels/sip/utils.c
 --- asterisk-22.3.0.orig/channels/sip/utils.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/utils.c	2025-04-14 18:36:00.054561030 +1200
++++ asterisk-22.3.0/channels/sip/utils.c	2025-04-17 11:11:22.825702903 +1200
 @@ -0,0 +1,2411 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -40492,8 +40492,8 @@ diff -durN asterisk-22.3.0.orig/channels/sip/utils.c asterisk-22.3.0/channels/si
 +	ast_channel_set_redirecting(dialog->channel, &redirecting, &update);
 +}
 diff -durN asterisk-22.3.0.orig/configs/samples/res_parking.conf.sample asterisk-22.3.0/configs/samples/res_parking.conf.sample
---- asterisk-22.3.0.orig/configs/samples/res_parking.conf.sample	2025-04-14 18:35:50.663811290 +1200
-+++ asterisk-22.3.0/configs/samples/res_parking.conf.sample	2025-04-14 18:36:00.055561003 +1200
+--- asterisk-22.3.0.orig/configs/samples/res_parking.conf.sample	2025-04-17 11:10:32.018056908 +1200
++++ asterisk-22.3.0/configs/samples/res_parking.conf.sample	2025-04-17 11:11:22.825702903 +1200
 @@ -68,6 +68,7 @@
                                  ; extensions if parkext is set
  
@@ -40504,7 +40504,7 @@ diff -durN asterisk-22.3.0.orig/configs/samples/res_parking.conf.sample asterisk
                                  ; parked call times out (See the parkingtime option).  The default value is 'yes'.
 diff -durN asterisk-22.3.0.orig/configs/samples/sip.conf.sample asterisk-22.3.0/configs/samples/sip.conf.sample
 --- asterisk-22.3.0.orig/configs/samples/sip.conf.sample	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/configs/samples/sip.conf.sample	2025-04-14 18:43:40.516289868 +1200
++++ asterisk-22.3.0/configs/samples/sip.conf.sample	2025-04-17 11:11:22.827702849 +1200
 @@ -0,0 +1,1209 @@
 +;
 +; SIP Configuration example for Asterisk
@@ -41717,7 +41717,7 @@ diff -durN asterisk-22.3.0.orig/configs/samples/sip.conf.sample asterisk-22.3.0/
 +;			; from the peer's configuration.
 diff -durN asterisk-22.3.0.orig/configs/samples/sip_notify.conf.sample asterisk-22.3.0/configs/samples/sip_notify.conf.sample
 --- asterisk-22.3.0.orig/configs/samples/sip_notify.conf.sample	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/configs/samples/sip_notify.conf.sample	2025-04-14 18:36:00.057560950 +1200
++++ asterisk-22.3.0/configs/samples/sip_notify.conf.sample	2025-04-17 11:11:22.827702849 +1200
 @@ -0,0 +1,80 @@
 +; RFC3842
 +; put empty "Content=" at the end to have CRLF after last body line
@@ -41800,8 +41800,8 @@ diff -durN asterisk-22.3.0.orig/configs/samples/sip_notify.conf.sample asterisk-
 +Content=action=prt-report
 +Content=RegisterCallId={${SIPPEER(${PEERNAME},regcallid)}}
 diff -durN asterisk-22.3.0.orig/contrib/realtime/mysql/mysql_config.sql asterisk-22.3.0/contrib/realtime/mysql/mysql_config.sql
---- asterisk-22.3.0.orig/contrib/realtime/mysql/mysql_config.sql	2025-04-14 18:35:50.681810810 +1200
-+++ asterisk-22.3.0/contrib/realtime/mysql/mysql_config.sql	2025-04-14 18:36:00.057560950 +1200
+--- asterisk-22.3.0.orig/contrib/realtime/mysql/mysql_config.sql	2025-04-17 11:10:32.130053923 +1200
++++ asterisk-22.3.0/contrib/realtime/mysql/mysql_config.sql	2025-04-17 11:11:22.828702823 +1200
 @@ -95,6 +95,9 @@
      dynamic ENUM('yes','no'), 
      path VARCHAR(256), 
@@ -41813,8 +41813,8 @@ diff -durN asterisk-22.3.0.orig/contrib/realtime/mysql/mysql_config.sql asterisk
      UNIQUE (name)
  );
 diff -durN asterisk-22.3.0.orig/contrib/realtime/postgresql/postgresql_config.sql asterisk-22.3.0/contrib/realtime/postgresql/postgresql_config.sql
---- asterisk-22.3.0.orig/contrib/realtime/postgresql/postgresql_config.sql	2025-04-14 18:35:50.682810784 +1200
-+++ asterisk-22.3.0/contrib/realtime/postgresql/postgresql_config.sql	2025-04-14 18:36:00.058560923 +1200
+--- asterisk-22.3.0.orig/contrib/realtime/postgresql/postgresql_config.sql	2025-04-17 11:10:32.133053843 +1200
++++ asterisk-22.3.0/contrib/realtime/postgresql/postgresql_config.sql	2025-04-17 11:11:22.829702796 +1200
 @@ -115,6 +115,9 @@
      dynamic yes_no_values, 
      path VARCHAR(256), 
@@ -41826,8 +41826,8 @@ diff -durN asterisk-22.3.0.orig/contrib/realtime/postgresql/postgresql_config.sq
      UNIQUE (name)
  );
 diff -durN asterisk-22.3.0.orig/include/asterisk/callerid.h asterisk-22.3.0/include/asterisk/callerid.h
---- asterisk-22.3.0.orig/include/asterisk/callerid.h	2025-04-14 18:35:50.693810491 +1200
-+++ asterisk-22.3.0/include/asterisk/callerid.h	2025-04-14 18:36:00.059560896 +1200
+--- asterisk-22.3.0.orig/include/asterisk/callerid.h	2025-04-17 11:10:32.253050645 +1200
++++ asterisk-22.3.0/include/asterisk/callerid.h	2025-04-17 11:11:22.829702796 +1200
 @@ -557,7 +557,11 @@
  	/*! Update from call transfer(active) (Party has already answered) */
  	AST_CONNECTED_LINE_UPDATE_SOURCE_TRANSFER,
@@ -41842,8 +41842,8 @@ diff -durN asterisk-22.3.0.orig/include/asterisk/callerid.h asterisk-22.3.0/incl
  
  /*!
 diff -durN asterisk-22.3.0.orig/include/asterisk/parking.h asterisk-22.3.0/include/asterisk/parking.h
---- asterisk-22.3.0.orig/include/asterisk/parking.h	2025-04-14 18:35:50.698810357 +1200
-+++ asterisk-22.3.0/include/asterisk/parking.h	2025-04-14 18:36:00.060560870 +1200
+--- asterisk-22.3.0.orig/include/asterisk/parking.h	2025-04-17 11:10:32.292049606 +1200
++++ asterisk-22.3.0/include/asterisk/parking.h	2025-04-17 11:11:22.830702769 +1200
 @@ -50,6 +50,7 @@
  	PARKED_CALL_UNPARKED,
  	PARKED_CALL_FAILED,
@@ -41853,8 +41853,8 @@ diff -durN asterisk-22.3.0.orig/include/asterisk/parking.h asterisk-22.3.0/inclu
  
  /*!
 diff -durN asterisk-22.3.0.orig/main/callerid.c asterisk-22.3.0/main/callerid.c
---- asterisk-22.3.0.orig/main/callerid.c	2025-04-14 18:35:50.705810171 +1200
-+++ asterisk-22.3.0/main/callerid.c	2025-04-14 18:36:00.061560843 +1200
+--- asterisk-22.3.0.orig/main/callerid.c	2025-04-17 11:10:32.371047501 +1200
++++ asterisk-22.3.0/main/callerid.c	2025-04-17 11:11:22.831702743 +1200
 @@ -1472,7 +1472,9 @@
  	{ AST_CONNECTED_LINE_UPDATE_SOURCE_DIVERSION,         "diversion",         "Call Diversion (Deprecated, use REDIRECTING)" },
  	{ AST_CONNECTED_LINE_UPDATE_SOURCE_TRANSFER,          "transfer_active",   "Call Transfer(Active)" },
@@ -41867,8 +41867,8 @@ diff -durN asterisk-22.3.0.orig/main/callerid.c asterisk-22.3.0/main/callerid.c
  };
  
 diff -durN asterisk-22.3.0.orig/main/cel.c asterisk-22.3.0/main/cel.c
---- asterisk-22.3.0.orig/main/cel.c	2025-04-14 18:35:50.705810171 +1200
-+++ asterisk-22.3.0/main/cel.c	2025-04-14 18:36:00.062560816 +1200
+--- asterisk-22.3.0.orig/main/cel.c	2025-04-17 11:10:32.380047261 +1200
++++ asterisk-22.3.0/main/cel.c	2025-04-17 11:11:22.832702716 +1200
 @@ -1156,6 +1156,8 @@
  	case PARKED_CALL_SWAP:
  		reason = "ParkedCallSwap";
@@ -41879,8 +41879,8 @@ diff -durN asterisk-22.3.0.orig/main/cel.c asterisk-22.3.0/main/cel.c
  
  	if (parked_payload->retriever) {
 diff -durN asterisk-22.3.0.orig/main/pbx.c asterisk-22.3.0/main/pbx.c
---- asterisk-22.3.0.orig/main/pbx.c	2025-04-14 18:35:50.715809905 +1200
-+++ asterisk-22.3.0/main/pbx.c	2025-04-14 18:36:00.064560763 +1200
+--- asterisk-22.3.0.orig/main/pbx.c	2025-04-17 11:10:32.444045555 +1200
++++ asterisk-22.3.0/main/pbx.c	2025-04-17 11:11:22.833702689 +1200
 @@ -8396,12 +8396,16 @@
  		   "Context: %s\r\n"
  		   "Hint: %s\r\n"
@@ -41901,8 +41901,8 @@ diff -durN asterisk-22.3.0.orig/main/pbx.c asterisk-22.3.0/main/pbx.c
  	}
  
 diff -durN asterisk-22.3.0.orig/main/presencestate.c asterisk-22.3.0/main/presencestate.c
---- asterisk-22.3.0.orig/main/presencestate.c	2025-04-14 18:35:50.715809905 +1200
-+++ asterisk-22.3.0/main/presencestate.c	2025-04-14 18:36:00.064560763 +1200
+--- asterisk-22.3.0.orig/main/presencestate.c	2025-04-17 11:10:32.456045235 +1200
++++ asterisk-22.3.0/main/presencestate.c	2025-04-17 11:11:22.835702636 +1200
 @@ -75,13 +75,13 @@
  	enum ast_presence_state state;
  
@@ -41925,8 +41925,8 @@ diff -durN asterisk-22.3.0.orig/main/presencestate.c asterisk-22.3.0/main/presen
  
  static struct ast_manager_event_blob *presence_state_to_ami(struct stasis_message *msg);
 diff -durN asterisk-22.3.0.orig/res/parking/parking_applications.c asterisk-22.3.0/res/parking/parking_applications.c
---- asterisk-22.3.0.orig/res/parking/parking_applications.c	2025-04-14 18:35:50.732809451 +1200
-+++ asterisk-22.3.0/res/parking/parking_applications.c	2025-04-14 18:36:00.065560737 +1200
+--- asterisk-22.3.0.orig/res/parking/parking_applications.c	2025-04-17 11:10:32.727038014 +1200
++++ asterisk-22.3.0/res/parking/parking_applications.c	2025-04-17 11:11:22.835702636 +1200
 @@ -80,6 +80,11 @@
  						<para>Use a timeout of <literal>duration</literal> seconds instead
  							of the timeout specified by the parking lot.</para>
@@ -42078,8 +42078,8 @@ diff -durN asterisk-22.3.0.orig/res/parking/parking_applications.c asterisk-22.3
  }
  
 diff -durN asterisk-22.3.0.orig/res/parking/parking_bridge.c asterisk-22.3.0/res/parking/parking_bridge.c
---- asterisk-22.3.0.orig/res/parking/parking_bridge.c	2025-04-14 18:35:50.732809451 +1200
-+++ asterisk-22.3.0/res/parking/parking_bridge.c	2025-04-14 18:36:00.066560710 +1200
+--- asterisk-22.3.0.orig/res/parking/parking_bridge.c	2025-04-17 11:10:32.728037987 +1200
++++ asterisk-22.3.0/res/parking/parking_bridge.c	2025-04-17 11:11:22.836702609 +1200
 @@ -31,6 +31,7 @@
  #include "asterisk/term.h"
  #include "asterisk/features.h"
@@ -42162,8 +42162,8 @@ diff -durN asterisk-22.3.0.orig/res/parking/parking_bridge.c asterisk-22.3.0/res
  
  	return 0;
 diff -durN asterisk-22.3.0.orig/res/parking/parking_bridge_features.c asterisk-22.3.0/res/parking/parking_bridge_features.c
---- asterisk-22.3.0.orig/res/parking/parking_bridge_features.c	2025-04-14 18:35:50.732809451 +1200
-+++ asterisk-22.3.0/res/parking/parking_bridge_features.c	2025-04-14 18:36:00.066560710 +1200
+--- asterisk-22.3.0.orig/res/parking/parking_bridge_features.c	2025-04-17 11:10:32.728037987 +1200
++++ asterisk-22.3.0/res/parking/parking_bridge_features.c	2025-04-17 11:11:22.837702583 +1200
 @@ -681,6 +681,15 @@
  	return -1;
  }
@@ -42215,8 +42215,8 @@ diff -durN asterisk-22.3.0.orig/res/parking/parking_bridge_features.c asterisk-2
  /*! \brief  Dial plan function to get the parking lot channel of an occupied parking lot */
  static int func_get_parkingslot_channel(struct ast_channel *chan, const char *function, char *data, char *buf, size_t len)
 diff -durN asterisk-22.3.0.orig/res/parking/parking_manager.c asterisk-22.3.0/res/parking/parking_manager.c
---- asterisk-22.3.0.orig/res/parking/parking_manager.c	2025-04-14 18:35:50.732809451 +1200
-+++ asterisk-22.3.0/res/parking/parking_manager.c	2025-04-14 18:36:00.067560683 +1200
+--- asterisk-22.3.0.orig/res/parking/parking_manager.c	2025-04-17 11:10:32.729037960 +1200
++++ asterisk-22.3.0/res/parking/parking_manager.c	2025-04-17 11:11:22.838702556 +1200
 @@ -482,7 +482,7 @@
  		struct ast_channel *chan, const char *parkinglot, int timeout_override)
  {
@@ -42237,8 +42237,8 @@ diff -durN asterisk-22.3.0.orig/res/parking/parking_manager.c asterisk-22.3.0/re
  		/* PARKED_CALL_FAILED doesn't currently get a message and is used exclusively for bridging */
  		return;
 diff -durN asterisk-22.3.0.orig/res/parking/parking_ui.c asterisk-22.3.0/res/parking/parking_ui.c
---- asterisk-22.3.0.orig/res/parking/parking_ui.c	2025-04-14 18:35:50.732809451 +1200
-+++ asterisk-22.3.0/res/parking/parking_ui.c	2025-04-14 18:36:00.068560657 +1200
+--- asterisk-22.3.0.orig/res/parking/parking_ui.c	2025-04-17 11:10:32.730037934 +1200
++++ asterisk-22.3.0/res/parking/parking_ui.c	2025-04-17 11:11:22.838702556 +1200
 @@ -58,6 +58,7 @@
  	ast_cli(fd, "Parking Context     :  %s\n", lot->cfg->parking_con);
  	ast_cli(fd, "Parking Spaces      :  %d-%d\n", lot->cfg->parking_start, lot->cfg->parking_stop);
@@ -42248,8 +42248,8 @@ diff -durN asterisk-22.3.0.orig/res/parking/parking_ui.c asterisk-22.3.0/res/par
  	ast_cli(fd, "Comeback Context    :  %s%s\n", lot->cfg->comebackcontext, lot->cfg->comebacktoorigin ? " (comebacktoorigin=yes, not used)" : "");
  	ast_cli(fd, "Comeback Dial Time  :  %u sec\n", lot->cfg->comebackdialtime);
 diff -durN asterisk-22.3.0.orig/res/parking/res_parking.h asterisk-22.3.0/res/parking/res_parking.h
---- asterisk-22.3.0.orig/res/parking/res_parking.h	2025-04-14 18:35:50.732809451 +1200
-+++ asterisk-22.3.0/res/parking/res_parking.h	2025-04-14 18:36:00.069560630 +1200
+--- asterisk-22.3.0.orig/res/parking/res_parking.h	2025-04-17 11:10:32.731037907 +1200
++++ asterisk-22.3.0/res/parking/res_parking.h	2025-04-17 11:11:22.839702529 +1200
 @@ -67,6 +67,7 @@
  	int parking_stop;                         /*!< Last space in the parking lot */
  
@@ -42300,8 +42300,8 @@ diff -durN asterisk-22.3.0.orig/res/parking/res_parking.h asterisk-22.3.0/res/pa
  };
  
 diff -durN asterisk-22.3.0.orig/res/res_format_attr_h264.c asterisk-22.3.0/res/res_format_attr_h264.c
---- asterisk-22.3.0.orig/res/res_format_attr_h264.c	2025-04-14 18:35:50.735809372 +1200
-+++ asterisk-22.3.0/res/res_format_attr_h264.c	2025-04-14 18:36:00.069560630 +1200
+--- asterisk-22.3.0.orig/res/res_format_attr_h264.c	2025-04-17 11:10:32.793036255 +1200
++++ asterisk-22.3.0/res/res_format_attr_h264.c	2025-04-17 11:11:22.839702529 +1200
 @@ -47,6 +47,7 @@
   *   length. It must ALWAYS be a string literal representation of one less than
   *   H264_MAX_SPS_PPS_SIZE */
@@ -42384,8 +42384,8 @@ diff -durN asterisk-22.3.0.orig/res/res_format_attr_h264.c asterisk-22.3.0/res/r
  
  static int unload_module(void)
 diff -durN asterisk-22.3.0.orig/res/res_parking.c asterisk-22.3.0/res/res_parking.c
---- asterisk-22.3.0.orig/res/res_parking.c	2025-04-14 18:35:50.737809318 +1200
-+++ asterisk-22.3.0/res/res_parking.c	2025-04-14 18:36:00.070560603 +1200
+--- asterisk-22.3.0.orig/res/res_parking.c	2025-04-17 11:10:32.812035749 +1200
++++ asterisk-22.3.0/res/res_parking.c	2025-04-17 11:11:22.840702503 +1200
 @@ -140,6 +140,9 @@
  					</since>
  					<synopsis>Amount of time a call will remain parked before giving up (in seconds).</synopsis>
@@ -42413,8 +42413,8 @@ diff -durN asterisk-22.3.0.orig/res/res_parking.c asterisk-22.3.0/res/res_parkin
  	aco_option_register(&cfg_info, "comebackcontext", ACO_EXACT, parking_lot_types, "parkedcallstimeout", OPT_STRINGFIELD_T, 0, STRFLDSET(struct parking_lot_cfg, comebackcontext));
  	aco_option_register(&cfg_info, "comebackdialtime", ACO_EXACT, parking_lot_types, "30", OPT_UINT_T, 0, FLDSET(struct parking_lot_cfg, comebackdialtime));
 diff -durN asterisk-22.3.0.orig/res/res_srtp.c asterisk-22.3.0/res/res_srtp.c
---- asterisk-22.3.0.orig/res/res_srtp.c	2025-04-14 18:35:50.743809158 +1200
-+++ asterisk-22.3.0/res/res_srtp.c	2025-04-14 18:36:00.071560577 +1200
+--- asterisk-22.3.0.orig/res/res_srtp.c	2025-04-17 11:10:32.942032284 +1200
++++ asterisk-22.3.0/res/res_srtp.c	2025-04-17 11:11:22.841702476 +1200
 @@ -1140,19 +1140,19 @@
  			 * If you want to enable one of those defines, please, go for
  			 * CFLAGS='-DENABLE_SRTP_AES_GCM' ./configure && sudo make install
