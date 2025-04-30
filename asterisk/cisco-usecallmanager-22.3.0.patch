@@ -26026,8 +26026,8 @@ diff -durN asterisk-22.3.0.orig/channels/sip/parking.c asterisk-22.3.0/channels/
 +}
 diff -durN asterisk-22.3.0.orig/channels/sip/peers.c asterisk-22.3.0/channels/sip/peers.c
 --- asterisk-22.3.0.orig/channels/sip/peers.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.3.0/channels/sip/peers.c	2025-04-17 11:11:22.817703116 +1200
-@@ -0,0 +1,3156 @@
++++ asterisk-22.3.0/channels/sip/peers.c	2025-04-30 23:28:00.905083495 +1200
+@@ -0,0 +1,3159 @@
 + /*
 + * Asterisk -- An open source telephony toolkit.
 + *
@@ -26468,6 +26468,9 @@ diff -durN asterisk-22.3.0.orig/channels/sip/peers.c asterisk-22.3.0/channels/si
 +
 +		return -1;
 +	}
++
++	new_messages = 0;
++	old_messages = 0;
 +
 +	/* Attempt to use cached mwi to get message counts. */
 +	if (!sip_peer_get_cached_mwi(peer, &new_messages, &old_messages) && !cache_only) {
