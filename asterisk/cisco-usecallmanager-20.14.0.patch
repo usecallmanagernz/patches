@@ -1,6 +1,6 @@
 diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/chan_sip.c
 --- asterisk-20.14.0.orig/channels/chan_sip.c	2025-05-12 23:42:28.131411621 +1200
-+++ asterisk-20.14.0/channels/chan_sip.c	2025-05-12 23:42:37.206169783 +1200
++++ asterisk-20.14.0/channels/chan_sip.c	2025-05-16 14:50:01.254730231 +1200
 @@ -176,7 +176,7 @@
  /*** MODULEINFO
  	<use type="module">res_crypto</use>
@@ -6359,7 +6359,15 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  			} else if (p->subscribed == CALL_COMPLETION) {
  				ast_debug(2, "%s CC subscription for peer %s\n", action, p->username);
  			} else {
-@@ -28944,10 +33137,38 @@
+@@ -28936,6 +33129,7 @@
+ 			/* Set timer for destruction of call at expiration */
+ 			sip_scheddestroy(p, (p->expiry + 10) * 1000);
+ 		}
++		req->authenticated = 1;
+ 
+ 		if (p->subscribed == MWI_NOTIFICATION) {
+ 			ast_set_flag(&p->flags[1], SIP_PAGE2_DIALOG_ESTABLISHED);
+@@ -28944,10 +33138,38 @@
  				struct sip_peer *peer = p->relatedpeer;
  				sip_ref_peer(peer, "ensure a peer ref is held during MWI sending");
  				ao2_unlock(p);
@@ -6399,7 +6407,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  		} else if (p->subscribed != CALL_COMPLETION) {
  			struct state_notify_data data = { 0, };
  			char *subtype = NULL;
-@@ -28968,6 +33189,9 @@
+@@ -28968,6 +33190,9 @@
  
  			sip_pvt_unlock(p);
  			data.state = ast_extension_state_extended(NULL, p->context, p->exten, &device_state_info);
@@ -6409,7 +6417,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  			sip_pvt_lock(p);
  
  			if (data.state < 0) {
-@@ -28982,11 +33206,7 @@
+@@ -28982,11 +33207,7 @@
  				}
  				return 0;
  			}
@@ -6422,7 +6430,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  			ast_set_flag(&p->flags[1], SIP_PAGE2_DIALOG_ESTABLISHED);
  			transmit_response(p, "200 OK", req);
  			/* RFC 3265: A notification must be sent on every subscribe, so force it */
-@@ -29333,7 +33553,7 @@
+@@ -29333,7 +33554,7 @@
  
  		break;
  	case SIP_REFER:
@@ -6431,7 +6439,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  		break;
  	case SIP_CANCEL:
  		res = handle_request_cancel(p, req);
-@@ -29793,7 +34013,7 @@
+@@ -29793,7 +34014,7 @@
   *  \retval -1 on failure.
   *  \retval 0 on success.
   */
@@ -6440,7 +6448,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  {
  	/* Called with peer lock, but releases it */
  	struct sip_pvt *p;
-@@ -29823,7 +34043,7 @@
+@@ -29823,7 +34044,7 @@
  	if (!get_cached_mwi(peer, &newmsgs, &oldmsgs) && !cache_only) {
  		/* Fall back to manually checking the mailbox if not cache_only and get_cached_mwi failed */
  		struct ast_str *mailbox_str = ast_str_alloca(512);
@@ -6449,7 +6457,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  		/* if there is no mailbox do nothing */
  		if (!ast_str_strlen(mailbox_str)) {
  			ao2_unlock(peer);
-@@ -29841,7 +34061,7 @@
+@@ -29841,7 +34062,7 @@
  
  	if (peer->mwipvt) {
  		/* Base message on subscription */
@@ -6458,7 +6466,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  		ao2_unlock(peer);
  	} else {
  		ao2_unlock(peer);
-@@ -29891,13 +34111,360 @@
+@@ -29891,13 +34112,360 @@
  	/* the following will decrement the refcount on p as it finishes */
  	transmit_notify_with_mwi(p, newmsgs, oldmsgs, vmexten);
  	sip_pvt_unlock(p);
@@ -6820,7 +6828,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  static struct ast_manager_event_blob *session_timeout_to_ami(struct stasis_message *msg)
  {
  	RAII_VAR(struct ast_str *, channel_string, NULL, ast_free);
-@@ -30599,6 +35166,25 @@
+@@ -30599,6 +35167,25 @@
  		ast_devstate_changed(AST_DEVICE_UNKNOWN, AST_DEVSTATE_CACHABLE, "SIP/%s", peer->name);
  	}
  
@@ -6846,7 +6854,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  	/* Try again quickly */
  	AST_SCHED_REPLACE_UNREF(peer->pokeexpire, sched,
  			DEFAULT_FREQ_NOTOK, sip_poke_peer_s, peer,
-@@ -30752,13 +35338,13 @@
+@@ -30752,13 +35339,13 @@
  	char *host;
  	char *tmp;
  	struct sip_peer *p;
@@ -6862,7 +6870,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  
  	ast_debug(3, "Checking device state for peer %s\n", host);
  
-@@ -30796,7 +35382,7 @@
+@@ -30796,7 +35383,7 @@
  			else if (p->call_limit && p->busy_level && p->inuse >= p->busy_level)
  				/* We're forcing busy before we've reached the call limit */
  				res = AST_DEVICE_BUSY;
@@ -6871,7 +6879,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  				/* Not busy, but we do have a call */
  				res = AST_DEVICE_INUSE;
  			else if (p->maxms && ((p->lastms > p->maxms) || (p->lastms < 0)))
-@@ -30814,6 +35400,35 @@
+@@ -30814,6 +35401,35 @@
  	return res;
  }
  
@@ -6907,7 +6915,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  /*! \brief PBX interface function -build SIP pvt structure
   *	SIP calls initiated by the PBX arrive here.
   *
-@@ -31308,9 +35923,21 @@
+@@ -31308,9 +35924,21 @@
  	} else if (!strcasecmp(v->name, "rfc2833compensate")) {
  		ast_set_flag(&mask[1], SIP_PAGE2_RFC2833_COMPENSATE);
  		ast_set2_flag(&flags[1], ast_true(v->value), SIP_PAGE2_RFC2833_COMPENSATE);
@@ -6932,7 +6940,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  	} else if (!strcasecmp(v->name, "rtcp_mux")) {
  		ast_set_flag(&mask[2], SIP_PAGE3_RTCP_MUX);
  		ast_set2_flag(&flags[2], ast_true(v->value), SIP_PAGE3_RTCP_MUX);
-@@ -31572,7 +36199,6 @@
+@@ -31572,7 +36200,6 @@
  	peer->stimer.st_max_se = global_max_se;
  	peer->timer_t1 = global_t1;
  	peer->timer_b = global_timer_b;
@@ -6940,7 +6948,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  	peer->disallowed_methods = sip_cfg.disallowed_methods;
  	peer->transports = default_transports;
  	peer->default_outbound_transport = default_primary_transport;
-@@ -31580,6 +36206,8 @@
+@@ -31580,6 +36207,8 @@
  		ao2_ref(peer->outboundproxy, -1);
  		peer->outboundproxy = NULL;
  	}
@@ -6949,7 +6957,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  }
  
  /*! \brief Create temporary peer (used in autocreatepeer mode) */
-@@ -31631,7 +36259,6 @@
+@@ -31631,7 +36260,6 @@
  
  	while ((mbox = strsep(&next, ","))) {
  		struct sip_mailbox *mailbox;
@@ -6957,7 +6965,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  
  		/* remove leading/trailing whitespace from mailbox string */
  		mbox = ast_strip(mbox);
-@@ -31642,12 +36269,11 @@
+@@ -31642,12 +36270,11 @@
  		/* Check whether the mailbox is already in the list */
  		AST_LIST_TRAVERSE(&peer->mailboxes, mailbox, entry) {
  			if (!strcmp(mailbox->id, mbox)) {
@@ -6972,7 +6980,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  			continue;
  		}
  
-@@ -31663,6 +36289,87 @@
+@@ -31663,6 +36290,87 @@
  	}
  }
  
@@ -7060,7 +7068,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  /*! \brief Build peer from configuration (file or realtime static/dynamic) */
  static struct sip_peer *build_peer(const char *name, struct ast_variable *v_head, struct ast_variable *alt, int realtime, int devstate_only)
  {
-@@ -31686,6 +36393,7 @@
+@@ -31686,6 +36394,7 @@
  	int alt_fullcontact = alt ? 1 : 0, headercount = 0;
  	struct ast_str *fullcontact = ast_str_alloca(512);
  	int acl_change_subscription_needed = 0;
@@ -7068,7 +7076,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  
  	if (!realtime || ast_test_flag(&global_flags[1], SIP_PAGE2_RTCACHEFRIENDS)) {
  		/* Note we do NOT use sip_find_peer here, to avoid realtime recursion */
-@@ -31783,9 +36491,18 @@
+@@ -31783,9 +36492,18 @@
  
  	if (!devstate_only) {
  		struct sip_mailbox *mailbox;
@@ -7087,7 +7095,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  	}
  
  	/* clear named callgroup and named pickup group container */
-@@ -32000,7 +36717,7 @@
+@@ -32000,7 +36718,7 @@
  			} else if (!strcasecmp(v->name, "regexten")) {
  				ast_string_field_set(peer, regexten, v->value);
  			} else if (!strcasecmp(v->name, "callbackextension")) {
@@ -7096,7 +7104,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  			} else if (!strcasecmp(v->name, "amaflags")) {
  				format = ast_channel_string2amaflag(v->value);
  				if (format < 0) {
-@@ -32170,6 +36887,46 @@
+@@ -32170,6 +36888,46 @@
  				ast_set2_flag(&peer->flags[2], ast_true(v->value), SIP_PAGE3_DISCARD_REMOTE_HOLD_RETRIEVAL);
  			} else if (!strcasecmp(v->name, "force_avp")) {
  				ast_set2_flag(&peer->flags[2], ast_true(v->value), SIP_PAGE3_FORCE_AVP);
@@ -7143,7 +7151,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  			} else {
  				ast_rtp_dtls_cfg_parse(&peer->dtls_cfg, v->name, v->value);
  			}
-@@ -32252,6 +37009,9 @@
+@@ -32252,6 +37010,9 @@
  
  	if (!devstate_only) {
  		struct sip_mailbox *mailbox;
@@ -7153,7 +7161,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  		AST_LIST_TRAVERSE_SAFE_BEGIN(&peer->mailboxes, mailbox, entry) {
  			if (mailbox->status == SIP_MAILBOX_STATUS_UNKNOWN) {
  				AST_LIST_REMOVE_CURRENT(entry);
-@@ -32259,6 +37019,20 @@
+@@ -32259,6 +37020,20 @@
  			}
  		}
  		AST_LIST_TRAVERSE_SAFE_END;
@@ -7174,7 +7182,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  	}
  
  	if (!can_parse_xml && (ast_get_cc_agent_policy(peer->cc_params) == AST_CC_AGENT_NATIVE)) {
-@@ -32416,6 +37190,22 @@
+@@ -32416,6 +37191,22 @@
  		reg_source_db(peer);
  	}
  
@@ -7197,7 +7205,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  	/* If they didn't request that MWI is sent *only* on subscribe, go ahead and
  	 * subscribe to it now. */
  	if (!devstate_only && !ast_test_flag(&peer->flags[1], SIP_PAGE2_SUBSCRIBEMWIONLY) &&
-@@ -32424,7 +37214,12 @@
+@@ -32424,7 +37215,12 @@
  		/* Send MWI from the event cache only.  This is so we can send initial
  		 * MWI if app_voicemail got loaded before chan_sip.  If it is the other
  		 * way, then we will get events when app_voicemail gets loaded. */
@@ -7211,7 +7219,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  	}
  
  	peer->the_mark = 0;
-@@ -32432,9 +37227,9 @@
+@@ -32432,9 +37228,9 @@
  	oldacl = ast_free_acl_list(oldacl);
  	oldcontactacl = ast_free_acl_list(oldcontactacl);
  	olddirectmediaacl = ast_free_acl_list(olddirectmediaacl);
@@ -7223,7 +7231,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  			sip_register(reg_string, 0); /* XXX TODO: count in registry_count */
  			ast_free(reg_string);
  		}
-@@ -34052,6 +38847,7 @@
+@@ -34052,6 +38848,7 @@
  static char *app_dtmfmode = "SIPDtmfMode";
  static char *app_sipaddheader = "SIPAddHeader";
  static char *app_sipremoveheader = "SIPRemoveHeader";
@@ -7231,7 +7239,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  #ifdef TEST_FRAMEWORK
  static char *app_sipsendcustominfo = "SIPSendCustomINFO";
  #endif
-@@ -34183,6 +38979,430 @@
+@@ -34183,6 +38980,444 @@
  	return 0;
  }
  
@@ -7243,7 +7251,8 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
 +	APP_CISCOPAGE_DISPLAY     = 1 << 3,
 +	APP_CISCOPAGE_INCLUDEBUSY = 1 << 4,
 +	APP_CISCOPAGE_OFFHOOK     = 1 << 5,
-+	APP_CISCOPAGE_BEEP        = 1 << 6
++	APP_CISCOPAGE_BEEP        = 1 << 6,
++	APP_CISCOPAGE_TIMER       = 1 << 7,
 +};
 +
 +enum {
@@ -7251,6 +7260,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
 +	APP_CISCOPAGE_ARG_PORT,
 +	APP_CISCOPAGE_ARG_VOLUME,
 +	APP_CISCOPAGE_ARG_DISPLAY,
++	APP_CISCOPAGE_ARG_TIMER,
 +	APP_CISCOPAGE_ARG_ARRAY_SIZE
 +};
 +
@@ -7259,6 +7269,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
 +	AST_APP_OPTION_ARG('p', APP_CISCOPAGE_PORT, APP_CISCOPAGE_ARG_PORT),
 +	AST_APP_OPTION_ARG('v', APP_CISCOPAGE_VOLUME, APP_CISCOPAGE_ARG_VOLUME),
 +	AST_APP_OPTION_ARG('d', APP_CISCOPAGE_DISPLAY, APP_CISCOPAGE_ARG_DISPLAY),
++	AST_APP_OPTION_ARG('t', APP_CISCOPAGE_TIMER, APP_CISCOPAGE_ARG_TIMER),
 +	AST_APP_OPTION('b', APP_CISCOPAGE_INCLUDEBUSY),
 +	AST_APP_OPTION('o', APP_CISCOPAGE_OFFHOOK),
 +	AST_APP_OPTION('a', APP_CISCOPAGE_BEEP)
@@ -7279,7 +7290,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
 +	struct ast_flags options = { 0, };
 +	char *option_args[APP_CISCOPAGE_ARG_ARRAY_SIZE];
 +	char *parse, *peername, *codec, display[64];
-+	int volume, port, multicast, includebusy, offhook, beep;
++	int volume, port, multicast, includebusy, offhook, beep, timer;
 +	struct ast_format *format;
 +	AST_LIST_HEAD_NOLOCK(, page_target) targets;
 +	struct page_target *target;
@@ -7345,6 +7356,17 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
 +		ast_xml_escape(option_args[APP_CISCOPAGE_ARG_DISPLAY], display, sizeof(display));
 +	} else {
 +		display[0] = '\0';
++	}
++
++	if (ast_test_flag(&options, APP_CISCOPAGE_TIMER) && !ast_strlen_zero(option_args[APP_CISCOPAGE_ARG_TIMER])) {
++		timer = strtol(option_args[APP_CISCOPAGE_ARG_TIMER], NULL, 10);
++
++		if (timer < 1 || timer > 60) {
++			ast_log(LOG_ERROR, "Invalid timer option '%s'\n", option_args[APP_CISCOPAGE_ARG_TIMER]);
++			return -1;
++		}
++	} else {
++		timer = 10;
 +	}
 +
 +	beep = ast_test_flag(&options, APP_CISCOPAGE_BEEP);
@@ -7445,7 +7467,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
 +			ast_str_append(&content, 0, "<statuslineupdatereq>\n");
 +			ast_str_append(&content, 0, "<action>notify_display</action>\n");
 +			ast_str_append(&content, 0, "<statustext>%s</statustext>\n", display);
-+			ast_str_append(&content, 0, "<displaytimeout>10</displaytimeout>\n");
++			ast_str_append(&content, 0, "<displaytimeout>%d</displaytimeout>\n", timer);
 +			ast_str_append(&content, 0, "<linenumber>0</linenumber>\n");
 +			ast_str_append(&content, 0, "<priority>1</priority>\n");
 +			ast_str_append(&content, 0, "</statuslineupdatereq>\n");
@@ -7662,7 +7684,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  #ifdef TEST_FRAMEWORK
  /*! \brief Send a custom INFO message via AST_CONTROL_CUSTOM indication */
  static int sip_sendcustominfo(struct ast_channel *chan, const char *data)
-@@ -34288,6 +39508,11 @@
+@@ -34288,6 +39523,11 @@
  	i = ao2_iterator_init(peers, 0);
  	while ((peer = ao2_t_iterator_next(&i, "iterate thru peers table"))) {
  		ao2_lock(peer);
@@ -7674,7 +7696,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  		/* Don't schedule poking on a peer without qualify */
  		if (peer->maxms) {
  			if (num == global_qualify_peers) {
-@@ -34433,6 +39658,9 @@
+@@ -34433,6 +39673,9 @@
  	/* Send qualify (OPTIONS) to all peers */
  	sip_poke_all_peers();
  
@@ -7684,7 +7706,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  	/* Send keepalive to all peers */
  	sip_keepalive_all_peers();
  
-@@ -34579,9 +39807,9 @@
+@@ -34579,9 +39822,9 @@
  static int peer_ipcmp_cb_full(void *obj, void *arg, void *data, int flags)
  {
  	struct sip_peer *peer = obj, *peer2 = arg;
@@ -7696,7 +7718,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  		/* We require a callback extension match, but don't have one */
  		return 0;
  	}
-@@ -34743,6 +39971,9 @@
+@@ -34743,6 +39986,9 @@
  	AST_CLI_DEFINE(sip_show_settings, "Show SIP global settings"),
  	AST_CLI_DEFINE(sip_show_mwi, "Show MWI subscriptions"),
  	AST_CLI_DEFINE(sip_cli_notify, "Send a notify packet to a SIP peer"),
@@ -7706,7 +7728,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  	AST_CLI_DEFINE(sip_show_channel, "Show detailed SIP channel info"),
  	AST_CLI_DEFINE(sip_show_history, "Show SIP dialog history"),
  	AST_CLI_DEFINE(sip_show_peer, "Show details on specific SIP peer"),
-@@ -35652,6 +40883,7 @@
+@@ -35652,6 +40898,7 @@
  	ast_register_application_xml(app_dtmfmode, sip_dtmfmode);
  	ast_register_application_xml(app_sipaddheader, sip_addheader);
  	ast_register_application_xml(app_sipremoveheader, sip_removeheader);
@@ -7714,7 +7736,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  #ifdef TEST_FRAMEWORK
  	ast_register_application_xml(app_sipsendcustominfo, sip_sendcustominfo);
  #endif
-@@ -35726,6 +40958,7 @@
+@@ -35726,6 +40973,7 @@
  
  	sip_register_tests();
  	network_change_stasis_subscribe();
@@ -7722,7 +7744,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  
  	if (sip_cfg.websocket_enabled) {
  		ast_websocket_add_protocol("sip", sip_websocket_callback);
-@@ -35758,6 +40991,7 @@
+@@ -35758,6 +41006,7 @@
  
  	network_change_stasis_unsubscribe();
  	acl_change_event_stasis_unsubscribe();
@@ -7730,7 +7752,7 @@ diff -durN asterisk-20.14.0.orig/channels/chan_sip.c asterisk-20.14.0/channels/c
  
  	/* First, take us out of the channel type list */
  	ast_channel_unregister(&sip_tech);
-@@ -35775,6 +41009,7 @@
+@@ -35775,6 +41024,7 @@
  	ast_unregister_application(app_dtmfmode);
  	ast_unregister_application(app_sipaddheader);
  	ast_unregister_application(app_sipremoveheader);

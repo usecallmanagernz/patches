@@ -26,7 +26,7 @@ be suitable for production use.
 ## Latest Patch Versions
 
 * Asterisk 20 (Stable): [cisco-usecallmanager-20.14.0.patch](asterisk/cisco-usecallmanager-20.14.0.patch).
-* Asterisk 22 (Development): [cisco-usecallmanager-22.3.0.patch](asterisk/cisco-usecallmanager-22.3.0.patch).
+* Asterisk 22 (Development): [cisco-usecallmanager-22.4.0.patch](asterisk/cisco-usecallmanager-22.4.0.patch).
 
 ## Version 22 ChangeLog
 
@@ -35,8 +35,11 @@ be suitable for production use.
 * Removed global options `insecure`, `allowguest`, `autocreatepeer`,
   `compactheaders`, `notifymime`, `snom_aoc_enabled` , `storesipcause`,
   `regcontext`, `regextenonqualify`, `legacy_option_parsing`
-  `discard_hold_retrieval`.
-* Removed peer options `username`, `callbackexten` and `regexten`.
+  `discard_hold_retrieval`, `disallowed_methods`, `dumphistory`,
+  `recordhistory`, `ignoresdpversion`, `dynamic_exclude_static`,
+  `refer_addheaders` and `outofcall_message_context`.
+* Removed peer options `callbackexten`, `regexten`, `promiscredir`,
+  `g726nonstandard`, `encryption_taglen` and `mwi_from`.
 * Removed DMTF mode INFO. Use either `rfc2833` or `inband`.
 * Removed support the for `Also` header in BYE as this was replaced by
   the REFER method.
@@ -45,6 +48,7 @@ be suitable for production use.
 * Removed support for `call-completion`.
 * Off-hook status for the peer is shown is available in the CLI and Manager.
 * Outbound MWI subscriptions can now use TCP and TLS transports.
+* `sip show registry` renamed to `sip show registrations`.
 
 ## OpenConnect Patch
 
