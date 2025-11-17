@@ -8,7 +8,7 @@ should be used, the older versions are kept here for historical reference.
 
 Patches are only created for LTS versions of Asterisk.
 
-See [Patching Asterisk](http://usecallmanager.nz/patching-asterisk.html)
+See [Patching Asterisk](https://usecallmanager.nz/patching-asterisk.html)
 for more information.
 
 **Note:** `chan_sip` was removed from the official Asterisk source in version 22
