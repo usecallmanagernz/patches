@@ -1,4 +1,4 @@
-name: asterisk 22 build
+name: asterisk-22-build
 
 on:
   push:
