@@ -120,7 +120,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/chan_sip.c asterisk-22.7
 +);
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/authentication_realms.c asterisk-22.7.0/channels/sip/authentication_realms.c
 --- asterisk-22.7.0.orig/channels/sip/authentication_realms.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/authentication_realms.c	2026-01-12 13:44:19.112915776 +1300
++++ asterisk-22.7.0/channels/sip/authentication_realms.c	2026-01-15 17:41:00.145248279 +1300
 @@ -0,0 +1,137 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -261,7 +261,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/authentication_realm
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/callback.c asterisk-22.7.0/channels/sip/callback.c
 --- asterisk-22.7.0.orig/channels/sip/callback.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/callback.c	2026-01-12 13:44:19.115915696 +1300
++++ asterisk-22.7.0/channels/sip/callback.c	2026-01-15 17:41:00.146248252 +1300
 @@ -0,0 +1,440 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -705,7 +705,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/callback.c asterisk-
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/channel_tech.c asterisk-22.7.0/channels/sip/channel_tech.c
 --- asterisk-22.7.0.orig/channels/sip/channel_tech.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/channel_tech.c	2026-01-12 13:44:19.118915616 +1300
++++ asterisk-22.7.0/channels/sip/channel_tech.c	2026-01-15 17:41:00.148248199 +1300
 @@ -0,0 +1,1789 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -2498,7 +2498,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/channel_tech.c aster
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/cli_commands.c asterisk-22.7.0/channels/sip/cli_commands.c
 --- asterisk-22.7.0.orig/channels/sip/cli_commands.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/cli_commands.c	2026-01-12 13:44:19.120915562 +1300
++++ asterisk-22.7.0/channels/sip/cli_commands.c	2026-01-15 17:41:00.150248145 +1300
 @@ -0,0 +1,2236 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -4738,7 +4738,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/cli_commands.c aster
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/conference.c asterisk-22.7.0/channels/sip/conference.c
 --- asterisk-22.7.0.orig/channels/sip/conference.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/conference.c	2026-01-12 13:44:19.121915536 +1300
++++ asterisk-22.7.0/channels/sip/conference.c	2026-01-15 17:41:00.151248119 +1300
 @@ -0,0 +1,968 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -5710,7 +5710,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/conference.c asteris
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/config.c asterisk-22.7.0/channels/sip/config.c
 --- asterisk-22.7.0.orig/channels/sip/config.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/config.c	2026-01-12 13:44:19.123915483 +1300
++++ asterisk-22.7.0/channels/sip/config.c	2026-01-15 17:41:00.153248065 +1300
 @@ -0,0 +1,1726 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -7440,7 +7440,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/config.c asterisk-22
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/dialog.c asterisk-22.7.0/channels/sip/dialog.c
 --- asterisk-22.7.0.orig/channels/sip/dialog.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/dialog.c	2026-01-12 13:44:19.126915403 +1300
++++ asterisk-22.7.0/channels/sip/dialog.c	2026-01-15 17:41:00.155248012 +1300
 @@ -0,0 +1,3263 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -10707,7 +10707,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/dialog.c asterisk-22
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/dialplan_applications.c asterisk-22.7.0/channels/sip/dialplan_applications.c
 --- asterisk-22.7.0.orig/channels/sip/dialplan_applications.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/dialplan_applications.c	2026-01-12 13:44:19.127915376 +1300
++++ asterisk-22.7.0/channels/sip/dialplan_applications.c	2026-01-15 17:41:00.156247986 +1300
 @@ -0,0 +1,685 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -11396,7 +11396,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/dialplan_application
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/dialplan_functions.c asterisk-22.7.0/channels/sip/dialplan_functions.c
 --- asterisk-22.7.0.orig/channels/sip/dialplan_functions.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/dialplan_functions.c	2026-01-12 13:44:19.129915323 +1300
++++ asterisk-22.7.0/channels/sip/dialplan_functions.c	2026-01-15 17:41:00.159247906 +1300
 @@ -0,0 +1,987 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -12387,7 +12387,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/dialplan_functions.c
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/domains.c asterisk-22.7.0/channels/sip/domains.c
 --- asterisk-22.7.0.orig/channels/sip/domains.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/domains.c	2026-01-12 13:44:19.131915270 +1300
++++ asterisk-22.7.0/channels/sip/domains.c	2026-01-15 17:41:00.161247852 +1300
 @@ -0,0 +1,129 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -12520,7 +12520,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/domains.c asterisk-2
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/events.c asterisk-22.7.0/channels/sip/events.c
 --- asterisk-22.7.0.orig/channels/sip/events.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/events.c	2026-01-12 13:44:19.132915243 +1300
++++ asterisk-22.7.0/channels/sip/events.c	2026-01-15 17:41:00.163247799 +1300
 @@ -0,0 +1,141 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -12665,7 +12665,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/events.c asterisk-22
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/extension_state.c asterisk-22.7.0/channels/sip/extension_state.c
 --- asterisk-22.7.0.orig/channels/sip/extension_state.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/extension_state.c	2026-01-12 13:44:19.134915189 +1300
++++ asterisk-22.7.0/channels/sip/extension_state.c	2026-01-15 17:41:00.164247772 +1300
 @@ -0,0 +1,187 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -12856,7 +12856,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/extension_state.c as
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/fax.c asterisk-22.7.0/channels/sip/fax.c
 --- asterisk-22.7.0.orig/channels/sip/fax.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/fax.c	2026-01-12 13:44:19.137915109 +1300
++++ asterisk-22.7.0/channels/sip/fax.c	2026-01-15 17:41:00.166247719 +1300
 @@ -0,0 +1,310 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -13170,7 +13170,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/fax.c asterisk-22.7.
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/handlers.c asterisk-22.7.0/channels/sip/handlers.c
 --- asterisk-22.7.0.orig/channels/sip/handlers.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/handlers.c	2026-01-12 13:44:19.139915056 +1300
++++ asterisk-22.7.0/channels/sip/handlers.c	2026-01-15 17:41:00.167247693 +1300
 @@ -0,0 +1,4254 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -20298,7 +20298,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/include/utils.h aste
 +#endif
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/manager.c asterisk-22.7.0/channels/sip/manager.c
 --- asterisk-22.7.0.orig/channels/sip/manager.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/manager.c	2026-01-12 13:44:19.140915029 +1300
++++ asterisk-22.7.0/channels/sip/manager.c	2026-01-15 17:41:00.168247666 +1300
 @@ -0,0 +1,1225 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -21527,7 +21527,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/manager.c asterisk-2
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/message.c asterisk-22.7.0/channels/sip/message.c
 --- asterisk-22.7.0.orig/channels/sip/message.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/message.c	2026-01-12 13:44:19.141915003 +1300
++++ asterisk-22.7.0/channels/sip/message.c	2026-01-15 17:41:00.169247639 +1300
 @@ -0,0 +1,1733 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -22170,19 +22170,19 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/message.c asterisk-2
 +		domain = ast_sockaddr_stringify_host_remote(&dialog->our_address);
 +	}
 +
-+	if (dialog->peer->cisco_support) {
-+		if (!strcmp(connected_name, "Conference") &&
-+			connected_source == AST_CONNECTED_LINE_UPDATE_SOURCE_CONFERENCE) {
-+			/* Phone will translate \2004 into the localised version of Conference and enable
-+			 * ConfList/ConfDetails support */
-+			connected_name = "\2004";
-+		} else if (!strcmp(connected_name, "Park") &&
-+				connected_source == AST_CONNECTED_LINE_UPDATE_SOURCE_PARKED_CALL) {
-+			connected_name = "\2005";
-+		}
-+	}
-+
 +	if (!ast_strlen_zero(connected_name)) {
++		if (dialog->peer->cisco_support) {
++			if (!strcmp(connected_name, "Conference") &&
++				connected_source == AST_CONNECTED_LINE_UPDATE_SOURCE_CONFERENCE) {
++				/* Phone will translate \2004 into the localised version of Conference and enable
++				 * ConfList/ConfDetails support */
++				connected_name = "\2004";
++			} else if (!strcmp(connected_name, "Park") &&
++					connected_source == AST_CONNECTED_LINE_UPDATE_SOURCE_PARKED_CALL) {
++				connected_name = "\2005";
++			}
++		}
++
 +		ast_escape_quoted(connected_name, escaped_name, sizeof(escaped_name));
 +	} else {
 +		escaped_name[0] = '\0';
@@ -23264,7 +23264,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/message.c asterisk-2
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/monitor.c asterisk-22.7.0/channels/sip/monitor.c
 --- asterisk-22.7.0.orig/channels/sip/monitor.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/monitor.c	2026-01-12 13:44:19.142914976 +1300
++++ asterisk-22.7.0/channels/sip/monitor.c	2026-01-15 17:41:00.170247612 +1300
 @@ -0,0 +1,173 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -23441,7 +23441,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/monitor.c asterisk-2
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/mwi_subscriptions.c asterisk-22.7.0/channels/sip/mwi_subscriptions.c
 --- asterisk-22.7.0.orig/channels/sip/mwi_subscriptions.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/mwi_subscriptions.c	2026-01-12 13:44:19.143914950 +1300
++++ asterisk-22.7.0/channels/sip/mwi_subscriptions.c	2026-01-15 17:41:00.171247586 +1300
 @@ -0,0 +1,430 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -23875,7 +23875,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/mwi_subscriptions.c 
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/netsock.c asterisk-22.7.0/channels/sip/netsock.c
 --- asterisk-22.7.0.orig/channels/sip/netsock.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/netsock.c	2026-01-12 13:44:19.144914923 +1300
++++ asterisk-22.7.0/channels/sip/netsock.c	2026-01-15 17:41:00.172247559 +1300
 @@ -0,0 +1,1254 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -25133,7 +25133,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/netsock.c asterisk-2
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/notify_types.c asterisk-22.7.0/channels/sip/notify_types.c
 --- asterisk-22.7.0.orig/channels/sip/notify_types.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/notify_types.c	2026-01-12 13:44:19.145914896 +1300
++++ asterisk-22.7.0/channels/sip/notify_types.c	2026-01-15 17:41:00.173247533 +1300
 @@ -0,0 +1,216 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -25353,7 +25353,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/notify_types.c aster
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/parking.c asterisk-22.7.0/channels/sip/parking.c
 --- asterisk-22.7.0.orig/channels/sip/parking.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/parking.c	2026-01-12 13:44:19.146914870 +1300
++++ asterisk-22.7.0/channels/sip/parking.c	2026-01-15 17:41:00.174247506 +1300
 @@ -0,0 +1,338 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -25695,7 +25695,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/parking.c asterisk-2
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/peers.c asterisk-22.7.0/channels/sip/peers.c
 --- asterisk-22.7.0.orig/channels/sip/peers.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/peers.c	2026-01-12 13:44:19.147914843 +1300
++++ asterisk-22.7.0/channels/sip/peers.c	2026-01-15 17:41:00.175247479 +1300
 @@ -0,0 +1,3390 @@
 + /*
 + * Asterisk -- An open source telephony toolkit.
@@ -29089,7 +29089,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/peers.c asterisk-22.
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/pickup.c asterisk-22.7.0/channels/sip/pickup.c
 --- asterisk-22.7.0.orig/channels/sip/pickup.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/pickup.c	2026-01-12 13:44:19.148914816 +1300
++++ asterisk-22.7.0/channels/sip/pickup.c	2026-01-15 17:41:00.175247479 +1300
 @@ -0,0 +1,341 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -29434,7 +29434,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/pickup.c asterisk-22
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/proxy.c asterisk-22.7.0/channels/sip/proxy.c
 --- asterisk-22.7.0.orig/channels/sip/proxy.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/proxy.c	2026-01-12 13:44:19.148914816 +1300
++++ asterisk-22.7.0/channels/sip/proxy.c	2026-01-15 17:41:00.177247426 +1300
 @@ -0,0 +1,162 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -29600,7 +29600,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/proxy.c asterisk-22.
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/realtime.c asterisk-22.7.0/channels/sip/realtime.c
 --- asterisk-22.7.0.orig/channels/sip/realtime.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/realtime.c	2026-01-12 13:44:19.149914790 +1300
++++ asterisk-22.7.0/channels/sip/realtime.c	2026-01-15 17:41:00.178247399 +1300
 @@ -0,0 +1,222 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -29826,7 +29826,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/realtime.c asterisk-
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/recording.c asterisk-22.7.0/channels/sip/recording.c
 --- asterisk-22.7.0.orig/channels/sip/recording.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/recording.c	2026-01-12 13:44:19.149914790 +1300
++++ asterisk-22.7.0/channels/sip/recording.c	2026-01-15 17:41:00.178247399 +1300
 @@ -0,0 +1,247 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -30077,7 +30077,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/recording.c asterisk
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/registrations.c asterisk-22.7.0/channels/sip/registrations.c
 --- asterisk-22.7.0.orig/channels/sip/registrations.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/registrations.c	2026-01-12 13:44:19.150914763 +1300
++++ asterisk-22.7.0/channels/sip/registrations.c	2026-01-15 17:41:00.179247373 +1300
 @@ -0,0 +1,625 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -30706,7 +30706,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/registrations.c aste
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/remotecc.c asterisk-22.7.0/channels/sip/remotecc.c
 --- asterisk-22.7.0.orig/channels/sip/remotecc.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/remotecc.c	2026-01-12 13:44:19.151914736 +1300
++++ asterisk-22.7.0/channels/sip/remotecc.c	2026-01-15 17:41:00.179247373 +1300
 @@ -0,0 +1,364 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -31074,7 +31074,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/remotecc.c asterisk-
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/request.c asterisk-22.7.0/channels/sip/request.c
 --- asterisk-22.7.0.orig/channels/sip/request.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/request.c	2026-01-12 13:44:19.151914736 +1300
++++ asterisk-22.7.0/channels/sip/request.c	2026-01-15 17:41:00.180247346 +1300
 @@ -0,0 +1,778 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -31856,7 +31856,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/request.c asterisk-2
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/response.c asterisk-22.7.0/channels/sip/response.c
 --- asterisk-22.7.0.orig/channels/sip/response.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/response.c	2026-01-12 13:44:19.152914710 +1300
++++ asterisk-22.7.0/channels/sip/response.c	2026-01-15 17:41:00.181247319 +1300
 @@ -0,0 +1,476 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -32336,7 +32336,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/response.c asterisk-
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/route.c asterisk-22.7.0/channels/sip/route.c
 --- asterisk-22.7.0.orig/channels/sip/route.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/route.c	2026-01-12 13:44:19.153914683 +1300
++++ asterisk-22.7.0/channels/sip/route.c	2026-01-15 17:41:00.181247319 +1300
 @@ -0,0 +1,190 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -32530,7 +32530,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/route.c asterisk-22.
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/rtp_glue.c asterisk-22.7.0/channels/sip/rtp_glue.c
 --- asterisk-22.7.0.orig/channels/sip/rtp_glue.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/rtp_glue.c	2026-01-12 13:44:19.153914683 +1300
++++ asterisk-22.7.0/channels/sip/rtp_glue.c	2026-01-15 17:41:00.182247293 +1300
 @@ -0,0 +1,349 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -32883,7 +32883,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/rtp_glue.c asterisk-
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/sdp.c asterisk-22.7.0/channels/sip/sdp.c
 --- asterisk-22.7.0.orig/channels/sip/sdp.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/sdp.c	2026-01-12 13:44:19.154914656 +1300
++++ asterisk-22.7.0/channels/sip/sdp.c	2026-01-15 17:41:00.183247266 +1300
 @@ -0,0 +1,2420 @@
 + /*
 + * Asterisk -- An open source telephony toolkit.
@@ -35307,7 +35307,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/sdp.c asterisk-22.7.
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/security_events.c asterisk-22.7.0/channels/sip/security_events.c
 --- asterisk-22.7.0.orig/channels/sip/security_events.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/security_events.c	2026-01-12 13:44:19.154914656 +1300
++++ asterisk-22.7.0/channels/sip/security_events.c	2026-01-15 17:41:00.183247266 +1300
 @@ -0,0 +1,298 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -35609,7 +35609,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/security_events.c as
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/session_timer.c asterisk-22.7.0/channels/sip/session_timer.c
 --- asterisk-22.7.0.orig/channels/sip/session_timer.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/session_timer.c	2026-01-12 13:44:19.156914603 +1300
++++ asterisk-22.7.0/channels/sip/session_timer.c	2026-01-15 17:41:00.183247266 +1300
 @@ -0,0 +1,242 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -35855,7 +35855,7 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/session_timer.c aste
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/transfer.c asterisk-22.7.0/channels/sip/transfer.c
 --- asterisk-22.7.0.orig/channels/sip/transfer.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/transfer.c	2026-01-12 13:44:19.156914603 +1300
++++ asterisk-22.7.0/channels/sip/transfer.c	2026-01-15 17:41:00.184247239 +1300
 @@ -0,0 +1,193 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
@@ -36052,8 +36052,8 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/transfer.c asterisk-
 +}
 diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/utils.c asterisk-22.7.0/channels/sip/utils.c
 --- asterisk-22.7.0.orig/channels/sip/utils.c	1970-01-01 12:00:00.000000000 +1200
-+++ asterisk-22.7.0/channels/sip/utils.c	2026-01-12 13:44:19.157914576 +1300
-@@ -0,0 +1,1850 @@
++++ asterisk-22.7.0/channels/sip/utils.c	2026-01-15 17:41:00.184247239 +1300
+@@ -0,0 +1,1875 @@
 +/*
 + * Asterisk -- An open source telephony toolkit.
 + *
@@ -36564,7 +36564,19 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/utils.c asterisk-22.
 +	if (*uri == '"') {
 +		uri++;
 +
-+		if (!(uri = strchr(uri, '"'))) {
++		while (*uri && *uri != '"') {
++			if (*uri == '\\') {
++				uri++;
++
++				if (!*uri) {
++					break;
++				}
++			}
++
++			uri++;
++		}
++
++		if (*uri != '"') {
 +			ast_debug(2, "Missing '\"' in URI\n");
 +			return "";
 +		}
@@ -36973,7 +36985,20 @@ diff '--color=auto' -durN asterisk-22.7.0.orig/channels/sip/utils.c asterisk-22.
 +			*name = contact;
 +		}
 +
-+		if (!(contact = strchr(contact, '"'))) {
++		while (*contact && *contact != '"') {
++			/* Handle escaped characters */
++			if (*contact == '\\') {
++				contact++;
++
++				if (!*contact) {
++					break;
++				}
++			}
++
++			contact++;
++		}
++
++		if (*contact != '"') {
 +			ast_debug(2, "Missing '\"' in contact\n");
 +			return -1;
 +		}

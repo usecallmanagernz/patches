@@ -15,6 +15,9 @@ on:
       - 'asterisk/cisco-usecallmanager-20.*.patch'
       - '.github/workflows/asterisk-20.yml'
 
+  schedule:
+    - cron: '0 8 1 * *'
+
   workflow_dispatch:
 
 env:
