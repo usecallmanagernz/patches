@@ -5,18 +5,18 @@ on:
     branches:
       - master
     paths:
-      - 'asterisk/cisco-usecallmanager-20.*.patch'
-      - '.github/workflows/asterisk-20.yml'
+      - "asterisk/cisco-usecallmanager-20.*.patch"
+      - ".github/workflows/asterisk-20.yml"
 
   pull_request:
     branches:
       - master
     paths:
-      - 'asterisk/cisco-usecallmanager-20.*.patch'
-      - '.github/workflows/asterisk-20.yml'
+      - "asterisk/cisco-usecallmanager-20.*.patch"
+      - ".github/workflows/asterisk-20.yml"
 
   schedule:
-    - cron: '0 8 1 * *'
+    - cron: "0 8 1 * *"
 
   workflow_dispatch:
 
@@ -34,6 +34,7 @@ jobs:
 
       - name: Install packages
         run: |
+          sudo apt update
           sudo apt install wget patch build-essential zlib1g-dev libssl-dev \
               libncurses-dev libreadline-dev libedit-dev uuid-dev libxml2-dev \
               libsqlite3-dev libjansson-dev libsrtp2-dev pkg-config libxml2-utils
