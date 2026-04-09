@@ -70,10 +70,13 @@ jobs:
         run: |
           cd downloads/asterisk-${{ env.ASTERISK_VERSION }}
 
-          export CFLAGS="-DENABLE_SRTP_AES_GCM -DENABLE_SRTP_AES_256"
           ./configure --without-pjproject
 
-          make
+          make menuselect.makeopts
+          ./menuselect/menuselect --enable ENABLE_SRTP_AES_256 menuselect.makeopts
+          ./menuselect/menuselect --enable ENABLE_SRTP_AES_GCM menuselect.makeopts
+
+          make all
 
       - name: Validate documentaton
         run: |
