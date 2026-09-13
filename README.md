@@ -24,7 +24,7 @@ suitable for production use.
 ## Latest Patch Versions
 
 * Asterisk 20 (Stable): [cisco-usecallmanager-20.20.0.patch](asterisk/cisco-usecallmanager-20.20.0.patch).
-* Asterisk 22 (Ready for Testing): [cisco-usecallmanager-22.10.0.patch](asterisk/cisco-usecallmanager-22.10.0.patch).
+* Asterisk 22 (Ready for Testing): [cisco-usecallmanager-22.11.0.patch](asterisk/cisco-usecallmanager-22.10.0.patch).
 
 ## OpenConnect Patch
 
